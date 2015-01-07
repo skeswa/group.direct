@@ -18,7 +18,8 @@ var gulp = require('gulp'),
     nodemon = require('nodemon');
 
 var constants = {
-    STAGING_DB_CONN_STRING: 'postgres://pgdev:FuckItShipIt@tudev.cloudapp.net:5432/tudev-site-dev'
+    DEV_DB_CONN_STRING:     'postgres://groupdirectdev:groupdirectdev@localhost:5432/groupdirectdev',
+    STAGING_DB_CONN_STRING: 'postgres://groupdirectstage:groupdirectstage@localhost:5432/groupdirectstage'
 };
 
 var helpers = {
@@ -137,10 +138,9 @@ gulp.task('dev', ['watch'], function() {
         env: {
             // Server environment
             PORT: 3000,
-            DB: constants.STAGING_DB_CONN_STRING,
+            DB: constants.DEV_DB_CONN_STRING,
             VERBOSE: true,
-            SESSION_SECRET: 'thisisnotasecretatall',
-            RESET_DB: true
+            SESSION_SECRET: 'thisisnotasecretatall'
         }
     });
 });
@@ -156,8 +156,7 @@ gulp.task('stage', ['clean', 'less', 'pages', 'images', 'browserify'], function(
             PORT: 80,
             DB: constants.STAGING_DB_CONN_STRING,
             VERBOSE: true,
-            SESSION_SECRET: 'thisisnotasecretatall',
-            RESET_DB: true
+            SESSION_SECRET: 'thisisnotasecretatall'
         }
     });
 });

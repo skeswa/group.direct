@@ -31,7 +31,7 @@ exports.model = function(db, callback) {
                                 var modelModule = require(path.join(__dirname, file));
                                 if (modelModule && modelModule.relate) {
                                     log.debug('Relating model defined in ' + file);
-                                    modelModule.relate(db);
+                                    modelModule.relate(models);
                                 }
                             }
                             relateCallback();

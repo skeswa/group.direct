@@ -21,14 +21,5 @@ module.exports = {
             });
         }
         return model;
-    },
-    relate: function(db) {
-        var CompanyModel    = require('./company').model(db),
-            UserModel       = module.exports.model(db);
-
-        // A user has many companies
-        UserModel.hasMany(CompanyModel, {
-            as: 'companies'
-        });
     }
 };

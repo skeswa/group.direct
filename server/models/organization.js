@@ -1,6 +1,6 @@
 var Sequelize = require('sequelize');
 
-var MODEL_ID = 'Company';
+var MODEL_ID = 'Organization';
 
 var model = undefined;
 module.exports = {
@@ -18,14 +18,5 @@ module.exports = {
             });
         }
         return model;
-    },
-    relate: function(db) {
-        var UserModel       = require('./user').model(db),
-            CompanyModel    = module.exports.model(db);
-
-        // A company has an admin
-        CompanyModel.hasOne(UserModel, {
-            as: 'admin'
-        });
     }
 };
