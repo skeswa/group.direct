@@ -1,0 +1,78 @@
+ #public .page {
+    .header {
+        position: absolute;
+        left: 0px;
+        top: 0px;
+        right: 0px;
+        z-index: 1100;
+        box-sizing: border-box;
+        padding: 6px 50px;
+
+        .logo {
+            float: left;
+            font-family: 'Open Sans', sans-serif;
+            color: @slate-gray;
+            font-size: 22px;
+            font-weight: 400;
+            letter-spacing: 0.5px;
+        }
+        .links {
+            float: left;
+            margin-left: 45px;
+            padding-top: 9px;
+
+            .link {
+                float: left;
+                margin-right: 55px;
+                text-transform: uppercase;
+                font-family: 'Open Sans', sans-serif;
+                color: @slate-gray;
+                text-shadow: 0px 1px 1px rgba(255, 255, 255, 0.8);
+                font-weight: 700;
+                font-size: 14px;
+            }
+        }
+        .nav {
+            float: right;
+
+            a {
+                padding-top: 9px;
+                float: right;
+                margin-left: 20px;
+                font-family: 'Open Sans', sans-serif;
+                color: @slate-gray;
+                text-shadow: 0px 1px 1px rgba(255, 255, 255, 0.8);
+                font-weight: 700;
+                font-size: 14px;
+                text-decoration: none;
+
+                &.button {
+                    margin-right: 10px;
+                    background: linear-gradient(to bottom, #f0f0f0 0%, #d6d6d6 100%);
+                    padding: 8px 26px;
+                    border-radius: 6px;
+                    border-top: 1px solid #f8f8f8;
+                    font-weight: 400;
+                    font-size: 12px;
+                    margin-top: 2px;
+                    letter-spacing: 0.4px;
+                    box-shadow: 0px 0px 1px @slate-gray;
+
+                    &:hover {
+                        background: linear-gradient(to bottom, lighten(#f0f0f0, 2%) 0%, lighten(#d6d6d6, 2%) 100%);
+                    }
+                    &:active {
+                        background: linear-gradient(to bottom, darken(#f0f0f0, 2%) 0%, darken(#d6d6d6, 2%) 100%);
+                    }
+                }
+            }
+            .separator {
+                float: right;
+                height: 30px;
+                margin-top: 4px;
+                margin-left: 20px;
+                border-right: 1px solid lighten(@slate-gray, 25%);
+            }
+        }
+    }
+}

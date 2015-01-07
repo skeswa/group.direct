@@ -1,0 +1,280 @@
+@import "../mixins";
+@import "../colors";
+
+#splash.page {
+    .mixin-page;
+
+    .header {
+        padding: 70px 50px;
+    }
+
+    section.intro {
+        position: relative;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(to bottom, #b1c6c4 0%, #a89d90 100%);
+
+        .spotlight {
+            position: absolute;
+            width: 100%;
+            height: 200%;
+            top: -100%;
+            z-index: 900;
+            background: radial-gradient(ellipse at center, rgba(255, 255, 255, 0.7) 0%, rgba(255, 255, 255, 0) 100%);
+        }
+        .message {
+            box-sizing: border-box;
+            position: absolute;
+            top: 0px;
+            bottom: 0px;
+            left: 0px;
+            right: 0px;
+            padding: 0px 10%;
+            z-index: 1000;
+            text-align: center;
+            font-family: 'Open Sans', sans-serif;
+
+            .title-wrapper {
+                display: table;
+                width: 100%;
+                height: 100%;
+
+                .title-centerer {
+                    display: table-cell;
+                    vertical-align: middle;
+
+                    .title {
+                        color: @slate-gray;
+                        font-size: 42px;
+
+                    }
+                    .subtitle {
+                        margin-top: 20px;
+                        box-sizing: border-box;
+                        padding: 0px 20%;
+                        color: lighten(@slate-gray, 15%);
+                        font-size: 24px;
+                    }
+                }
+            }
+        }
+        .scroll-down {
+            position: absolute;
+            left: 50%;
+            width: 120px;
+            margin-left: -60px;
+            bottom: 0px;
+            padding-bottom: 20px;
+            cursor: pointer;
+            z-index: 1000;
+
+            .text {
+                text-transform: uppercase;
+                font-family: 'Open Sans', sans-serif;
+                color: @slate-gray;
+                font-weight: 300;
+                font-size: 14px;
+                letter-spacing: 2px;
+            }
+            i {
+                margin-top: 10px;
+                font-size: 20px;
+                color: @slate-gray;
+            }
+        }
+    }
+    section.features {
+        background: #dddddd;
+        box-sizing: border-box;
+        padding: 50px;
+        text-align: center;
+
+        .title {
+            .mixin-section-title;
+
+            width: 100%;
+        }
+        .subtitle {
+            .mixin-section-subtitle;
+
+            width: 100%;
+        }
+        .feature {
+            display: inline-block;
+            width: 33%;
+            box-sizing: border-box;
+            padding: 10px;
+
+            .card {
+                .mixin-card;
+
+                padding: 30px 10px;
+                padding-bottom: 10px;
+
+                .icon {
+                    box-sizing: border-box;
+                    width: 100px;
+                    height: 100px;
+                    margin: 0 auto;
+                    background-color: black;
+                    padding-top: 25px;
+                    margin-bottom: 20px;
+                    border-radius: 50px;
+
+                    &.green {
+                        background-color: darken(#b1c6ba, 20%);
+                    }
+                    &.blue {
+                        background-color: darken(#b1bec6, 20%);
+                    }
+                    &.gray {
+                        background-color: darken(#b1c6c4, 20%);
+                    }
+                    &.orange {
+                        background-color: darken(#c6bab1, 20%);
+                    }
+                    &.dark-green {
+                        background-color: darken(#85a6a3, 20%);
+                    }
+                    &.shimmed {
+                        padding-top: 28px;
+                    }
+
+                    i {
+                        font-size: 50px;
+                        color: white;
+                        text-shadow: 0px 0px 8px rgba(0, 0, 0, 0.2);
+                    }
+                }
+                .title {
+                    font-size: 20px;
+                }
+                .button {
+                    margin-top: 20px;
+                    font-size: 14px;
+                    text-transform: uppercase;
+                    letter-spacing: 1px;
+                    width: 100%;
+                    padding: 10px 0px;
+                    font-family: 'Open Sans', sans-serif;
+                    background: darken(#b1bec6, 10%);
+                    border-radius: 4px;
+                    color: white;
+                    cursor: pointer;
+                }
+            }
+        }
+    }
+    section.gptt,
+    section.gvc,
+    section.aphelia,
+    section.bioconnect,
+    section.r4r {
+        .mixin-splash-section;
+
+        &.green {
+            border-top-color: darken(#b1c6ba, 20%);
+        }
+        &.blue {
+            border-top-color: darken(#b1bec6, 20%);
+        }
+        &.gray {
+            border-top-color: darken(#b1c6c4, 20%);
+        }
+        &.orange {
+            border-top-color: darken(#c6bab1, 20%);
+        }
+        &.dark-green {
+            border-top-color: darken(#85a6a3, 20%);
+        }
+
+        .title {
+            text-align: left;
+            margin-bottom: 10px;
+
+            .icon {
+                display: inline-block;
+                font-size: 16px;
+                margin-right: 15px;
+            }
+            .text {
+                .mixin-section-subtitle;
+
+                display: inline-block;
+            }
+        }
+
+        .row {
+            width: 100%;
+            overflow: hidden;
+
+            .half {
+                float: left;
+                width: 50%;
+                padding: 10px;
+                box-sizing: border-box;
+            }
+        }
+        .app {
+            text-align: left;
+
+            .logo {
+                display: inline-block;
+                width: 50px;
+                height: 50px;
+                background: #aaaaaa;
+                border-radius: 4px;
+                margin-right: 20px;
+                text-align: left;
+            }
+            .title {
+                .mixin-section-title;
+
+                display: inline-block;
+                vertical-align: top;
+                padding-top: 0px;
+                text-align: left;
+            }
+            .features {
+                margin-left: 50px;
+                margin-top: 10px;
+                margin-bottom: 20px;
+
+                li {
+                    font-family: 'Open Sans', sans-serif;
+                    font-size: 18px;
+                    line-height: 32px;
+                }
+            }
+            .get-the-app {
+                .mixin-section-subtitle;
+
+                font-size: 12px;
+                letter-spacing: 1px;
+                text-align: left;
+                margin-left: 72px;
+                margin-bottom: 10px;
+            }
+            .get-for-ios {
+                display: inline-block;
+                width: 168px;
+                height: 50px;
+                margin-left: 72px;
+                background-repeat: no-repeat;
+                background-image: url(/static/img/ios-app-store.svg);
+                background-size: contain;
+                margin-right: 10px;
+            }
+            .get-for-android {
+                .get-for-ios;
+
+                width: 150px;
+                background-image: url(/static/img/android-play-store.png);
+                margin-left: 0px;
+            }
+        }
+    }
+    section.r4r {
+        padding-bottom: 100px;
+    }
+}
