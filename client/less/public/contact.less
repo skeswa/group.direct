@@ -1,10 +1,5 @@
 #contact.page {
     .form-holder{
-        position: absolute;
-        left: 0;
-        right: 0;
-        bottom: 0;
-        top: 50px;
         font-family: "Open Sans",sans-serif;
         padding: 20px;
 
@@ -21,11 +16,25 @@
                 color: #FFF;
                 min-width: 916px;
             }
-    #submit_button {
-        .mixin-button;
-        width: 150px;
-        color: black;
-        padding: 10px;
+        label {
+            .mixin-form-label;
+        }
+        input {
+            .mixin-form-textbox;
+            width: 30%;
+
+            #submit_button {
+                .mixin-button;
+                width: 150px;
+                color: black;
+                padding: 10px;
+                background-color: #ddd;
+            }
+        }
+        textarea {
+            .mixin-form-textbox;
+            width: 50%;
+            height: 150px;
         }
     }
 }
