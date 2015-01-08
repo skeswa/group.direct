@@ -10,7 +10,7 @@ exports.route = function(app, callback) {
         else {
             async.each(files, function(file, callback) {
                 try {
-                    if (file !== 'index.js') {
+                    if (file !== 'index.js' && (file.indexOf('.js', file.length - 3) !== -1)) {
                         var routeModule = require(path.join(__dirname, file));
                         if (routeModule && routeModule.route) {
                             log.debug('Loading routes from ' + file);
