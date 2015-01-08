@@ -16,6 +16,7 @@ var Public      = require('./components/public'),
     About       = require('./components/public/about'),
     Contact     = require('./components/public/contact'),
     Login       = require('./components/public/login'),
+    Terms       = require('./components/public/terms'),
     Register    = require('./components/public/register');
 
 // Authentication-required page components
@@ -29,6 +30,7 @@ var sitemap = (
             <Route name="signin" handler={Login}/>
             <Route name="signup" handler={Register}/>
             <Route name="contact" handler={Contact}/>
+            <Route name="terms" handler={Terms}/>
             <DefaultRoute name="splash" handler={Splash}/>
         </Route>
         <NotFoundRoute name="404" handler={NotFound}/>
