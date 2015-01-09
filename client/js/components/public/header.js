@@ -10,10 +10,6 @@ var Header = React.createClass({
         return (
             <div className="header">
                 <div className="logo">GroupConnect</div>
-                <div className="links">
-                    <div className="link" data-reference="gptt">Verticals</div>
-                    <div className="link" data-reference="apps">Apps</div>
-                </div>
                 <div className="nav">
                     <Link to="about">About Us</Link>
                     <div className="separator"></div>
