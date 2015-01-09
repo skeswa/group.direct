@@ -1,0 +1,39 @@
+@import "../colors";
+@import "../mixins";
+
+#register.page {
+    background: linear-gradient(to bottom, #b1c6c4 0%, #a89d90 100%);
+
+    .header {
+        background: rgba(0, 0, 0, 0);
+        z-index: 1100;
+    }
+
+    .spotlight {
+        position: absolute;
+        width: 100%;
+        height: 200%;
+        top: -100%;
+        z-index: 900;
+        background: radial-gradient(ellipse at center, rgba(255, 255, 255, 0.7) 0%, rgba(255, 255, 255, 0) 100%);
+    }
+
+    #content {
+        position: absolute;
+        top: 75px;
+        left: 0px;
+        right: 0px;
+        bottom: 0px;
+        z-index: 1000;
+        box-sizing: border-box;
+        padding: 50px;
+        padding-top: 10px;
+
+        .card {
+            .mixin-card;
+
+            width: 100%;
+            height: 100%;
+        }
+    }
+}

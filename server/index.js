@@ -2,7 +2,7 @@ var express         = require('express'),
     // General purpose imports
     path            = require('path'),
     async           = require('async'),
-    crypto          = require('crypto'),
+    bcrypt          = require('bcrypt'),
     // Express specific imports
     favicon         = require('serve-favicon'),
     session         = require('express-session'),
@@ -63,15 +63,15 @@ module.exports = function(done) {
                         });
                     } else {
                         // We found a user matching that user name
-                        var hashedPassword = crypto.createHash('sha256').update(password, 'utf8').digest('base64');
-                        // Compare hashed password here and in the database
-                        if (user.password !== hashedPassword) {
-                            return done(null, false, {
-                                message: 'Could not authenticate user "' + userName + '"'
-                            });
-                        } else {
-                            return done(null, user);
-                        }
+                        bcrypt.compare(password, user.password, function(err, same) {
+                            if (same) {
+                                return done(null, user);
+                            } else {
+                                return done(null, false, {
+                                    message: 'Could not authenticate user "' + userName + '"'
+                                });
+                            }
+                        });
                     }
                 }).catch(function(err) {
                     return done(null, false, err);
