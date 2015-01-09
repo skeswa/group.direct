@@ -14,8 +14,11 @@ var NotFound    = require('./components/404');
 var Public      = require('./components/public'),
     Splash      = require('./components/public/splash'),
     About       = require('./components/public/about'),
+    Contact     = require('./components/public/contact'),
     Login       = require('./components/public/login'),
+    Terms       = require('./components/public/terms'),
     Register    = require('./components/public/register');
+
 // Authentication-required page components
 // TODO make the internal pages a thing
 
@@ -26,6 +29,8 @@ var sitemap = (
             <Route name="about" handler={About}/>
             <Route name="signin" handler={Login}/>
             <Route name="signup" handler={Register}/>
+            <Route name="contact" handler={Contact}/>
+            <Route name="terms" handler={Terms}/>
             <DefaultRoute name="splash" handler={Splash}/>
         </Route>
         <NotFoundRoute name="404" handler={NotFound}/>
