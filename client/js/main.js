@@ -20,6 +20,7 @@ var Public      = require('./components/public'),
     Privacy     = require('./components/public/privacy'),
     Services    = require('./components/public/services'),
     Register    = require('./components/public/register');
+    Thankyou    = require('./components/public/thankyou');
 
 // Authentication-required page components
 // TODO make the internal pages a thing
@@ -35,6 +36,7 @@ var sitemap = (
             <Route name="terms" handler={Terms}/>
             <Route name="privacy" handler={Privacy}/>
             <Route name="services" handler={Services}/>
+            <Route name="thankyou" handler={Thankyou}/>
             <DefaultRoute name="splash" handler={Splash}/>
         </Route>
         <NotFoundRoute name="404" handler={NotFound}/>
