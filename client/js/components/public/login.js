@@ -2,7 +2,8 @@
 var React       = require('react');
 
 var AuthService = require('../../services/auth'),
-    Actions     = require('../../actions');
+    Actions     = require('../../actions'),
+    Header      = require('./header');
 
 var Login = React.createClass({
     getInitialState: function() {
@@ -92,25 +93,29 @@ var Login = React.createClass({
     render: function() {
         return (
             <div id="login" className="page">
-                <div className="card">
-                    <div className="wrapper">
-                        <h1>
-                            <span className={this.state.waiting ? 'hidden' : ''}>Log In</span>
-                            <i className={'fa fa-refresh fa-spin' + (this.state.waiting ? '' : ' hidden')}></i>
-                        </h1>
-                        <div className="divider"/>
-                        <div className="form">
-                            <div className="label">User Name</div>
-                            <input type="text" className="textbox" ref="username" id="username-textbox" value={this.state.userName} onChange={this.onUserNameUpdated} disabled={this.state.waiting}/>
-                            <div className="label">Password</div>
-                            <input type="password" className="textbox" ref="password" id="password-textbox" value={this.state.password} onChange={this.onPasswordUpdated} onKeyDown={this.onPasswordKeyPress} disabled={this.state.waiting}/>
+                <Header />
+                <div className="spotlight"/>
+                <div id="content">
+                    <div className="card">
+                        <div className="wrapper">
+                            <h1>
+                                <span className={this.state.waiting ? 'hidden' : ''}>Log In</span>
+                                <i className={'fa fa-refresh fa-spin' + (this.state.waiting ? '' : ' hidden')}></i>
+                            </h1>
+                            <div className="divider"/>
+                            <div className="form">
+                                <div className="label">User Name</div>
+                                <input type="text" className="textbox" ref="username" id="username-textbox" value={this.state.userName} onChange={this.onUserNameUpdated} disabled={this.state.waiting}/>
+                                <div className="label">Password</div>
+                                <input type="password" className="textbox" ref="password" id="password-textbox" value={this.state.password} onChange={this.onPasswordUpdated} onKeyDown={this.onPasswordKeyPress} disabled={this.state.waiting}/>
+                            </div>
+                            <div className={'flash' + (this.state.toastMessage ? ' visible' : '')}>
+                                {this.state.toastMessage}
+                            </div>
+                            <p>If you have forgotten your password, click <span className="link">this link</span>.</p>
+                            <div className="divider"/>
+                            <button id="login-button" onClick={this.onSubmitClicked} disabled={this.state.waiting}>Log In</button>
                         </div>
-                        <div className={'flash' + (this.state.toastMessage ? ' visible' : '')}>
-                            {this.state.toastMessage}
-                        </div>
-                        <p>If you have forgotten your password, click <span className="link">this link</span>.</p>
-                        <div className="divider"/>
-                        <button id="login-button" onClick={this.onSubmitClicked} disabled={this.state.waiting}>Log In</button>
                     </div>
                 </div>
             </div>
