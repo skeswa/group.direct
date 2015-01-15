@@ -1,5 +1,193 @@
 #login.page {
+    background: linear-gradient(to bottom, #b1c6c4 0%, #a89d90 100%);
+    position: absolute;
+    top: 0px;
+    bottom: 0px;
+    left: 0px;
+    right: 0px;
+    font-size: 0; // To counteract the centering jank
+    text-align: center;
+
+    .header {
+        background: rgba(0, 0, 0, 0);
+        z-index: 1100;
+        position: absolute;
+        top: 0px;
+        left: 0px;
+        right: 0px;
+    }
+
+    .spotlight {
+        position: absolute;
+        width: 100%;
+        height: 200%;
+        top: -100%;
+        z-index: 900;
+        background: radial-gradient(ellipse at center, rgba(255, 255, 255, 0.7) 0%, rgba(255, 255, 255, 0) 100%);
+    }
+
     #content {
-        
+        position: absolute;
+        top: 75px;
+        left: 0px;
+        right: 0px;
+        bottom: 0px;
+        z-index: 1000;
+        box-sizing: border-box;
+        padding: 50px;
+        padding-top: 10px;
+
+        // Hack that accomplishes vertical centering for the card
+        // Explained here: http://css-tricks.com/centering-in-the-unknown/
+        &:before {
+            content: '';
+            display: inline-block;
+            height: 100%;
+            vertical-align: middle;
+            margin-right: -0.25em;
+        }
+
+        .card {
+            display: inline-block;
+            vertical-align: middle;
+            text-align: left;
+            width: 500px;
+            background: white;
+            border-radius: 4px;
+            box-shadow: 0px 1px 5px 0px rgba(0, 0, 0, 0.3);
+            font-size: 12px; // To undo the jank fix above
+
+            .wrapper {
+                box-sizing: border-box;
+                padding: 20px;
+
+                h1 {
+                    margin-top: 0px;
+                    font-family: 'Montserrat', sans-serif;
+                    text-transform: uppercase;
+                    font-size: 22px;
+                    font-weight: 700;
+                    color: @chocolate;
+                    text-align: center;
+
+                    .hidden {
+                        display: none;
+                    }
+                }
+
+                .divider {
+                    width: 100%;
+                    border-top: 1px solid #dddddd;
+                    height: 0px;
+                }
+
+                .form {
+                    margin-top: 10px;
+                    margin-bottom: 20px;
+
+                    .label {
+                        font-family: 'Roboto', sans-serif;
+                        font-size: 12px;
+                        color: #777777;
+                        letter-spacing: 1px;
+                        font-weight: 700;
+                        text-transform: uppercase;
+                    }
+
+                    .textbox {
+                        display: block;
+                        width: 100%;
+                        height: 35px;
+                        padding: 6px 12px;
+                        font-size: 14px;
+                        color: #666666;
+                        background-color: white;
+                        border: 1px solid #dddddd;
+                        border-radius: 4px;
+                        box-sizing: border-box;
+                        margin: 10px 0px;
+                        outline: 0 none;
+
+                        &:focus {
+                            border-width: 3px;
+                            padding: 4px 10px;
+                            border-color: @pale-green;
+                        }
+                    }
+
+                }
+
+                .flash {
+                    display: none;
+                    width: 100%;
+                    font-family: 'Roboto', sans-serif;
+                    font-size: 12px;
+                    color: @chocolate;
+                    font-weight: 400;
+                    letter-spacing: 0.5px;
+                    text-transform: uppercase;
+                    text-align: center;
+                    box-sizing: border-box;
+                    background-color: lighten(@chocolate, 55%);
+                    border: 2px solid @chocolate;
+                    border-radius: 4px;
+                    padding: 10px;
+
+                    &.visible {
+                        display: block;
+                    }
+                }
+
+                p {
+                    font-family: 'Roboto', sans-serif;
+                    font-size: 12px;
+                    color: #777777;
+                    font-weight: 400;
+                    letter-spacing: 0.5px;
+                    text-transform: uppercase;
+                    text-align: center;
+
+                    .link {
+                        color: @pale-green;
+                        cursor: pointer;
+                        letter-spacing: 0.75px;
+                        font-weight: 700;
+                    }
+                }
+
+                #login-button {
+                    cursor: pointer;
+                    text-decoration: none;
+                    border-radius: 4px;
+                    text-transform: uppercase;
+                    display: block;
+                    background-color: @chocolate;
+                    width: 100%;
+                    color: white;
+                    padding: 10px 0px;
+                    font-family: 'Montserrat', sans-serif;
+                    font-size: 14px;
+                    letter-spacing: 1px;
+                    border: none;
+                    outline: 0 none;
+                    margin-top: 20px;
+                    transition: background-color 0.5s;
+
+                    &:hover {
+                        background-color: lighten(@chocolate, 5%);
+                    }
+
+                    &:active {
+                        text-shadow: 0px 0px 6px rgba(0, 0, 0, 0.4);
+                        box-shadow: 0px 0px 6px rgba(0, 0, 0, 0.6) inset;
+                        background-color: darken(@chocolate, 5%);
+                    }
+
+                    &[disabled] {
+                        background-color: #aaaaaa;
+                    }
+                }
+            }
+        }
     }
 }
