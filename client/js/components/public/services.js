@@ -27,7 +27,7 @@ var Services = React.createClass({
                             <div className="box-holder">
                                 <div className="boxes">
                                     <div className="icon gray shimmed">
-                                        <i className="fa fa-tasks"/>
+                                        <i className="fa fa-headphones"/>
                                     </div>
                                     <div className="text">Group Push-to-Talk</div>
                                     <div className="roundedTwo">
@@ -48,7 +48,7 @@ var Services = React.createClass({
                                 </div>
                                 <div className="boxes">
                                     <div className="icon gray shimmed">
-                                        <i className="fa fa-tasks"/>
+                                        <i className="fa fa-calendar"/>
                                     </div>
 
                                     <div className="text">Personal & Group Task Scheduling</div>
@@ -59,7 +59,7 @@ var Services = React.createClass({
                                 </div>
                                 <div className="boxes">
                                     <div className="icon gray shimmed">
-                                        <i className="fa fa-tasks"/>
+                                        <i className="fa fa-male"/>
                                     </div>
 
                                     <div className="text">Monitor & Alert based on Sensors</div>
@@ -70,7 +70,7 @@ var Services = React.createClass({
                                 </div>
                                 <div className="boxes">
                                     <div className="icon gray shimmed">
-                                        <i className="fa fa-tasks"/>
+                                        <i className="fa fa-exclamation "/>
                                     </div>
 
                                     <div className="text">Community Self-Reporting</div>
