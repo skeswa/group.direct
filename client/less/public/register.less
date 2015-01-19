@@ -7,6 +7,10 @@
     .header {
         background: rgba(0, 0, 0, 0);
         z-index: 1100;
+        position: absolute;
+        top: 0px;
+        left: 0px;
+        right: 0px;
     }
 
     .spotlight {
@@ -28,142 +32,191 @@
         box-sizing: border-box;
         padding: 50px;
         padding-top: 10px;
+        text-align: center;
+
+        // Hack that accomplishes vertical centering for the card
+        // Explained here: http://css-tricks.com/centering-in-the-unknown/
+        &:before {
+            content: '';
+            display: inline-block;
+            height: 100%;
+            vertical-align: middle;
+            margin-right: -0.25em;
+        }
 
         .card {
-            .mixin-card;
+            display: inline-block;
+            vertical-align: middle;
+            text-align: left;
+            width: 800px;
+            background: white;
+            border-radius: 4px;
+            box-shadow: 0px 1px 5px 0px rgba(0, 0, 0, 0.3);
+            font-size: 12px; // To undo the jank fix above
 
-            position: relative;
-            width: 100%;
-            height: 100%;
-
-            .title {
-                position: absolute;
-                top: 0px;
-                left: 0px;
-                right: 0px;
-                font-family: 'Open Sans', sans-serif;
-                font-size: 36px;
-                text-align: center;
-                width: 100%;
-                padding: 30px 0px;
-                color: #4A4A4A;
-                font-weight: 400;
-            }
-
-            .step-holder {
-                position: absolute;
-                top: 125px;
-                left: 0px;
-                right: 0px;
-                bottom: 125px;
+            .wrapper {
                 box-sizing: border-box;
-                padding: 0px 60px;
+                padding: 20px;
 
-                .step {
-                    height: 100%;
-
-                    &.one {
-                        .left,
-                        .right {
-                            width: 50%;
-                            float: left;
-                            box-sizing: border-box;
-                            height: 100%;
-                        }
-                        .left {
-                            padding-right: 20px;
-                        }
-                        .right {
-                            padding-left: 20px;
-                            border-left: 1px solid #979797;
-                            font-family: 'Arial', sans-serif;
-                            font-size: 24px;
-                            color: #999999;
-
-                            input[type="radio"] {
-                                margin-right: 20px;
-                            }
-                        }
-
-                        .field {
-                            position: relative;
-                            width: 100%;
-                            height: 36px;
-                            margin-bottom: 16px;
-
-                            .label {
-                                font-family: 'Arial', sans-serif;
-                                position: absolute;
-                                left: 0px;
-                                top: 0px;
-                                width: 80px;
-                                color: #999999;
-                                font-size: 14px;
-                                text-align: right;
-                                margin-right: 20px;
-                                padding-top: 8px;
-                            }
-                            .value {
-                                position: absolute;
-                                left: 100px;
-                                top: 0px;
-                                right: 0px;
-                                height: 36px;
-
-                                input {
-                                    width: 100%;
-                                    box-shadow: inset 0px 1px 2px rgba(0, 0, 0, 0.25);
-                                    border: 1px solid #979797;
-                                    height: 34px;
-                                    padding: 0px;
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-
-            .footer {
-                position: absolute;
-                bottom: 0px;
-                left: 0px;
-                right: 0px;
-                overflow: hidden;
-                padding: 40px 80px;
-
-                .separator {
-                    border-top: 1px solid #979797;
-                }
-
-                .btn {
-                    cursor: pointer;
-                    float: right;
-                    width: 148px;
-                    border: 1px solid #9a9a9a;
-                    border-radius: 6px;
-                    font-family: 'Open Sans', sans-serif;
+                h1 {
+                    margin-top: 0px;
+                    font-family: 'Montserrat', sans-serif;
+                    text-transform: uppercase;
+                    font-size: 22px;
                     font-weight: 700;
-                    font-size: 14px;
-                    color: #4a4a4a;
+                    color: @chocolate;
                     text-align: center;
-                    margin-top: 25px;
-                    margin-left: 25px;
-                    padding: 7px 0px;
 
-                    &.next {
-                        background: linear-gradient(to bottom, #f0f0f0 0%, #d6d6d6 100%);
-                        text-shadow: 0px 2px 1px white;
+                    .hidden {
+                        display: none;
+                    }
+                }
+
+                .divider {
+                    width: 100%;
+                    border-top: 1px solid #dddddd;
+                    height: 0px;
+                }
+
+                .form {
+                    margin-top: 10px;
+                    margin-bottom: 20px;
+                    overflow: hidden;
+
+                    .field {
+                        float: left;
+                        box-sizing: border-box;
+                        width: 50%;
+
+                        &.left {
+                            padding-right: 10px;
+                        }
+                        &.right {
+                            padding-left: 10px;
+                        }
+
+                        .label {
+                            font-family: 'Roboto', sans-serif;
+                            font-size: 12px;
+                            color: #777777;
+                            letter-spacing: 1px;
+                            font-weight: 700;
+                            text-transform: uppercase;
+                        }
+
+                        .textbox {
+                            display: block;
+                            width: 100%;
+                            height: 35px;
+                            padding: 6px 12px;
+                            font-size: 14px;
+                            color: #666666;
+                            background-color: white;
+                            border: 1px solid #dddddd;
+                            border-radius: 4px;
+                            box-sizing: border-box;
+                            margin: 10px 0px;
+                            outline: 0 none;
+
+                            &:focus {
+                                border-width: 3px;
+                                padding: 4px 10px;
+                                border-color: @pale-green;
+                            }
+                        }
+                    }
+                }
+
+                .flash {
+                    display: none;
+                    width: 100%;
+                    font-family: 'Roboto', sans-serif;
+                    font-size: 12px;
+                    color: @chocolate;
+                    font-weight: 400;
+                    letter-spacing: 0.5px;
+                    text-transform: uppercase;
+                    text-align: center;
+                    box-sizing: border-box;
+                    background-color: lighten(@chocolate, 55%);
+                    border: 2px solid @chocolate;
+                    border-radius: 4px;
+                    padding: 10px;
+
+                    &.visible {
+                        display: block;
+                    }
+                }
+
+                p {
+                    font-family: 'Roboto', sans-serif;
+                    font-size: 12px;
+                    color: #777777;
+                    font-weight: 400;
+                    letter-spacing: 0.5px;
+                    text-transform: uppercase;
+                    text-align: center;
+
+                    .link {
+                        color: @pale-green;
+                        cursor: pointer;
+                        letter-spacing: 0.75px;
+                        font-weight: 700;
+                    }
+                }
+
+                .footer {
+                    text-align: right;
+                }
+
+                button {
+                    cursor: pointer;
+                    text-decoration: none;
+                    border-radius: 4px;
+                    text-transform: uppercase;
+                    display: inline-block;
+                    width: 150px;
+                    padding: 10px 0px;
+                    font-family: 'Montserrat', sans-serif;
+                    font-size: 14px;
+                    letter-spacing: 1px;
+                    border: none;
+                    margin-left: 10px;
+                    outline: 0 none;
+                    margin-top: 20px;
+                    transition: background-color 0.5s, color 0.5s;
+
+                    &#next-button {
+                        background-color: darken(@pale-green, 10%);
+                        color: white;
+
+                        &:hover {
+                            background-color: @pale-green;
+                        }
+
+                        &[disabled] {
+                            background-color: #aaaaaa;
+                        }
+                    }
+
+                    &#back-button {
+                        background-color: white;
+                        border: 1px solid @chocolate;
+                        color: @chocolate;
+                        padding: 9px 0px;
+                        width: 148px;
+
+                        &:hover {
+                            background-color: @chocolate;
+                            color: white;
+                        }
+
+                        &[disabled] {
+                            background-color: #aaaaaa;
+                        }
                     }
                 }
             }
-
-        // .footer {
-        //     .mixin-footer;
-        //     .separator {
-        //         .mixin-separator;
-        //         }
-        //     .btn{
-        //         .mixin-btn;
         }
     }
 }
