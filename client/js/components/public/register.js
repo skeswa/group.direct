@@ -176,7 +176,7 @@ var Register = React.createClass({
                 <div id="content">
                     <div className="card">
                         <div className="wrapper">
-                            <h1 onClick={this.onSubmit}>
+                            <h1>
                                 <span className={this.state.waiting ? 'hidden' : ''}>Quick Sign-Up</span>
                                 <i className={'fa fa-refresh fa-spin' + (this.state.waiting ? '' : ' hidden')}></i>
                             </h1>
