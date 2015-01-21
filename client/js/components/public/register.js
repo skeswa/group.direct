@@ -3,7 +3,8 @@ var React           = require('react'),
     Router          = require('react-router');
 
 var Util            = require('../../util'),
-    Actions         = require('../../actions');
+    Actions         = require('../../actions'),
+    SignupService   = require('../../services/signup');
 
 var Header          = require('./header');
 
@@ -148,6 +149,25 @@ var Register = React.createClass({
             });
         }
     },
+    onSubmit: function() {
+        SignupService.userSignupRequest(
+            'Ali',
+            'Khan',
+            'akhan',
+            'LOL',
+            'Male',
+            'akhan@technuf.com',
+            93218470921384,
+            '267-312-8763',
+            function(res) {
+                if (res.ok) {
+                    // This means everything went just fine
+                    console.log('We got a response', JSON.stringify(res.body));
+                } else {
+                    console.log('We got an error', res.text);
+                }
+            });
+    },
     render: function() {
         return (
             <div id="register" className="page">
@@ -156,7 +176,7 @@ var Register = React.createClass({
                 <div id="content">
                     <div className="card">
                         <div className="wrapper">
-                            <h1>
+                            <h1 onClick={this.onSubmit}>
                                 <span className={this.state.waiting ? 'hidden' : ''}>Quick Sign-Up</span>
                                 <i className={'fa fa-refresh fa-spin' + (this.state.waiting ? '' : ' hidden')}></i>
                             </h1>
