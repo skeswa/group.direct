@@ -20,22 +20,23 @@ var match   = util.env.dbConnString.match(/postgres:\/\/([^:]+):([^@]+)@([^:]+):
 
 module.exports = {
     setup: function(app, callback) {
-        models.model(db, function(err, modelMap) {
-            if (err) callback(err);
-            else {
+        callback();
+        // models.model(db, function(err, modelMap) {
+            // if (err) callback(err);
+            // else {
                 // Synchronize with the database
-                db.sync({}).then(function() {
-                    // Add middleware to make models accessible in request object
-                    app.use(function(req, res, next) {
-                        req.models = modelMap;
-                        next();
-                    });
-                    log.info('Database configuration completed');
-                    callback();
-                }).catch(function(err) {
-                    callback(err);
-                });
-            }
-        });
+            //    db.sync({}).then(function() {
+            //        // Add middleware to make models accessible in request object
+            //        app.use(function(req, res, next) {
+            //            req.models = modelMap;
+            //            next();
+            //        });
+            //        log.info('Database configuration completed');
+            //        callback();
+            //    }).catch(function(err) {
+            //        callback(err);
+            //    });
+            // }
+        // });
     }
 };
