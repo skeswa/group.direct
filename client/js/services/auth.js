@@ -8,7 +8,7 @@ var AuthService = {
     },
     login: function(user, pass, callback) {
         request
-            .post('/api/auth/login')
+            .post('/GroupDirectServices/SignupService.svc/login')
             .send({
                 userName: user,
                 password: pass

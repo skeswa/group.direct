@@ -5,4 +5,4 @@ module.exports = {
         sessionSecret: process.env.SESSION_SECRET || 'NO_SESSION_SECRET',
         dbConnString: process.env.DB || 'postgres://groupdirectdev:groupdirectdev@localhost:5432/groupdirectdev'
     }
-}
+};

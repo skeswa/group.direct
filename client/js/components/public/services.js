@@ -31,7 +31,7 @@ var Services = React.createClass({
                                     </div>
                                     <div className="text">Group Push-to-Talk</div>
                                     <div className="roundedTwo">
-                                      <input type="checkbox" value="None" id="roundedTwo" name="check" checked/>
+                                      <input type="checkbox" value="None" id="roundedTwo" name="check" />
                                       <label for="roundedTwo"></label>
                                     </div>
                                 </div>

@@ -15,15 +15,12 @@ exports.route = function(app) {
             remoteRequest.query(req.query);
         } else {
             remoteRequest = request.post(REMOTE_SERVER_URL + req.path);
+            console.log("URL " + REMOTE_SERVER_URL + req.path);
             remoteRequest.query(req.query);
             remoteRequest.send(req.body);
         }
         remoteRequest.end(function(remoteResponse) {
-            if (remoteResponse.ok) {
-                res.status(200).send(remoteResponse.body);
-            } else {
-                res.status(500).send(remoteResponse.text);
-            }
+            res.status(remoteResponse.status).send(remoteResponse.body);
         });
     };
 

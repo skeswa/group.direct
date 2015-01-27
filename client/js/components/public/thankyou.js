@@ -26,7 +26,7 @@ var Thankyou = React.createClass({
                             <i className="fa fa-check"/>
                         </div>
                         <div className="title">Thank you! Your order has been received. You will receive an email and see your new services on your account once they have been provisioned.</div>
-                        <div className="subtitle">Continue to your account</div>
+                        <Link to="signin" className="subtitle">Continue to your account</Link>
                     </div>
                 </div>
             </div>

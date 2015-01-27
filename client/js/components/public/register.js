@@ -18,27 +18,27 @@ var steps = [
             <div className="form">
                 <div className="field left">
                     <div className="label">First Name</div>
-                    <input type="text" className="textbox" value={component.state['firstName']} onChange={component.generateTextListener('firstName')}/>
+                    <input type="text" className="textbox" value={component.state.firstName} onChange={component.onFirstNameChanged}/>
                 </div>
                 <div className="field right">
                     <div className="label">Last Name</div>
-                    <input type="text" className="textbox" value={component.state['lastName']} onChange={component.generateTextListener('lastName')}/>
+                    <input type="text" className="textbox" value={component.state.lastName} onChange={component.onLastNameChanged}/>
                 </div>
                 <div className="field left">
-                    <div className="label">Username</div>
-                    <input type="text" className="textbox" value={component.state['userName']} onChange={component.generateTextListener('userName')}/>
+                    <div className="label">Email</div>
+                    <input type="text" className="textbox" value={component.state.email} onChange={component.onEmailChanged}/>
                 </div>
                 <div className="field right">
-                    <div className="label">Email</div>
-                    <input type="text" className="textbox" value={component.state['email']} onChange={component.generateTextListener('email')}/>
+                     <div className="label">Username</div>
+                     <input type="text" className="textbox" value={component.state.userName} onChange={component.onUsernameChanged}/>
                 </div>
                 <div className="field left">
                     <div className="label">Password</div>
-                    <input type="password" className="textbox" value={component.state['password']} onChange={component.generateTextListener('password')}/>
+                    <input type="password" className="textbox" value={component.state.password} onChange={component.onPasswordChanged}/>
                 </div>
                 <div className="field right">
                     <div className="label">Confirm Password</div>
-                    <input type="password" className="textbox" value={component.state['confirmPassword']} onChange={component.generateTextListener('confirmPassword')}/>
+                    <input type="password" className="textbox" value={component.state.confirmPassword} onChange={component.onConfirmPasswordChanged}/>
                 </div>
             </div>
         );
@@ -55,43 +55,56 @@ var steps = [
                     <div className="field full">
                         <div className="label">Invitation Code</div>
                         <p>You should have received a company invitation code from your company admin. Please type it below.</p>
-                        <input type="text" className="textbox" value={component.state['companyInvitationCode']} onChange={component.generateTextListener('companyInvitationCode')}/>
+                        <input type="text" className="textbox" value={component.state['companyInvitationCode']} onChange={component.onLastNameChanged}/>
                     </div>
                 </div>
                 <div id="create-company-form" className="form" style={{ display: (component.state.isCreatingNewCompany ? 'block' : 'none') }}>
                     <div className="field left">
                         <div className="label">Name</div>
-                        <input type="text" className="textbox" value={component.state['newCompanyName']} onChange={component.generateTextListener('newCompanyName')}/>
+                        <input type="text" className="textbox" value={component.state['newCompanyName']} onChange={component.onLastNameChanged}/>
                     </div>
                     <div className="field right">
                         <div className="label">Email</div>
-                        <input type="text" className="textbox" value={component.state['newCompanyEmail']} onChange={component.generateTextListener('newCompanyEmail')}/>
+                        <input type="text" className="textbox" value={component.state['newCompanyEmail']} onChange={component.onLastNameChanged}/>
                     </div>
                     <div className="field full">
                         <div className="label">Address Line 1</div>
-                        <input type="text" className="textbox" value={component.state['newCompanyAddrLine1']} onChange={component.generateTextListener('newCompanyAddrLine1')}/>
+                        <input type="text" className="textbox" value={component.state['newCompanyAddrLine1']} onChange={component.onLastNameChanged}/>
                     </div>
                     <div className="field full">
                         <div className="label">Address Line 2</div>
-                        <input type="text" className="textbox" value={component.state['newCompanyAddrLine2']} onChange={component.generateTextListener('newCompanyAddrLine2')}/>
+                        <input type="text" className="textbox" value={component.state['newCompanyAddrLine2']} onChange={component.onLastNameChanged}/>
                     </div>
                     <div className="field left">
                         <div className="label">City</div>
-                        <input type="text" className="textbox" value={component.state['newCompanyCity']} onChange={component.generateTextListener('newCompanyCity')}/>
+                        <input type="text" className="textbox" value={component.state['newCompanyCity']} onChange={component.onLastNameChanged}/>
                     </div>
                     <div className="field right">
                         <div className="label">State</div>
-                        <input type="text" className="textbox" value={component.state['newCompanyState']} onChange={component.generateTextListener('newCompanyState')}/>
+                        <input type="text" className="textbox" value={component.state['newCompanyState']} onChange={component.onLastNameChanged}/>
                     </div>
                     <div className="field left">
                         <div className="label">Country</div>
-                        <input type="text" className="textbox" value={component.state['newCompanyCountry']} onChange={component.generateTextListener('newCompanyCountry')}/>
+                        <input type="text" className="textbox" value={component.state['newCompanyCountry']} onChange={component.onLastNameChanged}/>
                     </div>
                     <div className="field right">
                         <div className="label">Zip</div>
-                        <input type="text" className="textbox" value={component.state['newCompanyZip']} onChange={component.generateTextListener('newCompanyZip')}/>
+                        <input type="text" className="textbox" value={component.state['newCompanyZip']} onChange={component.onLastNameChanged}/>
                     </div>
                 </div>
+            </div>
+        );
+    },
+    // Third Step
+    function(component) {
+        return (
+            <div>
+                <div className="icon gray shimmed">
+                    <i className="fa fa-check"/>
+                </div>
+                <div className="title">Thank you! Your order has been received. You will receive an email and see your new services on your account once they have been provisioned.</div>
+                <Link to="signin" className="subtitle">Continue to your account</Link>
+                <br />
             </div>
         );
     }
@@ -110,16 +123,10 @@ var Register = React.createClass({
         };
     },
     componentDidMount: function() {
+        var component = this;
         Actions.changePageTitle('Register');
     },
     componentWillUnmount: function() {
-    },
-    generateTextListener: function(name) {
-        return function(event) {
-            var obj = {};
-            obj[name] = event.target.value;
-            this.setState(obj);
-        };
     },
     showJoinCompanyForm: function() {
         this.setState({
@@ -133,6 +140,37 @@ var Register = React.createClass({
             isJoiningExistingCompany: false
         });
     },
+    onFirstNameChanged: function(event){
+        this.setState({
+            firstName: event.target.value
+        });
+    },
+    onLastNameChanged: function(event){
+        this.setState({
+            lastName: event.target.value
+        });
+    },
+    onEmailChanged: function(event){
+        this.setState({
+            email: event.target.value
+        });
+    },
+    onPasswordChanged: function(event){
+        this.setState({
+            password: event.target.value
+        });
+    },
+    //TODO: Review
+    onConfirmPasswordChanged: function(event){
+        this.setState({
+            confirmPassword: event.target.value
+        });
+    },
+    onUsernameChanged: function(event){
+        this.setState({
+            userName: event.target.value
+        });
+    },
     onNext: function() {
         var step = this.state.step;
         if (step < steps.length - 1) {
@@ -140,6 +178,47 @@ var Register = React.createClass({
                 step: (step + 1)
             });
         }
+
+        var firstName = this.state.firstName,
+            lastName = this.state.lastName,
+            userName = this.state.userName,
+            email = this.state.email,
+            password = this.state.password,
+            activationCode = 0;
+
+        SignupService.userSignupRequest(
+            firstName,
+            lastName,
+            userName,
+            password,
+            'Male',
+            email,
+            '10-10-2010',
+            '902-872-1113',
+            function(res) {
+                if (res.ok) {
+                    // This means everything went just fine
+                    console.log('We got a response', JSON.stringify(res.body));
+                    activationCode = res.body.Result.ActivationCode;
+                    console.log(email + " Code: " +  activationCode);
+                    //Testing with timedelay
+                    setTimeout(function(){
+                        SignupService.activateUserSignupRequest(
+                        email,
+                        activationCode,
+                        function(res) {
+                            if (res.ok) {
+                                // This means everything went just fine
+                                console.log('Activation', JSON.stringify(res.body));
+                            } else {
+                                console.log('We got an error', res.text);
+                            }
+                        });
+                    }, 5000);
+                } else {
+                    console.log('We got an error', res.text);
+                }
+            });
     },
     onBack: function() {
         var step = this.state.step;
@@ -149,24 +228,21 @@ var Register = React.createClass({
             });
         }
     },
+    onSkip: function() {
+        //Go to thankyou page
+        this.setState({
+            step: 2
+        });
+    },
+    onFinish: function(){
+        this.setState({
+            step: 2
+        });
+        console.log("On finish Result: " + activationCode);
+        console.log("Email: " + email);
+    },
     onSubmit: function() {
-        SignupService.userSignupRequest(
-            'Ali',
-            'Khan',
-            'akhan',
-            'LOL',
-            'Male',
-            'akhan@technuf.com',
-            93218470921384,
-            '267-312-8763',
-            function(res) {
-                if (res.ok) {
-                    // This means everything went just fine
-                    console.log('We got a response', JSON.stringify(res.body));
-                } else {
-                    console.log('We got an error', res.text);
-                }
-            });
+
     },
     render: function() {
         return (
@@ -187,8 +263,10 @@ var Register = React.createClass({
                                 </div>
                                 <div className="footer">
                                     <div className="divider"/>
-                                    <button id="back-button" onClick={this.onBack} disabled={this.state.waiting}>Back</button>
-                                    <button id="next-button" onClick={this.onNext} disabled={this.state.waiting}>Next</button>
+                                    <button id="skip-button" style={{ display: (this.state.step === 1 ? 'inline-block' : 'none') }} onClick={this.onSkip} disabled={this.state.waiting}>Skip</button>
+                                    <button id="back-button" onClick={this.onBack} disabled={this.state.waiting} style={{ display: (this.state.step === 2 ? 'none' : 'inline-block') }}>Back</button>
+                                    <button id="next-button" onClick={this.onNext} disabled={this.state.waiting} style={{ display: (this.state.step === 0 ? 'inline-block' : 'none') }}>Next</button>
+                                    <button id="finish-button" onClick={this.onNext} disabled={this.state.waiting} style={{ display: (this.state.step === 1 ? 'inline-block' : 'none') }}>Finish</button>
                                 </div>
                             </div>
                         </div>

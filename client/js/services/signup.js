@@ -28,6 +28,21 @@ var SignupService = {
             })
             // Submit the request
             .end(callback);
+    },
+
+    activateUserSignupRequest: function(
+        email,
+        activationCode,
+        callback){
+        // Build the request
+        request
+            .post('/GroupDirectServices/SignupService.svc/activateusersignuprequest')
+            .send({
+                    email: email,
+                    code: activationCode
+            })
+            // Submit the request
+            .end(callback);
     }
 };
 

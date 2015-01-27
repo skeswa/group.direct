@@ -3,9 +3,12 @@ var React       = require('react');
 
 var AuthService = require('../../services/auth'),
     Actions     = require('../../actions'),
+    Navigation  = require('react-router').Navigation,
+
     Header      = require('./header');
 
 var Login = React.createClass({
+    mixins: [Navigation],
     getInitialState: function() {
         return {
             toastMessage: undefined,
@@ -54,7 +57,7 @@ var Login = React.createClass({
             var component = this;
             AuthService.login(this.state.userName, this.state.password, function(err, res) {
                 if (err) {
-                    // The was an issue with the connection
+                    // There was an issue with the connection
                     component.setState({
                         waiting: false,
                         password: '',
@@ -76,7 +79,7 @@ var Login = React.createClass({
                         return;
                     } else if (res.status === 200) {
                         // TODO
-                        alert('Authentication successful. TODO do something real here.');
+                        component.transitionTo('account');
                     } else {
                         // Stop waiting
                         component.setState({
