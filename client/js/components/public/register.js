@@ -210,10 +210,11 @@ var Register = React.createClass({
                     message: 'Must be between 6 and 18 alphanumeric characters long'
                 });
             }
-            if (!validator.matches(password, /((?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%]).{6,20})/)) {
+            //(?=.*[A-Z])(?=.*[@#$%]) //uppercase letter, special symbol
+            if (!validator.matches(password, /((?=.*\d)(?=.*[a-z]).{6,20})/)) {
                 problems.push({
                     field: 'Password',
-                    message: 'Must have one digit, lowercase letter, uppercase letter, special symbol and be between 6 and 20 characters long'
+                    message: 'Must have one digit, lowercase letter and be between 6 and 20 characters long'
                 });
             }
             if(confirmPassword != password){
@@ -238,10 +239,10 @@ var Register = React.createClass({
             }
         }
         // Start waiting
-        this.setState({
-            waiting: true,
-            toastMessage: 'This is a waiting Toast message.'
-        });
+        // this.setState({
+        //     waiting: true,
+        //     toastMessage: 'This is a waiting Toast message.'
+        // });
         // Send the signup request
         SignupService.userSignupRequest(
             firstName,
@@ -263,36 +264,36 @@ var Register = React.createClass({
                         function(res) {
                             if (res.ok) {
                                 // This means everything went just fine
-                                //Go to next step
-                                var step = this.state.step;
-                                if (step < steps.length - 1) {
-                                    this.setState({
-                                        step: (step + 1)
-                                    });
-                                }
                                 console.log('Activation', JSON.stringify(res.body));
                             } else {
-                                component.setState({
-                                    waiting: false,
-                                    password: '',
-                                    toastMessage:
-                                        'There was a problem connecting to the server. ' +
-                                        'Check your connection status and try again.'
-                                });
+                                // component.setState({
+                                //     waiting: false,
+                                //     password: '',
+                                //     toastMessage:
+                                //         'There was a problem connecting to the server. ' +
+                                //         'Check your connection status and try again.'
+                                // });
                                 console.log('We got an error', res.text);
                             }
                         });
                 } else {
-                    component.setState({
-                        waiting: false,
-                        password: '',
-                        toastMessage:
-                            'There was a problem connecting to the server. ' +
-                            'Check your connection status and try again.'
-                    });
+                    // component.setState({
+                    //     waiting: false,
+                    //     password: '',
+                    //     toastMessage:
+                    //         'There was a problem connecting to the server. ' +
+                    //         'Check your connection status and try again.'
+                    // });
                     console.log('We got an error', res.text);
                 }
             });
+        //Go to next step
+        var step = this.state.step;
+        if (step < steps.length - 1) {
+            this.setState({
+                step: (step + 1)
+            });
+        }
     },
     onBack: function() {
         var step = this.state.step;
@@ -341,7 +342,7 @@ var Register = React.createClass({
                                 <div className="step one">
                                     {(steps[this.state.step])(this)}
                                 </div>
-                                <div className={'flash' + (this.state.toastMessage ? ' visible' : '')}>
+                                <div className={'flash' + (this.state.toastMessage && this.state.step === 0 ? ' visible' : '')}>
                                     {this.state.toastMessage}
                                 </div>
                                 <div className="footer">
