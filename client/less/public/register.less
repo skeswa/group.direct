@@ -73,6 +73,27 @@
                     }
                 }
 
+                .flash {
+                    display: none;
+                    width: 100%;
+                    font-family: 'Roboto', sans-serif;
+                    font-size: 12px;
+                    color: @chocolate;
+                    font-weight: 400;
+                    letter-spacing: 0.5px;
+                    text-transform: uppercase;
+                    text-align: center;
+                    box-sizing: border-box;
+                    background-color: lighten(@chocolate, 55%);
+                    border: 2px solid @chocolate;
+                    border-radius: 4px;
+                    padding: 10px;
+
+                    &.visible {
+                        display: block;
+                    }
+                }
+
                 .divider {
                     width: 100%;
                     border-top: 1px solid #dddddd;
@@ -194,27 +215,6 @@
                                 border-color: @pale-green;
                             }
                         }
-                    }
-                }
-
-                .flash {
-                    display: none;
-                    width: 100%;
-                    font-family: 'Roboto', sans-serif;
-                    font-size: 12px;
-                    color: @chocolate;
-                    font-weight: 400;
-                    letter-spacing: 0.5px;
-                    text-transform: uppercase;
-                    text-align: center;
-                    box-sizing: border-box;
-                    background-color: lighten(@chocolate, 55%);
-                    border: 2px solid @chocolate;
-                    border-radius: 4px;
-                    padding: 10px;
-
-                    &.visible {
-                        display: block;
                     }
                 }
 

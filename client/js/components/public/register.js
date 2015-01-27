@@ -4,6 +4,8 @@ var React           = require('react'),
 
 var Util            = require('../../util'),
     Actions         = require('../../actions'),
+    validator       = require('validator'),
+
     SignupService   = require('../../services/signup');
 
 var Header          = require('./header');
@@ -172,20 +174,75 @@ var Register = React.createClass({
         });
     },
     onNext: function() {
-        var step = this.state.step;
-        if (step < steps.length - 1) {
-            this.setState({
-                step: (step + 1)
-            });
+        var firstName       = this.state.firstName,
+            lastName        = this.state.lastName,
+            userName        = this.state.userName,
+            email           = this.state.email,
+            password        = this.state.password,
+            confirmPassword = this.state.confirmPassword,
+            activationCode  = 0;
+
+        if (this.state.waiting) return;
+        else {
+            // Validate input
+            var problems = [];
+            if (!validator.matches(firstName, /[a-zA-Z_\-]{2,}/)) {
+                problems.push({
+                    field: 'First Name',
+                    message: 'Must be at least two letters long'
+                });
+            }
+            if (!validator.matches(lastName, /[a-zA-Z_\-]{2,}/)) {
+                problems.push({
+                    field: 'Last Name',
+                    message: 'Must be at least two letters long'
+                });
+            }
+            if (!validator.isEmail(email)) {
+                problems.push({
+                    field: 'Email',
+                    message: 'Must be a correctly formatted email address'
+                });
+            }
+            if (!validator.matches(userName, /[a-zA-Z0-9\.]{6,20}/)) {
+                problems.push({
+                    field: 'Username',
+                    message: 'Must be between 6 and 18 alphanumeric characters long'
+                });
+            }
+            if (!validator.matches(password, /((?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%]).{6,20})/)) {
+                problems.push({
+                    field: 'Password',
+                    message: 'Must have one digit, lowercase letter, uppercase letter, special symbol and be between 6 and 20 characters long'
+                });
+            }
+            if(confirmPassword != password){
+                problems.push({
+                    field: 'Confirm Password',
+                    message: 'Passwords did not match. Please try again'
+                });
+            }
+            // Yell at the requester if ill-formatter
+            if (problems.length > 0) {
+                //Display full message in toast
+                //var messages = '';
+                //for (var i=0; i < problems.length; i++)
+                //messages+= problems[i].field + ': '+ problems[i].message + '\n';
+
+                //Display messages one by one
+                var message = problems[0].field + ': '+ problems[0].message;
+                this.setState({
+                    toastMessage: message
+                    });
+                return;
+            }
         }
-
-        var firstName = this.state.firstName,
-            lastName = this.state.lastName,
-            userName = this.state.userName,
-            email = this.state.email,
-            password = this.state.password,
-            activationCode = 0;
-
+        // Start waiting
+        this.setState({
+            waiting: true,
+            toastMessage: 'This is a waiting Toast message.'
+        });
+        // Send the signup request
         SignupService.userSignupRequest(
             firstName,
             lastName,
@@ -200,19 +257,39 @@ var Register = React.createClass({
                     // This means everything went just fine
                     console.log('We got a response', JSON.stringify(res.body));
                     activationCode = res.body.Result.ActivationCode;
-                    console.log(email + " Code: " +  activationCode);
                         SignupService.activateUserSignupRequest(
                         email,
                         activationCode,
                         function(res) {
                             if (res.ok) {
                                 // This means everything went just fine
+                                //Go to next step
+                                var step = this.state.step;
+                                if (step < steps.length - 1) {
+                                    this.setState({
+                                        step: (step + 1)
+                                    });
+                                }
                                 console.log('Activation', JSON.stringify(res.body));
                             } else {
+                                component.setState({
+                                    waiting: false,
+                                    password: '',
+                                    toastMessage:
+                                        'There was a problem connecting to the server. ' +
+                                        'Check your connection status and try again.'
+                                });
                                 console.log('We got an error', res.text);
                             }
                         });
                 } else {
+                    component.setState({
+                        waiting: false,
+                        password: '',
+                        toastMessage:
+                            'There was a problem connecting to the server. ' +
+                            'Check your connection status and try again.'
+                    });
                     console.log('We got an error', res.text);
                 }
             });
@@ -263,6 +340,9 @@ var Register = React.createClass({
                             <div className="step-holder">
                                 <div className="step one">
                                     {(steps[this.state.step])(this)}
+                                </div>
+                                <div className={'flash' + (this.state.toastMessage ? ' visible' : '')}>
+                                    {this.state.toastMessage}
                                 </div>
                                 <div className="footer">
                                     <div className="divider"/>
