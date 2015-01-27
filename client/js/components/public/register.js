@@ -102,7 +102,7 @@ var steps = [
                 <div className="icon gray shimmed">
                     <i className="fa fa-check"/>
                 </div>
-                <div className="title">Thank you! Your order has been received. You will receive an email and see your new services on your account once they have been provisioned.</div>
+                <div className="title">Thank you for signing up with GroupConnect! You will receive a confirmation email. Please click on it to activate the basic free services provisioned with your account.</div>
                 <Link to="signin" className="subtitle">Continue to your account</Link>
                 <br />
             </div>
@@ -201,8 +201,6 @@ var Register = React.createClass({
                     console.log('We got a response', JSON.stringify(res.body));
                     activationCode = res.body.Result.ActivationCode;
                     console.log(email + " Code: " +  activationCode);
-                    //Testing with timedelay
-                    setTimeout(function(){
                         SignupService.activateUserSignupRequest(
                         email,
                         activationCode,
@@ -214,7 +212,6 @@ var Register = React.createClass({
                                 console.log('We got an error', res.text);
                             }
                         });
-                    }, 5000);
                 } else {
                     console.log('We got an error', res.text);
                 }
@@ -253,7 +250,13 @@ var Register = React.createClass({
                     <div className="card">
                         <div className="wrapper">
                             <h1>
-                                <span className={this.state.waiting ? 'hidden' : ''}>Quick Sign-Up</span>
+                                <span className={this.state.waiting ? 'hidden' : ''} style={{ display: (this.state.step === 0 ? 'inline-block' : 'none') }}>Quick Sign-Up</span>
+                                <div style={{ display: (this.state.step === 1 ? 'inline-block' : 'none') }}>
+                                    <span className={this.state.waiting ? 'hidden' : ''} >Sign-up with a Company</span>
+                                    <br />
+                                    <span><button id="skip-button" style={{ display: (this.state.step === 1 ? 'inline-block' : 'none') }} onClick={this.onSkip} disabled={this.state.waiting}>Skip Company Step</button></span>
+                                </div>
+                                <span className={this.state.waiting ? 'hidden' : ''} style={{ display: (this.state.step === 2 ? 'inline-block' : 'none') }}>Success!</span>
                                 <i className={'fa fa-refresh fa-spin' + (this.state.waiting ? '' : ' hidden')}></i>
                             </h1>
                             <div className="divider"/>
@@ -263,7 +266,6 @@ var Register = React.createClass({
                                 </div>
                                 <div className="footer">
                                     <div className="divider"/>
-                                    <button id="skip-button" style={{ display: (this.state.step === 1 ? 'inline-block' : 'none') }} onClick={this.onSkip} disabled={this.state.waiting}>Skip</button>
                                     <button id="back-button" onClick={this.onBack} disabled={this.state.waiting} style={{ display: (this.state.step === 2 ? 'none' : 'inline-block') }}>Back</button>
                                     <button id="next-button" onClick={this.onNext} disabled={this.state.waiting} style={{ display: (this.state.step === 0 ? 'inline-block' : 'none') }}>Next</button>
                                     <button id="finish-button" onClick={this.onNext} disabled={this.state.waiting} style={{ display: (this.state.step === 1 ? 'inline-block' : 'none') }}>Finish</button>

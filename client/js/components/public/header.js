@@ -7,6 +7,7 @@ var Link            = Router.Link;
 
 var Header = React.createClass({
     render: function() {
+        //TODO: hide signup/signin buttons if current page == signup/signin
         return (
             <div className="header">
                 <div className="logo">GroupConnect</div>
@@ -14,7 +15,7 @@ var Header = React.createClass({
                     <Link to="about">About Us</Link>
                     <div className="separator"></div>
                     <Link to="signin">Sign In</Link>
-                    <Link className="button" to="signup">Sign Up</Link>
+                    <Link style={{ display: (document.title === 'GroupDirect | Register' ? 'none' : 'inline-block') }} className="button" to="signup">Sign Up</Link>
                 </div>
             </div>
         );
