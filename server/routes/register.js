@@ -5,14 +5,9 @@ var fs          = require('fs'),
     bcrypt      = require('bcrypt'),
     passport    = require('passport');
 
-var log     = require('../log'),
-    email    = require('../email');
+var log     = require('../log');
 
 exports.route = function(app) {
-    app.get('/sendaliamessage', function(req,res){
-        email.send('ali.khan@technuf.com');
-        res.status(200).send('Hello world');
-    });
     app.post('/api/register/user', function(req, res) {
         // If we're already logged in, send a 401
         if (req.user) {
