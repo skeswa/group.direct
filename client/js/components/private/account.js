@@ -42,6 +42,10 @@ var steps = [
                             <div className="label">Email</div>
                             <input type="password" className="textbox" value={component.state.confirmPassword} onChange={component.onConfirmPasswordChanged}/>
                         </div>
+                        <div className="field btn" >
+                            <div className="label"></div>
+                            <Link to="about" className="button">Save</Link>
+                        </div>
                     </div>
                 </div>
                 <div className="right">
@@ -128,7 +132,8 @@ var steps = [
                             <div className="label">Confirm new</div>
                             <input type="text" className="textbox" value={component.state.email} onChange={component.onEmailChanged}/>
                         </div>
-                        <div className="field">
+                        <div className="field btn">
+                        <div className="label"></div>
                             <Link to="about" className="button">Save</Link>
                         </div>
                     </div>
