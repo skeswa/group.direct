@@ -29,7 +29,6 @@ var SignupService = {
             // Submit the request
             .end(callback);
     },
-
     activateUserSignupRequest: function(
         email,
         activationCode,
