@@ -11,7 +11,7 @@ var Header          = require('./header');
 var Link            = Router.Link;
 
 var steps = [
-    //First Step
+    //First Step: Profile
     function (component) {
         return (
             <div className="tab-content">
@@ -48,7 +48,7 @@ var steps = [
                         </div>
                     </div>
                 </div>
-                <div className="right">
+                <div className="right narrow">
                     <div className="subtitle">Company</div>
                     <div className="row">
                         <div className="profile-pic">
@@ -56,7 +56,7 @@ var steps = [
                         </div>
                         <div className="top-text-wrapper">
                             <div className="line1">Power and Electric Co</div>
-                            <div className="line2">Edit info</div>
+                            <div className="line2 link">Edit info</div>
                         </div>
                     </div>
                     <div className="row">
@@ -69,20 +69,20 @@ var steps = [
             </div>
         );
     },
-    // Second Step
+    // Second Step: Connections
     function(component) {
         return(
             <div className="tab-content">
                 <div className="row">
-                    <div className="left">
+                    <div className="left wide">
                         <input type="text" defaultValue='Search contacts'  className="textbox" ref="search" id="search-textbox" />
                     </div>
-                    <div className="right">
+                    <div className="right narrow">
                         <Link to="about" className="button"><i className="fa fa-plus"></i> Add Members</Link>
                     </div>
                 </div>
                 <div className="row">
-                    <div className="left">
+                    <div className="left wide">
                         <div className="profile-pic">
                             <i className="fa fa-user"></i>
                         </div>
@@ -91,12 +91,12 @@ var steps = [
                             <div className="line2">username@email.com</div>
                         </div>
                     </div>
-                    <div className="right">
+                    <div className="right narrow">
                         <Link to="about" className="button">Invite</Link>
                     </div>
                 </div>
                 <div className="row">
-                    <div className="left">
+                    <div className="left wide">
                         <div className="profile-pic">
                             <i className="fa fa-user"></i>
                         </div>
@@ -105,7 +105,7 @@ var steps = [
                             <div className="line2">username@email.com</div>
                         </div>
                     </div>
-                    <div className="right">
+                    <div className="right narrow">
                         <Link to="about" className="button">Member</Link>
                         <Link to="about" className="button">Remove</Link>
                     </div>
@@ -113,11 +113,11 @@ var steps = [
             </div>
         );
     },
-    //Third Step
+    //Third Step: Settings
     function (component) {
         return (
             <div className="tab-content">
-                <div className="left">
+                <div className="left wide">
                     <div className="subtitle">Password</div>
                     <div className="form">
                         <div className="field">
@@ -138,7 +138,7 @@ var steps = [
                         </div>
                     </div>
                 </div>
-                <div className="right">
+                <div className="right narrow">
                     <div className="subtitle">Notification</div>
                     <div className="field">
                         <div className="label">Send email</div>
@@ -148,19 +148,213 @@ var steps = [
             </div>
         );
     },
-    //Fourth Step
+    //Fourth Step: Apps
     function (component) {
         return (
             <div className="tab-content">
-                Apps content
+                <div className="left narrow">
+                    <div className="row">
+                        <div className="profile-pic">
+                            <i className="fa fa-puzzle-piece"></i>
+                        </div>
+                        <div className="top-text-wrapper">
+                            <div className="line1">Aphelia</div>
+                            <div className="line2">
+                                <span>Free</span>
+                                <span className="separator"></span>
+                                <span className="link">Upgrade License</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div className="row">
+                        <div className="profile-pic">
+                            <i className="fa fa-users"></i>
+                        </div>
+                        <div className="top-text-wrapper">
+                            <div className="line1">GroupVideoConnect</div>
+                            <div className="line2">
+                                <span>Free</span>
+                                <span className="separator"></span>
+                                <span className="link">Upgrade License</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div className="row">
+                        <div className="profile-pic">
+                            <i className="fa fa-bullhorn"></i>
+                        </div>
+                        <div className="top-text-wrapper">
+                            <div className="line1">BioConnect</div>
+                            <div className="line2">
+                                <span>Free</span>
+                                <span className="separator"></span>
+                                <span className="link">Upgrade License</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div className="row">
+                        <div className="profile-pic">
+                            <i className="fa fa-empire"></i>
+                        </div>
+                        <div className="top-text-wrapper">
+                            <div className="line1">ReportForResults</div>
+                            <div className="line2">
+                                <span>Free</span>
+                                <span className="separator"></span>
+                                <span className="link">Upgrade License</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div className="row">
+                        <div className="profile-pic">
+                            <i className="fa fa-phone-square"></i>
+                        </div>
+                        <div className="top-text-wrapper">
+                            <div className="line1">CiscoInstantConnect</div>
+                            <div className="line2">
+                                <span>Free</span>
+                                <span className="separator"></span>
+                                <span className="link">Upgrade License</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div className="row">
+                        <div className="profile-pic">
+                            <i className="fa fa-chain-broken"></i>
+                        </div>
+                        <div className="top-text-wrapper">
+                            <div className="line1">MutualConnect</div>
+                            <div className="line2">
+                                <span>Free</span>
+                                <span className="separator"></span>
+                                <span className="link">Upgrade License</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div className="right wide">
+                    <div className="left">
+                        <div className="subtitle">App Settings</div>
+                        <div className="field">
+                            <div className="label">Send email</div>
+                            <Link to="about" className="button">Once an hour  <i className="fa fa-chevron-down"></i></Link>
+                        </div>
+                    </div>
+                    <div className="right">
+                        <div className="subtitle">Console</div>
+                        <div className="field">
+                            <Link to="about" className="button big">Go to Application</Link>
+                        </div>
+                    </div>
+                </div>
             </div>
         );
     },
     //Fifth Step
     function (component) {
         return (
-            <div className="tab-content">
-                Billing content
+                        <div className="tab-content">
+                <div className="left narrow">
+                    <div className="row">
+                        <div className="profile-pic">
+                            <i className="fa fa-puzzle-piece"></i>
+                        </div>
+                        <div className="top-text-wrapper">
+                            <div className="line1">Aphelia</div>
+                            <div className="line2">
+                                <span>Free</span>
+                                <span className="separator"></span>
+                                <span className="link">Upgrade License</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div className="row">
+                        <div className="profile-pic">
+                            <i className="fa fa-users"></i>
+                        </div>
+                        <div className="top-text-wrapper">
+                            <div className="line1">GroupVideoConnect</div>
+                            <div className="line2">
+                                <span>Free</span>
+                                <span className="separator"></span>
+                                <span className="link">Upgrade License</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div className="row">
+                        <div className="profile-pic">
+                            <i className="fa fa-bullhorn"></i>
+                        </div>
+                        <div className="top-text-wrapper">
+                            <div className="line1">BioConnect</div>
+                            <div className="line2">
+                                <span>Free</span>
+                                <span className="separator"></span>
+                                <span className="link">Upgrade License</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div className="row">
+                        <div className="profile-pic">
+                            <i className="fa fa-empire"></i>
+                        </div>
+                        <div className="top-text-wrapper">
+                            <div className="line1">ReportForResults</div>
+                            <div className="line2">
+                                <span>Free</span>
+                                <span className="separator"></span>
+                                <span className="link">Upgrade License</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div className="row">
+                        <div className="profile-pic">
+                            <i className="fa fa-phone-square"></i>
+                        </div>
+                        <div className="top-text-wrapper">
+                            <div className="line1">CiscoInstantConnect</div>
+                            <div className="line2">
+                                <span>Free</span>
+                                <span className="separator"></span>
+                                <span className="link">Upgrade License</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div className="row">
+                        <div className="profile-pic">
+                            <i className="fa fa-chain-broken"></i>
+                        </div>
+                        <div className="top-text-wrapper">
+                            <div className="line1">MutualConnect</div>
+                            <div className="line2">
+                                <span>Free</span>
+                                <span className="separator"></span>
+                                <span className="link">Upgrade License</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div className="right wide">
+                    <div className="billing">
+                        <div className="app-header"><i className="fa fa-chevron-down"></i> Aphelia</div>
+                        <div className="row">
+                            <span></span>
+                            <span>License</span>
+                            <span className="amount">$0.00</span>
+                        </div>
+                        <div className="row">
+                            <input type="text" className="textbox" />
+                            <span> Free License - $0/month per user</span>
+                            <span className="amount">$0.00</span>
+                        </div>
+                        <div className="row">
+                            <input type="text" className="textbox" />
+                            <span> Free License - $0/month per user</span>
+                            <span className="amount">$0.00</span>
+                        </div>
+
+                    </div>
+                </div>
             </div>
         );
     }
