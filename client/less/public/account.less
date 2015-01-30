@@ -1,0 +1,213 @@
+#account.page {
+    #content {
+        .mixin-content;
+        .title{
+            .mixin-section-title;
+        }
+        .subtitle{
+            .mixin-section-subtitle;
+            margin-top: 0px;
+        }
+        .tabs {
+            margin-bottom: 10px;
+            .tab {
+                background: none;
+                border:none;
+                padding: 0;
+                &:hover {
+                    border-bottom: 2px solid orange;
+                }
+                &.active{
+                    border-bottom: 2px solid orange;
+                }
+            }
+        }
+        .tab-content {
+            width: 80%;
+            display: inline-block;
+            .form {
+                margin-top: 10px;
+                margin-bottom: 20px;
+                overflow: hidden;
+                .field {
+                    clear: both;
+                    &.btn{
+                        text-align: left;
+                        margin-left: 63px;
+                    }
+                    .button{
+                        padding: 3px 18px;
+                        text-align: left;
+                        display: inline-block;
+                    }
+                    .label {
+                        font-size: 12px;
+                        color: #777777;
+                        display: inline-block;
+                        float: left;
+                        height: 35px;
+                        margin: 5px 0px;
+                        text-align: right;
+                        width: 30%;
+                    }
+
+                    p {
+                        text-align: left;
+                        margin: 5px 0px;
+                    }
+
+                    .textbox {
+                        display: block;
+                        width: 100%;
+                        height: 30px;
+                        padding: 6px 12px;
+                        font-size: 14px;
+                        color: #666666;
+                        background-color: white;
+                        border: 1px solid #dddddd;
+                        border-radius: 4px;
+                        box-sizing: border-box;
+                        display: inline-block;
+                        float: right;
+                        width: 60%;
+
+                        &:focus {
+                            border-width: 3px;
+                            padding: 4px 10px;
+                            border-color: @pale-green;
+                        }
+                    }
+                }
+            }
+        }
+        .separator {
+            .mixin-tab-separator;
+        }
+        .profile-pic {
+            float: left;
+            display: inline-block;
+            padding: 5px;
+            border: 1px solid #aaa;
+            letter-spacing: 0;
+            line-height: 0;
+            font-weight: none;
+            min-height: 40px;
+            min-width: 43px;
+            text-align: center;
+            i {
+                color: #999;
+                font-size: 3em;
+            }
+        }
+        .button {
+            .mixin-btn;
+            font-size: 10px;
+            width: auto;
+            padding: 5px 8px;
+            border-radius: 2px;
+            margin: 5px;
+            background: linear-gradient(to bottom, darken(#f0f0f0, 2%) 0%, darken(#d6d6d6, 2%) 100%);
+            &:hover {
+            background: linear-gradient(to bottom, lighten(#f0f0f0, 2%) 0%, lighten(#d6d6d6, 2%) 100%);
+            }
+            &:active {
+                background: linear-gradient(to bottom, darken(#f0f0f0, 2%) 0%, darken(#d6d6d6, 2%) 100%);
+            }
+            &.big {
+                padding: 15px;
+                margin: 0px!important;
+                background: linear-gradient(to bottom, darken(#f0f0f0, 2%) 0%, darken(#83FF80, 2%) 100%);
+                &:hover {
+                    background: linear-gradient(to bottom, darken(#f0f0f0, 2%) 0%, darken(#d6d6d6, 2%) 100%);
+                }
+            }
+        }
+        .row {
+            border-bottom: 1px solid #eaeaea;
+            width: 75%;
+            display:inline-block;
+            overflow: auto;
+            padding-bottom: 5px;
+            &.active {
+                background: #cc0;
+            }
+            .right {
+                text-align: right;
+            }
+            .top-text-wrapper {
+                font-size: 12px;
+                padding: 0px 8px;
+                text-align: left;
+                float: left;
+                .line2 {
+                    font-size: 10px;
+                    line-height: 0.8;
+                    letter-spacing: 0;
+                    .link, &.link {
+                        color: blue;
+                    }
+                    .separator {
+                        margin: 5px;
+                    }
+                }
+            }
+        }
+
+        .textbox {
+            .mixin-form-textbox;
+            width: 70%;
+            height: 30px;
+            color: #ccc;
+            &:focus {
+                .mixin-form-textbox-focused;
+            }
+        }
+        .left, .right {
+            padding:5px 10px;
+            width: 45%;
+        }
+        .left {
+            float: left;
+            &.wide {
+                width: 55%;
+            }
+            &.narrow {
+                background: none repeat scroll 0% 0% rgb(244, 241, 241);
+                width: 30%;
+                .row {
+                    width:100%;
+                }
+            }
+            .profile-pic {
+                i{
+                    font-size: 3em;
+                }
+            }
+        }
+        .right {
+            float: right;
+            text-align: left;
+            &.narrow {
+               width: 35%;
+            }
+            &.wide {
+                width: 65%;
+                padding-top: 0;
+            }
+            .subtitle {
+                text-align: left;
+            }
+            .label {
+                float: left;
+            }
+            .button {
+                margin: 0 10px;
+            }
+        }
+        .app-header {
+            color: rgb(105, 86, 234);
+            background: none repeat scroll 0% 0% rgb(244, 241, 241);
+            padding: 2px 10px;
+        }
+    }
+}
