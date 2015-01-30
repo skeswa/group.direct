@@ -78,7 +78,19 @@ var Login = React.createClass({
                         });
                         return;
                     } else if (res.status === 200) {
-                        // TODO
+                        // We have to declare that we're logged in now :)
+                        Actions.declareLoggedIn({
+                            id: res.body.Result.Id,
+                            firstName: res.body.Result.FirstName,
+                            lastName: res.body.Result.LastName,
+                            contactNumber: res.body.Result.ContactNumber,
+                            email: res.body.Result.Email,
+                            picture: res.body.Result.ProfilePicture,
+                            sessionToken: res.body.Result.SessionToken,
+                            userName: res.body.Result.UserName,
+                            companyId: res.body.Result.CompanyId
+                        });
+                        // Move to the account screen
                         component.transitionTo('account');
                     } else {
                         // Stop waiting

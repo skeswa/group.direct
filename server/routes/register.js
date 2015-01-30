@@ -3,11 +3,36 @@ var fs          = require('fs'),
     async       = require('async'),
     validator   = require('validator'),
     bcrypt      = require('bcrypt'),
+    request     = require('superagent'),
     passport    = require('passport');
 
 var log     = require('../log');
 
 exports.route = function(app) {
+    app.get('/activateuser', function(req, res) {
+        // Call the activation endpoint
+        var email = req.query.email,
+            code = req.query.code;
+        // Redirect back to the login page is the parameters were not included
+        if (!email || !code) {
+            return res.redirect('/login');
+        }
+        // Build the request
+        request
+            .post('http://54.200.112.228/GroupDirectServices/SignupService.svc/activateusersignuprequest')
+            .send({
+                    email: email,
+                    code: code
+            })
+            // Submit the request
+            .end(function (response) {
+                if (!response.ok) {
+                    log.error('We got an invalid response from the backend on activation:', response.body);
+                }
+                return res.redirect('/login');
+            });
+    });
+
     app.post('/api/register/user', function(req, res) {
         // If we're already logged in, send a 401
         if (req.user) {

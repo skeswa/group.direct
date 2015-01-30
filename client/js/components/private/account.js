@@ -3,7 +3,8 @@ var React           = require('react'),
     Router          = require('react-router');
 
 var Util            = require('../../util'),
-    Actions         = require('../../actions');
+    Actions         = require('../../actions'),
+    AppStateStore   = require('../../stores/appstate');
 
 var Header          = require('./header');
 
@@ -364,7 +365,10 @@ var Account = React.createClass({
     getInitialState: function() {
         return {
             step: 0,
-            value: 'Search contacts'
+            value: 'Search contacts',
+            userName: AppStateStore.getSessionData().userName,
+            firstName: AppStateStore.getSessionData().firstName,
+            lastName: AppStateStore.getSessionData().lastName
         };
     },
     componentDidMount: function() {

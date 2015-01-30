@@ -3,8 +3,7 @@ var React           = require('react'),
     Router          = require('react-router');
 
 var Actions         = require('../../actions'),
-    AuthService     = require('../../services/auth'),
-    UIStateStore    = require('../../stores/uistate');
+    AuthService     = require('../../services/auth');
 
 var RouteHandler    = Router.RouteHandler;
 
@@ -19,7 +18,8 @@ var PublicPageWrapper = React.createClass({
                 // TODO create mechanism to report network problems
                 console.log('Could not get session', err);
             } else {
-                Actions.declareSessionDataLoaded(res.body);
+                // TODO repair this mechanism
+                // Actions.declareSessionDataLoaded(res.body);
             }
         });
     },

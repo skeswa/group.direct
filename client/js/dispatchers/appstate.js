@@ -3,26 +3,14 @@ var assign      = require('object-assign'),
 
 var AppStateDispatcher = assign(new Dispatcher(), {
     events: {
-        HEADER_LOADED: 1,
-        SESSION_DATA_LOADED: 2,
-        SPLASH_LOADED: 3
+        LOGGED_IN: 1
     },
-    handleHeaderLoaded: function() {
+    handleLoggedIn: function(sessionData) {
         this.dispatch({
-            type: this.events.HEADER_LOADED
-        });
-    },
-    handleSessionDataLoaded: function(sessionData) {
-        this.dispatch({
-            type: this.events.SESSION_DATA_LOADED,
+            type: this.events.LOGGED_IN,
             sessionData: sessionData
         });
     },
-    handleSplashLoaded: function() {
-        this.dispatch({
-            type: this.events.SPLASH_LOADED
-        });
-    }
 });
 
 module.exports = AppStateDispatcher;
