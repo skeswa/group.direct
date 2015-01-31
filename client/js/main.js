@@ -19,9 +19,9 @@ var Public      = require('./components/public'),
     Terms       = require('./components/public/terms'),
     Privacy     = require('./components/public/privacy'),
     Services    = require('./components/public/services'),
-    Register    = require('./components/public/register');
-    Thankyou    = require('./components/public/thankyou');
-    Account     = require('./components/private/account')
+    Register    = require('./components/public/register'),
+    Thankyou    = require('./components/public/thankyou'),
+    Account     = require('./components/private/account');
 
 // Authentication-required page components
 // TODO make the internal pages a thing
