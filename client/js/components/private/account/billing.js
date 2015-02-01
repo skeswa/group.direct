@@ -138,19 +138,57 @@ var Billing = React.createClass({
                     <div className="billing">
                         <div className="app-header"><i className="fa fa-chevron-down"></i> Aphelia</div>
                         <div className="row">
-                            <span></span>
-                            <span>License</span>
-                            <span className="amount">$0.00</span>
+                            <div className="column1"></div>
+                            <span className="column2 caps">License</span>
                         </div>
                         <div className="row">
-                            <input type="text" className="textbox" />
-                            <span> Free License - $0/month per user</span>
-                            <span className="amount">$0.00</span>
+                            <div className="column1"><input value="3" type="text" className="textbox" /></div>
+                            <span className="column2">Free License - $0/month per user</span>
+                            <span className="column3">$0.00</span>
                         </div>
                         <div className="row">
-                            <input type="text" className="textbox" />
-                            <span> Free License - $0/month per user</span>
-                            <span className="amount">$0.00</span>
+                            <div className="column1"><input value="2" type="text" className="textbox" /></div>
+                            <span className="column2">Free License - $5/month per user</span>
+                            <span className="column3">$10.00</span>
+                        </div>
+                        <div className="row">
+                            <div className="column1"></div>
+                            <span className="column2 caps">Add ons</span>
+                        </div>
+                        <div className="row">
+                            <div className="column1"><input value="3" type="text" className="textbox" /></div>
+                            <span className="column2">PTT Chat on TalkGroups with Radio Interoperability - $10/month per user</span>
+                            <span className="column3">$30.00</span>
+                        </div>
+                        <div className="row empty"></div>
+                        <div className="app-header"><i className="fa fa-chevron-down"></i> Group Video Connect</div>
+                        <div className="row">
+                            <div className="column1"></div>
+                            <span className="column2 caps">License</span>
+                        </div>
+                        <div className="row">
+                            <div className="column1"><input value="3" type="text" className="textbox" /></div>
+                            <span className="column2">Free License - $0/month per user</span>
+                            <span className="column3">$0.00</span>
+                        </div>
+                        <div className="row">
+                            <div className="column1"><input value="2" type="text" className="textbox" /></div>
+                            <span className="column2">Free License - $5/month per user</span>
+                            <span className="column3">$10.00</span>
+                        </div>
+                        <div className="row">
+                            <div className="column1"></div>
+                            <span className="column2 caps">Add ons</span>
+                        </div>
+                        <div className="row">
+                            <div className="column1"><input value="3" type="text" className="textbox" /></div>
+                            <span className="column2">PTT Chat on TalkGroups with Radio Interoperability - $10/month per user</span>
+                            <span className="column3">$30.00</span>
+                        </div>
+                        <div className="row">
+                            <div className="column1"></div>
+                            <span className="column2 caps">Total</span>
+                            <span className="column3 big">$80.00</span>
                         </div>
 
                     </div>

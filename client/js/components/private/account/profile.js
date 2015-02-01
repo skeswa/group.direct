@@ -2,7 +2,8 @@
 var React           = require('react'),
     Router          = require('react-router');
 
-var Actions         = require('../../../actions');
+var Actions         = require('../../../actions'),
+    AppStateStore   = require('../../../stores/appstate');
 
 // React-router variables
 var Link            = Router.Link;
@@ -12,7 +13,8 @@ var Profile = React.createClass({
         return {
             //userName: AppStateStore.getSessionData().userName,
             //firstName: AppStateStore.getSessionData().firstName,
-            //lastName: AppStateStore.getSessionData().lastName
+            //lastName: AppStateStore.getSessionData().lastName,
+            //sk: AppStateStore.getSessionData().sessionToken
         };
     },
     componentDidMount: function() {
@@ -38,7 +40,7 @@ var Profile = React.createClass({
                         </div>
                         <div className="field">
                              <div className="label">City/State/Zip</div>
-                             <input type="text" className="textbox" value={this.state.userName} onChange={this.onUsernameChanged}/>
+                             <input type="text" className="textbox" value={this.state.sk} onChange={this.onUsernameChanged}/>
                         </div>
                         <div className="field">
                             <div className="label">Country</div>

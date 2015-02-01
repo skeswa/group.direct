@@ -43,7 +43,7 @@ var Splash = React.createClass({
         return (
             <div id="splash" className="page">
                 <div className="header">
-                    <div className="logo">GroupConnect</div>
+                    <Link to="splash" className="logo">GroupConnect <sup>BETA</sup></Link>
                     <div className="links">
                         <div className="link" data-reference="gptt">Verticals</div>
                         <div className="link" data-reference="apps">Apps</div>

@@ -55,9 +55,6 @@ var Account = React.createClass({
         return {
             step: 3,
             value: 'Search contacts',
-            //userName: AppStateStore.getSessionData().userName,
-            //firstName: AppStateStore.getSessionData().firstName,
-            //lastName: AppStateStore.getSessionData().lastName
         };
     },
     componentDidMount: function() {
@@ -95,7 +92,7 @@ var Account = React.createClass({
             <div id="account" className="page">
                 <Header />
                 <div id="content">
-                <div className="title">My Account <sup>BETA</sup></div>
+                <div className="title">My Account</div>
                 <div className="tabs">
                     <span onClick={this.onProfileClick} className={'tab'+(this.state.step === 0 ? ' active' : '')}>Profile</span>
                     <span className="separator"></span>

@@ -9,7 +9,7 @@ var Header = React.createClass({
     render: function() {
         return (
             <div className="header-private">
-                <div className="logo">GroupConnect</div>
+                <Link to="splash" className="logo">GroupConnect <sup>BETA</sup></Link>
                 <div className="nav">
                     <Link to="signin">Sign out</Link>
                     <div className="separator"></div>

@@ -15,10 +15,10 @@ var Notice = React.createClass({
         return (
             <div className="right wide">
                 <div className="notice">
-                    <div className="big">
+                    <div className="huge">
                         <i className="fa fa-frown-o"></i>
                     </div>
-                    Upgrade is not available in <b>My Account</b><sup>BETA</sup>
+                    Upgrade is not available in <b>Group.Connect</b><sup>BETA</sup>
                 </div>
             </div>
         );

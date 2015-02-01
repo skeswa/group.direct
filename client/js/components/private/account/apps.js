@@ -2,7 +2,8 @@
 var React           = require('react'),
     Router          = require('react-router');
 
-var Actions         = require('../../../actions');
+var Actions         = require('../../../actions'),
+    AppStateStore   = require('../../../stores/appstate');
 
 // React-router variables
 var Link            = Router.Link;
@@ -25,6 +26,7 @@ var steps = [
                     <div className="right">
                         <div className="subtitle">Console</div>
                         <div className="field">
+                            <Link to="about">App Information</Link><br /><br />
                             <Link to="about" className="button big">Go to Application</Link>
                         </div>
                     </div>
@@ -45,6 +47,7 @@ var steps = [
                     <div className="right">
                         <div className="subtitle">Console</div>
                         <div className="field">
+                            <Link to="about">App Information</Link><br /><br />
                             <Link to="about" className="button big">Go to Application</Link>
                         </div>
                     </div>
@@ -65,6 +68,7 @@ var steps = [
                     <div className="right">
                         <div className="subtitle">Console</div>
                         <div className="field">
+                            <Link to="about">App Information</Link><br /><br />
                             <Link to="about" className="button big">Go to Application</Link>
                         </div>
                     </div>
@@ -85,6 +89,7 @@ var steps = [
                     <div className="right">
                         <div className="subtitle">Console</div>
                         <div className="field">
+                            <Link to="about">App Information</Link><br /><br />
                             <Link to="about" className="button big">Go to Application</Link>
                         </div>
                     </div>
@@ -105,7 +110,8 @@ var steps = [
                     <div className="right">
                         <div className="subtitle">Console</div>
                         <div className="field">
-                            <Link to="about" className="button big">Go to Application</Link>
+                            <Link to="about">App Information</Link><br /><br />
+                            <a href='http://apps.group.direct?sk=NAAzAA==' className="button big">Go to Application</a>
                         </div>
                     </div>
                 </div>
@@ -122,7 +128,8 @@ var steps = [
 var Apps = React.createClass({
     getInitialState: function() {
         return {
-            step: 0
+            step: 0,
+            //sk: AppStateStore.getSessionData().sessionToken
         };
     },
     componentDidMount: function() {
