@@ -70,10 +70,10 @@ var Billing = React.createClass({
                     </div>
                     <div className={'row'+(this.state.step === 0 ? ' active' : '')}>
                         <div className="profile-pic" onClick={this.onApheliaClick} >
-                            <i className="fa fa-puzzle-piece"></i>
+                            <a href="#aphelia"><i className="fa fa-puzzle-piece"></i></a>
                         </div>
                         <div className="top-text-wrapper">
-                            <div className="line1" onClick={this.onApheliaClick}>Aphelia</div>
+                            <div className="line1" onClick={this.onApheliaClick}><a href="#aphelia">Aphelia</a></div>
                             <div className="line2">
                                 <span>Free</span>
                                 <span className="separator"></span>
@@ -83,10 +83,10 @@ var Billing = React.createClass({
                     </div>
                     <div className={'row'+(this.state.step === 1 ? ' active' : '')}>
                         <div className="profile-pic" onClick={this.onGvcClick} >
-                            <i className="fa fa-users"></i>
+                            <a href="#gvc"><i className="fa fa-users"></i></a>
                         </div>
                         <div className="top-text-wrapper">
-                            <div className="line1" onClick={this.onGvcClick}>GroupVideoConnect</div>
+                            <div className="line1" onClick={this.onGvcClick}><a href="#gvc">GroupVideoConnect</a></div>
                             <div className="line2">
                                 <span>Free</span>
                                 <span className="separator"></span>
@@ -96,10 +96,10 @@ var Billing = React.createClass({
                     </div>
                     <div className={'row'+(this.state.step === 2 ? ' active' : '')}>
                         <div className="profile-pic" onClick={this.onBiocomClick}>
-                            <i className="fa fa-shield"></i>
+                            <a href="#biocom"><i className="fa fa-shield"></i></a>
                         </div>
                         <div className="top-text-wrapper">
-                            <div className="line1" onClick={this.onBiocomClick}>BioConnect</div>
+                            <div className="line1" onClick={this.onBiocomClick}><a href="#biocom">BioConnect</a></div>
                             <div className="line2">
                                 <span>Free</span>
                                 <span className="separator"></span>
@@ -109,10 +109,10 @@ var Billing = React.createClass({
                     </div>
                     <div className={'row'+(this.state.step === 3 ? ' active' : '')}>
                         <div className="profile-pic" onClick={this.onR4rClick}>
-                            <i className="fa fa-empire"></i>
+                            <a href="#r4r"><i className="fa fa-empire"></i></a>
                         </div>
                         <div className="top-text-wrapper">
-                            <div className="line1" onClick={this.onR4rClick}>ReportForResults</div>
+                            <div className="line1" onClick={this.onR4rClick}><a href="#r4r">ReportForResults</a></div>
                             <div className="line2">
                                 <span>Free</span>
                                 <span className="separator"></span>
@@ -122,10 +122,10 @@ var Billing = React.createClass({
                     </div>
                     <div className={'row'+(this.state.step === 4 ? ' active' : '')}>
                         <div className="profile-pic" onClick={this.onCicClick}>
-                            <i className="fa fa-phone-square"></i>
+                            <a href="#cic"><i className="fa fa-phone-square"></i></a>
                         </div>
                         <div className="top-text-wrapper">
-                            <div className="line1" onClick={this.onCicClick}>CiscoInstantConnect</div>
+                            <div className="line1" onClick={this.onCicClick}><a href="#cic">CiscoInstantConnect</a></div>
                             <div className="line2">
                                 <span>Free</span>
                                 <span className="separator"></span>
@@ -136,59 +136,135 @@ var Billing = React.createClass({
                 </div>
                 <div className="right wide">
                     <div className="billing">
-                        <div className="app-header"><i className="fa fa-chevron-down"></i> Aphelia</div>
+                        <div className="app-header"><a name="aphelia"><i className="fa fa-chevron-down"></i> Aphelia</a></div>
                         <div className="row">
                             <div className="column1"></div>
                             <span className="column2 caps">License</span>
                         </div>
                         <div className="row">
-                            <div className="column1"><input value="3" type="text" className="textbox" /></div>
+                            <div className="column1"><input value="1" type="text" className="textbox" /></div>
                             <span className="column2">Free License - $0/month per user</span>
                             <span className="column3">$0.00</span>
                         </div>
                         <div className="row">
-                            <div className="column1"><input value="2" type="text" className="textbox" /></div>
+                            <div className="column1"><input value="0" type="text" className="textbox" /></div>
                             <span className="column2">Free License - $5/month per user</span>
-                            <span className="column3">$10.00</span>
+                            <span className="column3">$0.00</span>
                         </div>
                         <div className="row">
                             <div className="column1"></div>
                             <span className="column2 caps">Add ons</span>
                         </div>
                         <div className="row">
-                            <div className="column1"><input value="3" type="text" className="textbox" /></div>
+                            <div className="column1"><input value="0" type="text" className="textbox" /></div>
                             <span className="column2">PTT Chat on TalkGroups with Radio Interoperability - $10/month per user</span>
-                            <span className="column3">$30.00</span>
+                            <span className="column3">$0.00</span>
                         </div>
                         <div className="row empty"></div>
-                        <div className="app-header"><i className="fa fa-chevron-down"></i> Group Video Connect</div>
+
+                        <div className="app-header"><a name="gvc"><i className="fa fa-chevron-down"></i> Group Video Connec</a></div>
                         <div className="row">
                             <div className="column1"></div>
                             <span className="column2 caps">License</span>
                         </div>
                         <div className="row">
-                            <div className="column1"><input value="3" type="text" className="textbox" /></div>
+                            <div className="column1"><input value="1" type="text" className="textbox" /></div>
                             <span className="column2">Free License - $0/month per user</span>
                             <span className="column3">$0.00</span>
                         </div>
                         <div className="row">
-                            <div className="column1"><input value="2" type="text" className="textbox" /></div>
+                            <div className="column1"><input value="0" type="text" className="textbox" /></div>
                             <span className="column2">Free License - $5/month per user</span>
-                            <span className="column3">$10.00</span>
+                            <span className="column3">$0.00</span>
                         </div>
                         <div className="row">
                             <div className="column1"></div>
                             <span className="column2 caps">Add ons</span>
                         </div>
                         <div className="row">
-                            <div className="column1"><input value="3" type="text" className="textbox" /></div>
+                            <div className="column1"><input value="0" type="text" className="textbox" /></div>
                             <span className="column2">PTT Chat on TalkGroups with Radio Interoperability - $10/month per user</span>
-                            <span className="column3">$30.00</span>
+                            <span className="column3">$0.00</span>
+                        </div>
+
+                        <div className="app-header"><a name="biocom"><i className="fa fa-chevron-down"></i> Bio Connect</a></div>
+                        <div className="row">
+                            <div className="column1"></div>
+                            <span className="column2 caps">License</span>
+                        </div>
+                        <div className="row">
+                            <div className="column1"><input value="1" type="text" className="textbox" /></div>
+                            <span className="column2">Free License - $0/month per user</span>
+                            <span className="column3">$0.00</span>
+                        </div>
+                        <div className="row">
+                            <div className="column1"><input value="0" type="text" className="textbox" /></div>
+                            <span className="column2">Free License - $5/month per user</span>
+                            <span className="column3">$0.00</span>
+                        </div>
+                        <div className="row">
+                            <div className="column1"></div>
+                            <span className="column2 caps">Add ons</span>
+                        </div>
+                        <div className="row">
+                            <div className="column1"><input value="0" type="text" className="textbox" /></div>
+                            <span className="column2">PTT Chat on TalkGroups with Radio Interoperability - $10/month per user</span>
+                            <span className="column3">$0.00</span>
+                        </div>
+
+                        <div className="app-header"><a name="r4r"><i className="fa fa-chevron-down"></i> Reports for Results</a></div>
+                        <div className="row">
+                            <div className="column1"></div>
+                            <span className="column2 caps">License</span>
+                        </div>
+                        <div className="row">
+                            <div className="column1"><input value="1" type="text" className="textbox" /></div>
+                            <span className="column2">Free License - $0/month per user</span>
+                            <span className="column3">$0.00</span>
+                        </div>
+                        <div className="row">
+                            <div className="column1"><input value="0" type="text" className="textbox" /></div>
+                            <span className="column2">Free License - $5/month per user</span>
+                            <span className="column3">$0.00</span>
+                        </div>
+                        <div className="row">
+                            <div className="column1"></div>
+                            <span className="column2 caps">Add ons</span>
+                        </div>
+                        <div className="row">
+                            <div className="column1"><input value="0" type="text" className="textbox" /></div>
+                            <span className="column2">PTT Chat on TalkGroups with Radio Interoperability - $10/month per user</span>
+                            <span className="column3">$0.00</span>
+                        </div>
+
+                        <div className="app-header"><a name="cic"><i className="fa fa-chevron-down"></i> Cisco Instant Connect</a></div>
+                        <div className="row">
+                            <div className="column1"></div>
+                            <span className="column2 caps">License</span>
+                        </div>
+                        <div className="row">
+                            <div className="column1"><input value="1" type="text" className="textbox" /></div>
+                            <span className="column2">Free License - $0/month per user</span>
+                            <span className="column3">$0.00</span>
+                        </div>
+                        <div className="row">
+                            <div className="column1"><input value="0" type="text" className="textbox" /></div>
+                            <span className="column2">Free License - $5/month per user</span>
+                            <span className="column3">$0.00</span>
+                        </div>
+                        <div className="row">
+                            <div className="column1"></div>
+                            <span className="column2 caps">Add ons</span>
+                        </div>
+                        <div className="row">
+                            <div className="column1"><input value="0" type="text" className="textbox" /></div>
+                            <span className="column2">PTT Chat on TalkGroups with Radio Interoperability - $10/month per user</span>
+                            <span className="column3">$0.00</span>
                         </div>
                         <div className="row">
                             <div className="column1"></div>
                             <span className="column2 caps">Total</span>
-                            <span className="column3 big">$80.00</span>
+                            <span className="column3 big">$0.00</span>
                         </div>
 
                     </div>

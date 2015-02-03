@@ -24,10 +24,12 @@ var steps = [
                         </div>
                     </div>
                     <div className="right">
-                        <div className="subtitle">Console</div>
                         <div className="field">
-                            <Link to="about">App Information</Link><br /><br />
-                            <Link to="about" className="button big">Go to Application</Link>
+                            <a href='http://apps.group.direct?sk=NAAzAA==' className="button big">Application Console</a>
+                            <div><Link to="about">Application Description</Link></div>
+                            <div className="get-the-app">Get the app</div>
+                            <a className="get-for-ios" href="#"/>
+                            <a className="get-for-android" href="#"/>
                         </div>
                     </div>
                 </div>
@@ -45,10 +47,12 @@ var steps = [
                         </div>
                     </div>
                     <div className="right">
-                        <div className="subtitle">Console</div>
                         <div className="field">
-                            <Link to="about">App Information</Link><br /><br />
-                            <Link to="about" className="button big">Go to Application</Link>
+                            <a href='http://apps.group.direct?sk=NAAzAA==' className="button big">Application Console</a>
+                            <div><Link to="about">Application Description</Link></div>
+                            <div className="get-the-app">Get the app</div>
+                            <a className="get-for-ios" href="#"/>
+                            <a className="get-for-android" href="#"/>
                         </div>
                     </div>
                 </div>
@@ -66,10 +70,12 @@ var steps = [
                         </div>
                     </div>
                     <div className="right">
-                        <div className="subtitle">Console</div>
                         <div className="field">
-                            <Link to="about">App Information</Link><br /><br />
-                            <Link to="about" className="button big">Go to Application</Link>
+                            <a href='http://apps.group.direct?sk=NAAzAA==' className="button big">Application Console</a>
+                            <div><Link to="about">Application Description</Link></div>
+                            <div className="get-the-app">Get the app</div>
+                            <a className="get-for-ios" href="#"/>
+                            <a className="get-for-android" href="#"/>
                         </div>
                     </div>
                 </div>
@@ -87,10 +93,12 @@ var steps = [
                         </div>
                     </div>
                     <div className="right">
-                        <div className="subtitle">Console</div>
                         <div className="field">
-                            <Link to="about">App Information</Link><br /><br />
-                            <Link to="about" className="button big">Go to Application</Link>
+                            <a href='http://apps.group.direct?sk=NAAzAA==' className="button big">Application Console</a>
+                            <div><Link to="about">Application Description</Link></div>
+                            <div className="get-the-app">Get the app</div>
+                            <a className="get-for-ios" href="#"/>
+                            <a className="get-for-android" href="#"/>
                         </div>
                     </div>
                 </div>
@@ -108,10 +116,12 @@ var steps = [
                         </div>
                     </div>
                     <div className="right">
-                        <div className="subtitle">Console</div>
                         <div className="field">
-                            <Link to="about">App Information</Link><br /><br />
-                            <a href='http://apps.group.direct?sk=NAAzAA==' className="button big">Go to Application</a>
+                            <a href='http://apps.group.direct?sk=NAAzAA==' className="button big">Application Console</a>
+                            <div><Link to="about">Application Description</Link></div>
+                            <div className="get-the-app">Get the app</div>
+                            <a className="get-for-ios" href="#"/>
+                            <a className="get-for-android" href="#"/>
                         </div>
                     </div>
                 </div>

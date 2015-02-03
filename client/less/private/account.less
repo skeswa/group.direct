@@ -135,8 +135,9 @@
                 background: linear-gradient(to bottom, darken(#f0f0f0, 2%) 0%, darken(#d6d6d6, 2%) 100%);
             }
             &.big {
-                padding: 15px;
-                margin: 0px!important;
+                margin: 0 0 10px 0!important;
+                display: block;
+                width: 50%;
                 background: linear-gradient(to bottom, lighten(#f0f0f0, 2%) 0%, darken(#FCDA8B, 2%) 100%);
                 &:hover {
                     background: linear-gradient(to bottom, darken(#f0f0f0, 2%) 0%, lighten(#FFBC1B, 2%) 100%);
@@ -162,6 +163,9 @@
                 float: left;
                 .line1{
                     cursor: pointer;
+                    a {
+                        color:#4A4A4A!important;
+                    }
                 }
                 .line2 {
                     font-size: 10px;
@@ -201,10 +205,14 @@
             }
             &.narrow {
                 background: none repeat scroll 0% 0% rgb(244, 241, 241);
-                width: 23%;
+                position: fixed;
+                width: 18%;
+                top: 24%;
+                border-radius: 4px;
                 .row {
                     padding: 5px;
                     border-radius: 4px;
+                    margin-top: -6px;
                     &.active {
                         background: none repeat scroll 0% 0% #fff;
                     }
@@ -229,6 +237,13 @@
             }
             .button {
                 margin: 0 10px;
+            }
+            .field {
+                margin-top: 5px;
+                font-size: 12px;
+                a {
+
+                }
             }
         }
         .app-header {
@@ -267,5 +282,25 @@
                 }
             }
         }
+    }
+    .get-the-app {
+        .mixin-section-subtitle;
+        letter-spacing: 1px;
+        text-align: left;
+        margin:5px 0 0 0;
+        font-size: 10px;
+    }
+    .get-for-ios {
+        display: inline-block;
+        width: 100px;
+        height: 30px;
+        background-repeat: no-repeat;
+        background-image: url(/static/img/ios-app-store.svg);
+        background-size: contain;
+        margin-right: 10px;
+    }
+    .get-for-android {
+        .get-for-ios;
+        background-image: url(/static/img/android-play-store.png);
     }
 }
