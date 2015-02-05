@@ -113,9 +113,9 @@ var Connections = React.createClass({
                             step: 2
                         });
                     }
-                    console.log('We got a response', JSON.stringify(res.body));
+                    console.log('Response for getUserByEmail', JSON.stringify(res.body));
                 } else {
-                    console.log('We got an error', res.text);
+                    console.log('Error at getUserByEmail', res.text);
                 }
             });
     },
@@ -136,9 +136,9 @@ var Connections = React.createClass({
                         inviteButtonValue: 'Invitation sent',
                         inviteButtonStyle: 'button disabled'
                     });
-                    console.log('We got a response', JSON.stringify(res.body));
+                    console.log('Response for addContactRequest', JSON.stringify(res.body));
                 } else {
-                    console.log('We got an error', res.text);
+                    console.log('Error at addContactRequest', res.text);
                 }
             });
     },
@@ -152,9 +152,9 @@ var Connections = React.createClass({
             function(res) {
                 if (res.ok) {
                     if (!res.body.Result)
-                        console.log('We got a response', JSON.stringify(res.body));
+                        console.log('Response for getUserContactsByUserId', JSON.stringify(res.body));
                 } else {
-                    console.log('We got an error', res.text);
+                    console.log('Error at getUserContactsByUserId', res.text);
                 }
             });
     },
