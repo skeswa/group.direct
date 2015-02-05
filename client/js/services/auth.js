@@ -14,6 +14,14 @@ var AuthService = {
                 password: pass
             })
             .end(callback);
+    },
+    logout: function(userId, callback) {
+        request
+            .post('/GroupDirectServices/SignupService.svc/logout')
+            .send({
+                userId: userId
+            })
+            .end(callback);
     }
 };
 

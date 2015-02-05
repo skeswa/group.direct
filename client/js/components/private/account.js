@@ -3,8 +3,7 @@ var React           = require('react'),
     Router          = require('react-router');
 
 var Util            = require('../../util'),
-    Actions         = require('../../actions'),
-    AppStateStore   = require('../../stores/appstate');
+    Actions         = require('../../actions');
 
 var Header          = require('./header'),
     //Inlude the tabs

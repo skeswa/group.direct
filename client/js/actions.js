@@ -9,5 +9,9 @@ module.exports = {
     // Auth Actions
     declareLoggedIn: function(sessionData) {
         AppStateDispatcher.handleLoggedIn(sessionData);
+    },
+    // Connection Actions
+    declareContactFound: function(contactDetails) {
+        AppStateDispatcher.handleContactFound(contactDetails);
     }
 };

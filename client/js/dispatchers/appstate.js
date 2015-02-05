@@ -10,7 +10,7 @@ var AppStateDispatcher = assign(new Dispatcher(), {
             type: this.events.LOGGED_IN,
             sessionData: sessionData
         });
-    },
+    }
 });
 
 module.exports = AppStateDispatcher;

@@ -11,10 +11,10 @@ var Link            = Router.Link;
 var Profile = React.createClass({
     getInitialState: function() {
         return {
-            //userName: AppStateStore.getSessionData().userName,
-            //firstName: AppStateStore.getSessionData().firstName,
-            //lastName: AppStateStore.getSessionData().lastName,
-            //sk: AppStateStore.getSessionData().sessionToken
+            userName: AppStateStore.getSessionData().userName,
+            firstName: AppStateStore.getSessionData().firstName,
+            lastName: AppStateStore.getSessionData().lastName,
+            sk: AppStateStore.getSessionData().sessionToken
         };
     },
     componentDidMount: function() {
