@@ -29,7 +29,7 @@ exports.route = function(app) {
                 if (!response.ok) {
                     log.error('We got an invalid response from the backend on activation:', response.body);
                 }
-                return res.redirect('/login');
+                return res.redirect('/signin');
             });
     });
 
