@@ -1,11 +1,15 @@
 /** @jsx React.DOM */
-var React       = require('react');
+var React       = require('react'),
+    Router          = require('react-router');
 
 var AuthService = require('../../services/auth'),
     Actions     = require('../../actions'),
     Navigation  = require('react-router').Navigation,
 
     Header      = require('./header');
+
+// React-router variables
+var Link            = Router.Link;
 
 var Login = React.createClass({
     mixins: [Navigation],
@@ -127,7 +131,7 @@ var Login = React.createClass({
                             <div className={'flash' + (this.state.toastMessage ? ' visible' : '')}>
                                 {this.state.toastMessage}
                             </div>
-                            <p>If you have forgotten your password, click <span className="link">this link</span>.</p>
+                            <p>If you have forgotten your password, click <Link to="forgot" className="link">this link</Link>.</p>
                             <div className="divider"/>
                             <button id="login-button" onClick={this.onSubmitClicked} disabled={this.state.waiting}>Log In</button>
                         </div>

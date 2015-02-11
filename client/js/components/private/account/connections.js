@@ -14,37 +14,30 @@ var Link            = Router.Link;
 var steps = [
     //default state
     function (component) {
+        var contactElements = [];
+        for (var i=0; i<component.state.contacts.length; i++) {
+            var currentContact = component.state.contacts[i];
+            contactElements.push(
+                <div className="row">
+                    <div className="left wide">
+                        <div className="profile-pic">
+                            <i className="fa fa-user"></i>
+                        </div>
+                        <div className="top-text-wrapper">
+                            <div className="line1">{currentContact.FirstName + " " + currentContact.LastName}</div>
+                            <div className="line2">{currentContact.Email}</div>
+                        </div>
+                    </div>
+                    <div className="right narrow">
+                        <Link to="about" className="button">{currentContact.Status ? 'Invite' : 'Respond to Add Request'}</Link>
+                    </div>
+                </div>
+            );
+        }
+
         return (
             <div>
-                <div className="row">
-                    <div className="left wide">
-                        <div className="profile-pic">
-                            <i className="fa fa-user"></i>
-                        </div>
-                        <div className="top-text-wrapper">
-                            <div className="line1">User Name</div>
-                            <div className="line2">username@email.com</div>
-                        </div>
-                    </div>
-                    <div className="right narrow">
-                        <Link to="about" className="button">Invite</Link>
-                    </div>
-                </div>
-                <div className="row">
-                    <div className="left wide">
-                        <div className="profile-pic">
-                            <i className="fa fa-user"></i>
-                        </div>
-                        <div className="top-text-wrapper">
-                            <div className="line1">User Name</div>
-                            <div className="line2">username@email.com</div>
-                        </div>
-                    </div>
-                    <div className="right narrow">
-                        <Link to="about" className="button">Member</Link>
-                        <Link to="about" className="button">Remove</Link>
-                    </div>
-                </div>
+                {contactElements}
             </div>
         );
     },
@@ -84,7 +77,8 @@ var Connections = React.createClass({
             inviteButtonValue: 'Invite',
             inviteButtonStyle: 'button',
             userId: AppStateStore.getSessionData().id,
-            sk: AppStateStore.getSessionData().sessionToken
+            sk: AppStateStore.getSessionData().sessionToken,
+            contacts: []
         };
     },
     onSearch: function(event) {
@@ -143,16 +137,23 @@ var Connections = React.createClass({
             });
     },
     componentDidMount: function() {
-        var userId          = this.state.userId;
+        var userId          = this.state.userId,
             sessionToken    = this.state.sessionToken;
+
+        var component       = this;
+
         Actions.changePageTitle('Connections');
         ContactService.getUserContactsByUserId(
             userId,
             sessionToken,
             function(res) {
                 if (res.ok) {
-                    if (!res.body.Result)
+                    if (res.body.ResultSet) {
+                        component.setState({
+                            contacts: res.body.ResultSet
+                        });
                         console.log('Response for getUserContactsByUserId', JSON.stringify(res.body));
+                    }
                 } else {
                     console.log('Error at getUserContactsByUserId', res.text);
                 }

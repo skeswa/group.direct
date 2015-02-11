@@ -22,6 +22,14 @@ var AuthService = {
                 userId: userId
             })
             .end(callback);
+    },
+    requestResetPassword: function(email, callback){
+        request
+            .post('/GroupDirectServices/ApheliaIUserService.svc/RequestResetPassword')
+            .send({
+                email: email
+            })
+            .end(callback);
     }
 };
 

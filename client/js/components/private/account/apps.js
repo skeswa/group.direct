@@ -25,7 +25,6 @@ var steps = [
                     </div>
                     <div className="right">
                         <div className="field">
-                            <a href='http://apps.group.direct?sk=NAAzAA==' className="button big">Application Console</a>
                             <div><Link to="about">Application Description</Link></div>
                             <div className="get-the-app">Get the app</div>
                             <a className="get-for-ios" href="#"/>
@@ -48,7 +47,6 @@ var steps = [
                     </div>
                     <div className="right">
                         <div className="field">
-                            <a href='http://apps.group.direct?sk=NAAzAA==' className="button big">Application Console</a>
                             <div><Link to="about">Application Description</Link></div>
                             <div className="get-the-app">Get the app</div>
                             <a className="get-for-ios" href="#"/>
@@ -71,7 +69,6 @@ var steps = [
                     </div>
                     <div className="right">
                         <div className="field">
-                            <a href='http://apps.group.direct?sk=NAAzAA==' className="button big">Application Console</a>
                             <div><Link to="about">Application Description</Link></div>
                             <div className="get-the-app">Get the app</div>
                             <a className="get-for-ios" href="#"/>
@@ -94,7 +91,6 @@ var steps = [
                     </div>
                     <div className="right">
                         <div className="field">
-                            <a href='http://apps.group.direct?sk=NAAzAA==' className="button big">Application Console</a>
                             <div><Link to="about">Application Description</Link></div>
                             <div className="get-the-app">Get the app</div>
                             <a className="get-for-ios" href="#"/>
@@ -117,7 +113,6 @@ var steps = [
                     </div>
                     <div className="right">
                         <div className="field">
-                            <a href='http://apps.group.direct?sk=NAAzAA==' className="button big">Application Console</a>
                             <div><Link to="about">Application Description</Link></div>
                             <div className="get-the-app">Get the app</div>
                             <a className="get-for-ios" href="#"/>

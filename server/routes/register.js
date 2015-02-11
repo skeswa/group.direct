@@ -33,6 +33,19 @@ exports.route = function(app) {
             });
     });
 
+    app.get('/reset', function(req, res) {
+        // Call the activation endpoint
+        var userId = req.query.userId,
+            token = req.query.token;
+        // Redirect back to the login page is the parameters were not included
+        if (!userId || !token) {
+            return res.redirect('/signin');
+        } else {
+            return res.redirect('/confirmpassword');
+        }
+
+    });
+
     app.post('/api/register/user', function(req, res) {
         // If we're already logged in, send a 401
         if (req.user) {

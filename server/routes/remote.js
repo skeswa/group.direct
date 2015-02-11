@@ -3,6 +3,8 @@ var fs          = require('fs'),
     async       = require('async'),
     request     = require('superagent');
 
+var userContactsByIdData = require('../data/userContactsById.json');
+
 var log     = require('../log');
 
 var REMOTE_SERVER_URL = 'http://54.200.112.228';
@@ -24,6 +26,9 @@ exports.route = function(app) {
         });
     };
 
+    app.post('/GroupDirectServices/ContactService.svc/GetUserContactsByUserId', function(req, res){
+        res.status(200).json(userContactsByIdData);
+    });
     app.get('/GroupDirectServices/*', serviceProxy);
     app.post('/GroupDirectServices/*', serviceProxy);
 };

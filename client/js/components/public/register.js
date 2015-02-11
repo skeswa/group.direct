@@ -257,43 +257,42 @@ var Register = React.createClass({
                 if (res.ok) {
                     // This means everything went just fine
                     console.log('We got a response', JSON.stringify(res.body));
-                    activationCode = res.body.Result.ActivationCode;
-                        SignupService.activateUserSignupRequest(
-                        email,
-                        activationCode,
-                        function(res) {
-                            if (res.ok) {
-                                // This means everything went just fine
-                                console.log('Activation', JSON.stringify(res.body));
-                            } else {
-                                // component.setState({
-                                //     waiting: false,
-                                //     password: '',
-                                //     toastMessage:
-                                //         'There was a problem connecting to the server. ' +
-                                //         'Check your connection status and try again.'
-                                // });
-                                console.log('We got an error', res.text);
-                            }
+                    //Go to next step
+                    var step = this.state.step;
+                    if (step < steps.length - 1) {
+                        this.setState({
+                            step: (step + 1)
                         });
+                    }
+                    // activationCode = res.body.Result.ActivationCode;
+                    //     SignupService.activateUserSignupRequest(
+                    //     email,
+                    //     activationCode,
+                    //     function(res) {
+                    //         if (res.ok) {
+                    //             // This means everything went just fine
+                    //             console.log('Activation', JSON.stringify(res.body));
+                    //         } else {
+                    //             // component.setState({
+                    //             //     waiting: false,
+                    //             //     password: '',
+                    //             //     toastMessage:
+                    //             //         'There was a problem connecting to the server. ' +
+                    //             //         'Check your connection status and try again.'
+                    //             // });
+                    //             console.log('We got an error', res.text);
+                    //         }
+                    //     });
                 } else {
-                    // component.setState({
-                    //     waiting: false,
-                    //     password: '',
-                    //     toastMessage:
-                    //         'There was a problem connecting to the server. ' +
-                    //         'Check your connection status and try again.'
-                    // });
+                    component.setState({
+                        toastMessage:
+                            'There was a problem connecting to the server. ' +
+                            'Check your connection status and try again.'
+                    });
+                    return;
                     console.log('We got an error', res.text);
                 }
             });
-        //Go to next step
-        var step = this.state.step;
-        if (step < steps.length - 1) {
-            this.setState({
-                step: (step + 1)
-            });
-        }
     },
     onBack: function() {
         var step = this.state.step;

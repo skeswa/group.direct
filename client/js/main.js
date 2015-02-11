@@ -20,7 +20,8 @@ var Public      = require('./components/public'),
     Privacy     = require('./components/public/privacy'),
     Services    = require('./components/public/services'),
     Register    = require('./components/public/register'),
-    Thankyou    = require('./components/public/thankyou'),
+    Forgot      = require('./components/public/forgot'),
+    ConfirmPassword = require('./components/public/confirmpassword')
     Account     = require('./components/private/account');
 
 // Authentication-required page components
@@ -37,8 +38,9 @@ var sitemap = (
             <Route name="terms" handler={Terms}/>
             <Route name="privacy" handler={Privacy}/>
             <Route name="services" handler={Services}/>
-            <Route name="thankyou" handler={Thankyou}/>
+            <Route name="forgot" handler={Forgot}/>
             <Route name="account" handler={Account}/>
+            <Route name="confirmpassword" handler={ConfirmPassword}/>
             <DefaultRoute name="splash" handler={Splash}/>
         </Route>
         <NotFoundRoute name="404" handler={NotFound}/>

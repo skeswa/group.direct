@@ -2,10 +2,19 @@
 var React           = require('react'),
     Router          = require('react-router');
 
+var AppStateStore   = require('../../stores/appstate')
+
 // React-router variables
 var Link            = Router.Link;
 
 var Header = React.createClass({
+    getInitialState: function() {
+        return {
+            firstName: AppStateStore.getSessionData().firstName,
+            lastName: AppStateStore.getSessionData().lastName,
+            sk: AppStateStore.getSessionData().sessionToken
+        };
+    },
     render: function() {
         return (
             <div className="header-private">
@@ -13,7 +22,9 @@ var Header = React.createClass({
                 <div className="nav">
                     <Link to="signin">Sign out</Link>
                     <div className="separator"></div>
-                    <Link to="about">User Name</Link>
+                    <a href={"http://apps.group.direct?sk=" + this.state.sk}>Application Console</a>
+                    <div className="separator"></div>
+                    <a href="#">{this.state.firstName + " " + this.state.lastName}</a>
                 </div>
             </div>
         );
