@@ -244,6 +244,7 @@ var Register = React.createClass({
         //     toastMessage: 'This is a waiting Toast message.'
         // });
         // Send the signup request
+        var component = this;
         SignupService.userSignupRequest(
             firstName,
             lastName,
@@ -257,11 +258,17 @@ var Register = React.createClass({
                 if (res.ok) {
                     // This means everything went just fine
                     console.log('We got a response', JSON.stringify(res.body));
-                    //Go to next step
-                    var step = this.state.step;
-                    if (step < steps.length - 1) {
-                        this.setState({
-                            step: (step + 1)
+                    if (res.body.Result) {
+                        //Go to next step
+                        var step = component.state.step;
+                        if (step < steps.length - 1) {
+                            component.setState({
+                                step: (step + 1)
+                            });
+                        }
+                    } else {
+                        component.setState({
+                            toastMessage: res.body.InfoMessages[0].Text
                         });
                     }
                     // activationCode = res.body.Result.ActivationCode;
