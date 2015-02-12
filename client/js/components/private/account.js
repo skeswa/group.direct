@@ -15,45 +15,15 @@ var Header          = require('./header'),
 
 // React-router variables
 var Link            = Router.Link;
-
-var steps = [
-    //First Step: Profile
-    function (component) {
-        return (
-            <Profile />
-        );
-    },
-    // Second Step: Connections
-    function(component) {
-        return(
-            <Connections />
-        );
-    },
-    //Third Step: Settings
-    function (component) {
-        return (
-            <Settings />
-        );
-    },
-    //Fourth Step: Apps
-    function (component) {
-        return (
-            <Apps />
-        );
-    },
-    //Fifth Step
-    function (component) {
-        return (
-            <Billing />
-        );
-    }
-];
+var RouteHandler    = Router.RouteHandler;
 
 var Account = React.createClass({
+    mixins: [
+        Router.State
+    ],
     getInitialState: function() {
         return {
-            step: 3,
-            value: 'Search contacts',
+            value: 'Search contacts'
         };
     },
     componentDidMount: function() {
@@ -61,49 +31,27 @@ var Account = React.createClass({
     },
     componentWillUnmount: function() {
     },
-    onProfileClick: function() {
-        this.setState({
-            step: 0
-        });
-    },
-    onConnectionsClick: function() {
-        this.setState({
-            step: 1
-        });
-    },
-    onSettingsClick: function() {
-        this.setState({
-            step: 2
-        });
-    },
-    onAppsClick: function() {
-        this.setState({
-            step: 3
-        });
-    },
-    onBillingClick: function() {
-        this.setState({
-            step: 4
-        });
-    },
     render: function() {
+        // Get the route name
+        var routeName = this.getRoutes().reverse()[0].name;
+
         return (
             <div id="account" className="page">
                 <Header />
                 <div id="content">
                 <div className="title">My Account</div>
                 <div className="tabs">
-                    <span onClick={this.onProfileClick} className={'tab'+(this.state.step === 0 ? ' active' : '')}>Profile</span>
+                    <Link to="profile">Profile</Link>
                     <span className="separator"></span>
-                    <span onClick={this.onConnectionsClick} className={'tab'+(this.state.step === 1 ? ' active' : '')}>Connections</span>
+                    <Link to="connections">Connections</Link>
                     <span className="separator"></span>
-                    <span className={'tab'+(this.state.step === 2 ? ' active' : '')} onClick={this.onSettingsClick}>Settings</span>
+                    <Link to="settings">Settings</Link>
                     <span className="separator"></span>
-                    <span className={'tab'+(this.state.step === 3 ? ' active' : '')} onClick={this.onAppsClick}>Apps</span>
+                    <Link to="apps">Apps</Link>
                     <span className="separator"></span>
-                    <span className={'tab'+(this.state.step === 4 ? ' active' : '')} onClick={this.onBillingClick}>Billing</span>
+                    <Link to="billing">Billing</Link>
                 </div>
-                    {(steps[this.state.step])(this)}
+                    <RouteHandler component="div" key={routeName}/>
                 </div>
             </div>
         );

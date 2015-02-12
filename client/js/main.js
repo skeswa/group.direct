@@ -22,7 +22,13 @@ var Public      = require('./components/public'),
     Register    = require('./components/public/register'),
     Forgot      = require('./components/public/forgot'),
     ConfirmPassword = require('./components/public/confirmpassword')
-    Account     = require('./components/private/account');
+
+    Account         = require('./components/private/account'),
+    Profile         = require('./components/private/account/profile'),
+    Connections     = require('./components/private/account/connections'),
+    Settings        = require('./components/private/account/settings'),
+    Apps            = require('./components/private/account/apps'),
+    Billing         = require('./components/private/account/billing');
 
 // Authentication-required page components
 // TODO make the internal pages a thing
@@ -39,7 +45,13 @@ var sitemap = (
             <Route name="privacy" handler={Privacy}/>
             <Route name="services" handler={Services}/>
             <Route name="forgot" handler={Forgot}/>
-            <Route name="account" handler={Account}/>
+            <Route name="account" handler={Account}>
+                <Route name="profile" handler={Profile}/>
+                <Route name="connections" handler={Connections}/>
+                <Route name="settings" handler={Settings}/>
+                <Route name="apps" handler={Apps}/>
+                <Route name="billing" handler={Billing}/>
+            </Route>
             <Route name="confirmpassword" handler={ConfirmPassword}/>
             <DefaultRoute name="splash" handler={Splash}/>
         </Route>

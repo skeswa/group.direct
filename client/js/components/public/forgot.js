@@ -27,7 +27,7 @@ var steps = [
                     {component.state.toastMessage}
                 </div>
                 <div className="divider"/>
-                <button type="submit" id="login-button" onClick={component.onSubmitClicked} disabled={component.state.waiting}>Request new password</button>
+                <button type="submit" id="request-password-button" onClick={component.onSubmitClicked} disabled={component.state.waiting}>Request new password</button>
             </div>
         );
     },

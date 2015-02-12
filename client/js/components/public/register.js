@@ -162,7 +162,6 @@ var Register = React.createClass({
             password: event.target.value
         });
     },
-    //TODO: Review
     onConfirmPasswordChanged: function(event){
         this.setState({
             confirmPassword: event.target.value

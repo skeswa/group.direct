@@ -18,13 +18,19 @@ var Header = React.createClass({
     render: function() {
         return (
             <div className="header-private">
-                <Link to="splash" className="logo">GroupConnect <sup>BETA</sup></Link>
+                <Link to="splash" className="logo">
+                        <div className="profile-pic" onClick={this.onBiocomClick}>
+                            <i className="fa fa-users"></i>
+                        </div>
+                        <div className="logo-text">
+                            GroupConnect <sup>BETA</sup>
+                        </div>
+                </Link>
                 <div className="nav">
-                    <Link to="signin">Sign out</Link>
+                    <Link to="signin">Log out</Link>
                     <div className="separator"></div>
-                    <a href={"http://apps.group.direct?sk=" + this.state.sk}>Application Console</a>
-                    <div className="separator"></div>
-                    <a href="#">{this.state.firstName + " " + this.state.lastName}</a>
+                    <a target="_blank" href={"http://apps.group.direct?sk=" + this.state.sk}>Application Console</a>
+                    <Link to="profile">{this.state.firstName + " " + this.state.lastName + " "} :</Link>
                 </div>
             </div>
         );

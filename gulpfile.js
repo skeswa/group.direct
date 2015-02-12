@@ -32,12 +32,14 @@ var constants = {
 
 var helpers = {
     rebundle: function(bundler) {
-        gutil.log('Re-bundling client js');
         bundler
             .bundle()
             .pipe(plumber())
             .pipe(source(path.join(__dirname, 'main.js')))
-            .pipe(gulp.dest(path.join(__dirname, 'client', 'dist', 'js')));
+            .pipe(gulp.dest(path.join(__dirname, 'client', 'dist', 'js')))
+            .pipe(function() {
+                gutil.log('Re-bundling client js finished');
+            });
     },
     delay: function(callback) {
         // Waits a second before executing a function

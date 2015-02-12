@@ -89,13 +89,14 @@ var Login = React.createClass({
                             lastName: res.body.Result.LastName,
                             contactNumber: res.body.Result.ContactNumber,
                             email: res.body.Result.Email,
+                            addressId: res.body.Result.AddressId,
                             picture: res.body.Result.ProfilePicture,
                             sessionToken: res.body.Result.SessionToken,
                             userName: res.body.Result.UserName,
                             companyId: res.body.Result.CompanyId
                         });
                         // Move to the account screen
-                        component.transitionTo('account');
+                        component.transitionTo('apps');
                     } else {
                         // Stop waiting
                         component.setState({

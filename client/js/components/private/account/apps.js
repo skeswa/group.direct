@@ -178,7 +178,7 @@ var Apps = React.createClass({
                 <div className="left narrow">
                     <div className={'row'+(this.state.step === 0 ? ' active' : '')}>
                         <div className="profile-pic" onClick={this.onApheliaClick} >
-                            <i className="fa fa-puzzle-piece"></i>
+                            <img src='../static/img/ic_aphelia.png' />
                         </div>
                         <div className="top-text-wrapper">
                             <div className="line1" onClick={this.onApheliaClick}>Aphelia</div>

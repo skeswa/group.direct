@@ -10,7 +10,14 @@ var Header = React.createClass({
         //TODO: hide signup/signin buttons if current page == signup/signin
         return (
             <div className="header">
-                <Link to="splash" className="logo">GroupConnect <sup>BETA</sup></Link>
+                <Link to="splash" className="logo">
+                        <div className="profile-pic" onClick={this.onBiocomClick}>
+                            <i className="fa fa-users"></i>
+                        </div>
+                        <div className="logo-text">
+                            GroupConnect <sup>BETA</sup>
+                        </div>
+                </Link>
                 <div className="nav">
                     <Link to="about">About Us</Link>
                     <div className="separator"></div>
