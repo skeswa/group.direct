@@ -1,6 +1,18 @@
 #account.page {
     #content {
         .mixin-content;
+        //TODO: remove temp
+        .temp {
+            display: inline-block!important;
+            width: 30%!important;
+            height: 25px!important;
+            padding: 6px 8px!important;
+
+            &:focus {
+                padding: 6px 8px!important;
+                border-width: 1px!important;
+            }
+        }
         .title {
             .mixin-section-title;
         }
@@ -93,6 +105,7 @@
                             border-width: 3px;
                             padding: 4px 10px;
                             border-color: @pale-green;
+                            color: #333;
                         }
                     }
                 }

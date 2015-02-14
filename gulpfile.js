@@ -42,7 +42,7 @@ var helpers = {
             })
             .pipe(plumber())
             .pipe(source(path.join(__dirname, 'main.js')))
-            .pipe(gulp.dest(path.join(__dirname, 'client', 'dist', 'js')));
+            .pipe(gulp.dest(path.join(__dirname, 'client', 'dist', 'js')))
     },
     delay: function(callback) {
         // Waits a second before executing a function

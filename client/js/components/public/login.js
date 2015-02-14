@@ -109,6 +109,8 @@ var Login = React.createClass({
                 }
             });
         }
+    console.log('sessionToken', this.state.sessionToken);
+    console.log( 'username', this.state.userName);
     },
     render: function() {
         return (

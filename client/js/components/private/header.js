@@ -30,7 +30,8 @@ var Header = React.createClass({
                     <Link to="signin">Log out</Link>
                     <div className="separator"></div>
                     <a target="_blank" href={"http://apps.group.direct?sk=" + this.state.sk}>Application Console</a>
-                    <Link to="profile">{this.state.firstName + " " + this.state.lastName + " "} :</Link>
+                    <div className="separator"></div>
+                    <Link to="profile">{this.state.firstName + " " + this.state.lastName}</Link>
                 </div>
             </div>
         );

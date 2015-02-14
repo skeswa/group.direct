@@ -3,7 +3,8 @@ var fs          = require('fs'),
     async       = require('async'),
     request     = require('superagent');
 
-var userContactsByIdData = require('../data/userContactsById.json');
+//Used for dummy service
+//var userContactsByIdData = require('../data/userContactsById.json');
 
 var log     = require('../log');
 
@@ -25,10 +26,10 @@ exports.route = function(app) {
             res.status(remoteResponse.status).send(remoteResponse.body);
         });
     };
-
-    app.post('/GroupDirectServices/ContactService.svc/GetUserContactsByUserId', function(req, res){
-        res.status(200).json(userContactsByIdData);
-    });
+    //Used for dummy service
+    // app.post('/GroupDirectServices/ContactService.svc/GetUserContactsByUserId', function(req, res){
+    //     res.status(200).json(userContactsByIdData);
+    // });
     app.get('/GroupDirectServices/*', serviceProxy);
     app.post('/GroupDirectServices/*', serviceProxy);
 };

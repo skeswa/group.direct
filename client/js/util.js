@@ -33,6 +33,14 @@ module.exports = {
             el.removeEventListener(type, callback, capture || false);
         }
     },
+    url: {
+        getParameterByName: function(name) {
+            name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
+            var regex = new RegExp("[\\?&]" + name + "=([^&#]*)"),
+            results = regex.exec(location.search);
+            return results === null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
+        }
+    },
     dom: {
         isDescendant: function(parent, child) {
             var node = child.parentNode;

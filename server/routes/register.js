@@ -35,13 +35,12 @@ exports.route = function(app) {
 
     app.get('/reset', function(req, res) {
         // Call the activation endpoint
-        var userId = req.query.userId,
-            token = req.query.token;
-        // Redirect back to the login page is the parameters were not included
-        if (!userId || !token) {
+        var token = req.query.token;
+        // Redirect back to the login page if the parameters were not included
+        if (!token) {
             return res.redirect('/signin');
         } else {
-            return res.redirect('/confirmpassword');
+            return res.redirect('/confirmpassword?token='+token);
         }
 
     });
