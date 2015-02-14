@@ -1,5 +1,6 @@
 var gulp = require('gulp'),
     // Generic imports
+    Stream = require('stream'),
     gutil = require('gulp-util'),
     path = require('path'),
     clean = require('rimraf'),
@@ -31,15 +32,17 @@ var constants = {
 };
 
 var helpers = {
-    rebundle: function(bundler) {
+    rebundle: function(bundler, done) {
+        var time = (new Date()).getTime();
+        gutil.log('Re-bundling js started');
         bundler
-            .bundle()
+            .bundle(function() {
+                gutil.log('Re-bundling js finished after ' + (((new Date()).getTime() - time) / 1000) + ' seconds');
+                if (done) done();
+            })
             .pipe(plumber())
             .pipe(source(path.join(__dirname, 'main.js')))
-            .pipe(gulp.dest(path.join(__dirname, 'client', 'dist', 'js')))
-            .pipe(function() {
-                gutil.log('Re-bundling client js finished');
-            });
+            .pipe(gulp.dest(path.join(__dirname, 'client', 'dist', 'js')));
     },
     delay: function(callback) {
         // Waits a second before executing a function
