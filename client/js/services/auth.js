@@ -23,11 +23,20 @@ var AuthService = {
             })
             .end(callback);
     },
-    requestResetPassword: function(email, callback){
+    requestResetPassword: function(email, callback) {
         request
             .post('/GroupDirectServices/ApheliaIUserService.svc/RequestResetPassword')
             .send({
                 email: email
+            })
+            .end(callback);
+    },
+    resetPassword: function(token, pass, callback) {
+        request
+            .post('/GroupDirectServices/ApheliaIUserService.svc/ResetPassword')
+            .send({
+                token: token,
+                password: pass
             })
             .end(callback);
     }

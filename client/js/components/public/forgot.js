@@ -31,7 +31,7 @@ var steps = [
             </div>
         );
     },
-    // Third Step
+    // Second Step
     function (component) {
         return (
                 <div className="wrapper">Help is on the way.</div>

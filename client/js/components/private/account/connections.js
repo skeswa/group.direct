@@ -8,12 +8,34 @@ var Actions             = require('../../../actions'),
 
 // React-router variables
 var Link            = Router.Link;
-//TODO: Review
-//Note: I have used the concept of Steps for showing dynamic html in render: function()
-//Wondering if there is a better way to do this.
+
 var steps = [
     //default state
     function (component) {
+        //Populate Add requests
+        var requestElements = [];
+        for (var i=0; i<component.state.requests.length; i++) {
+            var currentRequest = component.state.requests[i];
+            requestElements.push(
+                <div className="row">
+                    <div className="left wide">
+                        <div className="profile-pic">
+                            <i className="fa fa-user"></i>
+                        </div>
+                        <div className="top-text-wrapper">
+                            <div className="line1">{currentRequest.FirstName + " " + currentRequest.LastName}</div>
+                            <div className="line2">{currentRequest.Email}</div>
+                        </div>
+                    </div>
+                    <div className="right narrow">
+                        <input type="text" value={component.state.tempReqId} className="textbox temp" placeholder="Req Id?"  onChange={component.onTempReqId} />
+                        <button className="button" id="accept-button" onClick={component.onAcceptClick}>Accept</button>
+                        <button className="button" id="decline-button" onClick={component.onDeclineClick}>Decline</button>
+                    </div>
+                </div>
+            );
+        }
+        //Populate connections
         var contactElements = [];
         for (var i=0; i<component.state.contacts.length; i++) {
             var currentContact = component.state.contacts[i];
@@ -29,7 +51,7 @@ var steps = [
                         </div>
                     </div>
                     <div className="right narrow">
-                        <Link to="about" className="button">{currentContact.Status ? 'Invite' : 'Respond to Add Request'}</Link>
+                        <button className="button" id="remove-button" onClick={component.onRemoveClick}>Remove</button>
                     </div>
                 </div>
             );
@@ -37,6 +59,9 @@ var steps = [
 
         return (
             <div>
+                <div className="left">Connection Requests:</div>
+                {requestElements}
+                <div className="left">Connections:</div>
                 {contactElements}
             </div>
         );
@@ -76,17 +101,89 @@ var Connections = React.createClass({
             step: 0,
             inviteButtonValue: 'Invite',
             inviteButtonStyle: 'button',
+            sessionToken: AppStateStore.getSessionData().sessionToken,
             userId: AppStateStore.getSessionData().id,
-            sk: AppStateStore.getSessionData().sessionToken,
-            contacts: []
+            contacts: [],
+            requests: []
         };
+    },
+    //TODO: remove temp
+    onTempReqId: function(event){
+        this.setState({
+            tempReqId: event.target.value
+        });
+    },
+    onAcceptClick: function(event) {
+    var sessionToken = this.state.sessionToken,
+        requestId   = this.state.tempReqId,
+        status      = 1;
+
+    var component   = this;
+        ContactService.approveDenyContactRequest(
+            requestId,
+            status,
+            sessionToken,
+            function(res) {
+                if (res.ok) {
+                    if (res.body.Result) {
+                        component.componentDidMount();
+                    } else {
+                        console.log(res.body.InfoMessages[0].Text);
+                    }
+                } else {
+                    console.log('Error at approveDenyContactRequest', res.text);
+                }
+            });
+    },
+    onDeclineClick: function(event) {
+    var sessionToken    = this.state.sessionToken,
+        requestId   = this.state.tempReqId,
+        status      = 0;
+
+    var component   = this;
+        ContactService.approveDenyContactRequest(
+            requestId,
+            status,
+            sessionToken,
+            function(res) {
+                if (res.ok) {
+                    if (res.body.Result) {
+                        component.componentDidMount;
+                    } else {
+                        console.log(res.body.InfoMessages[0].Text);
+                    }
+                } else {
+                    console.log('Error at approveDenyContactRequest', res.text);
+                }
+            });
+    },
+    onRemoveClick: function(event, contactId) {
+        var sessionToken    = this.state.sessionToken,
+            component = this;
+        ContactService.deleteContactByUserId(
+            userId,
+            contactId,
+            sessionToken,
+            function(res) {
+                if (res.ok) {
+                    if (res.body.Result) {
+                        console.log('Response for getUserByEmail', JSON.stringify(res.body));
+                        //TODO call getUserContactsByUserId separtely
+                        component.componentDidMount;
+                    } else {
+                        console.log('Error at deleteContactByUserId', res.text);
+                    }
+                } else {
+                    console.log('Error at deleteContactByUserId', res.text);
+                }
+            })
     },
     onSearch: function(event) {
         this.setState({email: event.target.value});
-        var email           = this.state.email,
-            sessionToken    = this.state.sk;
+        var sessionToken    = this.state.sessionToken,
+            email = this.state.email,
+            component = this;
 
-        var component       = this;
         ContactService.getUserByEmail(
             email,
             sessionToken,
@@ -115,8 +212,8 @@ var Connections = React.createClass({
     },
     onInvite: function(event) {
         var requesterId     = this.state.userId,
-            requesteeId     = this.state.contactId,
-            sessionToken    = this.state.sk;
+            sessionToken    = this.state.sessionToken,
+            requesteeId     = this.state.contactId;
 
         var component       = this;
         ContactService.addContactRequest(
@@ -127,7 +224,7 @@ var Connections = React.createClass({
                 if (res.ok) {
                     //TODO: Review: experiment
                     component.setState({
-                        inviteButtonValue: 'Invitation sent',
+                        inviteButtonValue: 'Invitation sent, RequestId: '+ res.body.Result.Id, //TODO: remove temp
                         inviteButtonStyle: 'button disabled'
                     });
                     console.log('Response for addContactRequest', JSON.stringify(res.body));
@@ -137,12 +234,29 @@ var Connections = React.createClass({
             });
     },
     componentDidMount: function() {
-        var userId          = this.state.userId,
-            sessionToken    = this.state.sessionToken;
-
-        var component       = this;
+        var sessionToken    = this.state.sessionToken,
+            userId          = this.state.userId,
+            component       = this;
 
         Actions.changePageTitle('Connections');
+        //Get Add requests
+        ContactService.getAddRequestsByUserId(
+            userId,
+            sessionToken,
+            function(res) {
+                if (res.ok) {
+                    if (res.body.ResultSet) {
+                        component.setState({
+                            requests: res.body.ResultSet
+                        });
+                        console.log('Response for getAddRequestsByUserId', JSON.stringify(res.body));
+                    }
+                } else {
+                    console.log('Error at getAddRequestsByUserId', res.text);
+                }
+            });
+
+        //Get connections
         ContactService.getUserContactsByUserId(
             userId,
             sessionToken,
