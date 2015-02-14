@@ -4,13 +4,16 @@ var React           = require('react'),
 
 var Actions         = require('../../../actions');
 
+var AuthMixin       = require('../../../mixins/auth');
+
 // React-router variables
 var Link            = Router.Link;
 
 var Settings = React.createClass({
+    mixins: [AuthMixin],
     getInitialState: function() {
         return {
-            //userName: AppStateStore.getSessionData().userName,
+            // userName: AppStateStore.getSessionData().userName,
             //firstName: AppStateStore.getSessionData().firstName,
             //lastName: AppStateStore.getSessionData().lastName
         };

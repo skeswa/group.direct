@@ -5,6 +5,7 @@ var React   = require('react'),
 // React-router variables
 var Route           = Router.Route,
     RouteHandler    = Router.RouteHandler,
+    Redirect        = Router.Redirect,
     DefaultRoute    = Router.DefaultRoute,
     NotFoundRoute   = Router.NotFoundRoute;
 
@@ -45,15 +46,16 @@ var sitemap = (
             <Route name="privacy" handler={Privacy}/>
             <Route name="services" handler={Services}/>
             <Route name="forgot" handler={Forgot}/>
-            <Route name="account" handler={Account}>
-                <Route name="profile" handler={Profile}/>
-                <Route name="connections" handler={Connections}/>
-                <Route name="settings" handler={Settings}/>
-                <Route name="apps" handler={Apps}/>
-                <Route name="billing" handler={Billing}/>
-            </Route>
             <Route name="confirmpassword" handler={ConfirmPassword}/>
             <DefaultRoute name="splash" handler={Splash}/>
+        </Route>
+        <Route name="account" handler={Account}>
+            <Route name="profile" handler={Profile}/>
+            <Route name="connections" handler={Connections}/>
+            <Route name="settings" handler={Settings}/>
+            <Route name="apps" handler={Apps}/>
+            <Route name="billing" handler={Billing}/>
+            <Redirect from="*" to="apps" />
         </Route>
         <NotFoundRoute name="404" handler={NotFound}/>
     </Route>

@@ -6,10 +6,13 @@ var Actions         = require('../../../actions'),
     AppStateStore   = require('../../../stores/appstate'),
     ProfileService  = require('../../../services/profile');
 
+var AuthMixin       = require('../../../mixins/auth');
+
 // React-router variables
 var Link            = Router.Link;
 
 var Profile = React.createClass({
+    mixins: [AuthMixin],
     getInitialState: function() {
         return {
             userId: AppStateStore.getSessionData().id,

@@ -4,10 +4,13 @@ var React           = require('react'),
 
 var Actions         = require('../../../actions');
 
+var AuthMixin       = require('../../../mixins/auth');
+
 // React-router variables
 var Link            = Router.Link;
 
 var Notice = React.createClass({
+    mixins: [AuthMixin],
     componentDidMount: function() {
         Actions.changePageTitle('Notice');
     },

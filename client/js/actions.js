@@ -10,6 +10,9 @@ module.exports = {
     declareLoggedIn: function(sessionData) {
         AppStateDispatcher.handleLoggedIn(sessionData);
     },
+    declareLoggedOut: function() {
+        AppStateDispatcher.handleLoggedOut();
+    },
     // Connection Actions
     declareContactFound: function(contactDetails) {
         AppStateDispatcher.handleContactFound(contactDetails);

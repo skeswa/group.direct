@@ -4,7 +4,10 @@ var React               = require('react'),
 
 var Actions             = require('../../../actions'),
     AppStateStore       = require('../../../stores/appstate'),
-    ContactService   = require('../../../services/connections');
+    ContactService      = require('../../../services/connections');
+
+var AuthMixin       = require('../../../mixins/auth'),
+    ExecutorMixin   = require('../../../mixins/executor');
 
 // React-router variables
 var Link            = Router.Link;
@@ -28,7 +31,7 @@ var steps = [
                         </div>
                     </div>
                     <div className="right narrow">
-                        <input type="text" value={component.state.tempReqId} className="textbox temp" placeholder="Req Id?"  onChange={component.onTempReqId} />
+                        <input type="text" value={component.state.tempReqId} className="textbox temp" placeholder="Req Id?" onChange={component.onTempReqId} />
                         <button className="button" id="accept-button" onClick={component.onAcceptClick}>Accept</button>
                         <button className="button" id="decline-button" onClick={component.onDeclineClick}>Decline</button>
                     </div>
@@ -96,6 +99,10 @@ var steps = [
 ];
 
 var Connections = React.createClass({
+    mixins: [
+        AuthMixin,
+        ExecutorMixin
+    ],
     getInitialState: function() {
         return {
             step: 0,

@@ -3,7 +3,8 @@ var assign              = require('object-assign'),
 
 var AppStateDispatcher  = require('../dispatchers/appstate');
 
-var SESSION_DATA_LOCAL_STORAGE_KEY = 'groupDirectSessionData';
+var SESSION_DATA_LOCAL_STORAGE_KEY  = 'groupDirectSessionData',
+    SESSION_TIME_LIMIT              = 1000 * 60 * 60 * 24 * 7;  // Expires after a week
 
 // The event types
 var events = {
@@ -18,24 +19,46 @@ var appState = {
 var AppStateStore = assign({}, EventEmitter.prototype, {
     isLoggedIn: function() {
         if (!appState.sessionData) {
-           this.fetchSessionDataFromLocalStorage();
+            var localData = this.fetchSessionDataFromLocalStorage();
+            if (localData) {
+                appState.loggedIn = true;
+                appState.sessionData = localData;
+            }
         }
         return appState.loggedIn;
     },
     getSessionData: function() {
         if (!appState.sessionData) {
-           return this.fetchSessionDataFromLocalStorage();
+            var localData = this.fetchSessionDataFromLocalStorage();
+            if (localData) {
+                appState.loggedIn = true;
+                appState.sessionData = localData;
+                return localData;
+            } else {
+                return {};
+            }
+        } else {
+            return appState.sessionData;
         }
-        return appState.sessionData;
     },
     fetchSessionDataFromLocalStorage: function() {
         // check local storage
         var payloadString = localStorage.getItem(SESSION_DATA_LOCAL_STORAGE_KEY);
-        if (payloadString) {
-            var payload = JSON.parse(payloadString);
-            appState.sessionData = payload;
-            appState.loggedIn = true;
-            return payload;
+        if (payloadString && payloadString !== '' && payloadString !== 'undefined') {
+            try {
+                var payload = JSON.parse(payloadString);
+                if (!payload.timeStamp || ((new Date()).getTime() - payload.timeStamp > SESSION_TIME_LIMIT)) {
+                    localStorage.setItem(SESSION_DATA_LOCAL_STORAGE_KEY, '');
+                    return undefined;
+                } else {
+                    return payload;
+                }
+            } catch(err) {
+                localStorage.setItem(SESSION_DATA_LOCAL_STORAGE_KEY, '');
+                return undefined;
+            }
+        } else {
+            return undefined;
         }
     }
 });
@@ -44,9 +67,17 @@ var AppStateStore = assign({}, EventEmitter.prototype, {
 AppStateDispatcher.register(function(action) {
     switch(action.type) {
         case AppStateDispatcher.events.LOGGED_IN:
-            appState.sessionData = action.sessionData;
+            var sessionData = action.sessionData;
+            sessionData.timeStamp = (new Date()).getTime();
+
+            appState.sessionData = sessionData;
             appState.loggedIn = true;
-            localStorage.setItem(SESSION_DATA_LOCAL_STORAGE_KEY, JSON.stringify(appState.sessionData));
+            localStorage.setItem(SESSION_DATA_LOCAL_STORAGE_KEY, JSON.stringify(sessionData));
+            return true;
+        case AppStateDispatcher.events.LOGGED_OUT:
+            appState.sessionData = undefined;
+            appState.loggedIn = false;
+            localStorage.setItem(SESSION_DATA_LOCAL_STORAGE_KEY, '');
             return true;
     }
 

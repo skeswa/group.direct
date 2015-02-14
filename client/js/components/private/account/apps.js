@@ -5,6 +5,8 @@ var React           = require('react'),
 var Actions         = require('../../../actions'),
     AppStateStore   = require('../../../stores/appstate');
 
+var AuthMixin       = require('../../../mixins/auth');
+
 // React-router variables
 var Link            = Router.Link;
 
@@ -131,6 +133,7 @@ var steps = [
 ];
 
 var Apps = React.createClass({
+    mixins: [AuthMixin],
     getInitialState: function() {
         return {
             step: 0,
