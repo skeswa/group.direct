@@ -37,7 +37,7 @@ var helpers = {
         gutil.log('Re-bundling js started');
         bundler
             .bundle(function(err) {
-                if (err) {
+                if (!err) {
                     gutil.log('Re-bundling js finished after ' + (((new Date()).getTime() - time) / 1000) + ' seconds');
                     if (done) done();
                 } else {
