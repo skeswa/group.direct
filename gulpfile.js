@@ -36,9 +36,15 @@ var helpers = {
         var time = (new Date()).getTime();
         gutil.log('Re-bundling js started');
         bundler
-            .bundle(function() {
-                gutil.log('Re-bundling js finished after ' + (((new Date()).getTime() - time) / 1000) + ' seconds');
-                if (done) done();
+            .bundle(function(err) {
+                if (err) {
+                    gutil.log('Re-bundling js finished after ' + (((new Date()).getTime() - time) / 1000) + ' seconds');
+                    if (done) done();
+                } else {
+                    gutil.log('Re-bundling js FAILED after ' + (((new Date()).getTime() - time) / 1000) + ' seconds');
+                    console.log(err);
+                    if (done) done();
+                }
             })
             .pipe(plumber())
             .pipe(source(path.join(__dirname, 'main.js')))
