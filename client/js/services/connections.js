@@ -1,13 +1,14 @@
 var request = require('superagent');
 
 var ContactService = {
+    //search
     getUserByEmail: function(
         email,
         sessionToken,
         callback) {
         // Build the request
         request
-            .post('/GroupDirectServices/SignupService.svc/GetUserByEmail')
+            .post('/GroupDirectServices/ContactService.svc/GetUserByEmail')
             .send({
                 email: email,
                 st: sessionToken
@@ -15,6 +16,7 @@ var ContactService = {
             // Submit the request
             .end(callback);
     },
+    //Send Add Request to existing user:
     addContactRequest: function(
         requesterId,
         requesteeId,
@@ -30,7 +32,23 @@ var ContactService = {
             })
             // Submit the request
             .end(callback);
-
+    },
+    //Send Add Request to new user:
+    sendInviteToEmail : function(
+        requesterId,
+        requesteeEmail,
+        sessionToken,
+        callback) {
+        // Build the request
+        request
+            .post('/GroupDirectServices/ContactService.svc/SendInviteToEmail')
+            .send({
+                requesterId: requesterId,
+                requesteeEmail: requesteeEmail,
+                st: sessionToken
+            })
+            // Submit the request
+            .end(callback);
     },
     getAddRequestsByUserId: function(
         userId,

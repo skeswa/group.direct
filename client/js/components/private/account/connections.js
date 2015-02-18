@@ -4,7 +4,8 @@ var React               = require('react'),
 
 var Actions             = require('../../../actions'),
     AppStateStore       = require('../../../stores/appstate'),
-    ContactService      = require('../../../services/connections');
+    ContactService      = require('../../../services/connections'),
+    Validator           = require('validator');
 
 var AuthMixin       = require('../../../mixins/auth'),
     ExecutorMixin   = require('../../../mixins/executor');
@@ -13,7 +14,7 @@ var AuthMixin       = require('../../../mixins/auth'),
 var Link            = Router.Link;
 
 var steps = [
-    //default state
+    //0:default state
     function (component) {
         //Populate Add requests
         var requestElements = [];
@@ -31,9 +32,8 @@ var steps = [
                         </div>
                     </div>
                     <div className="right narrow">
-                        <input type="text" value={component.state.tempReqId} className="textbox temp" placeholder="Req Id?" onChange={component.onTempReqId} />
-                        <button className="button" id="accept-button" onClick={component.onAcceptClick}>Accept</button>
-                        <button className="button" id="decline-button" onClick={component.onDeclineClick}>Decline</button>
+                        <button className="button" id="accept-button" onClick={component.createExecutable(component.onAcceptClick, currentRequest.RequestId)}>Accept</button>
+                        <button className="button" id="decline-button" onClick={component.createExecutable(component.onDeclineClick, currentRequest.RequestId)}>Decline</button>
                     </div>
                 </div>
             );
@@ -54,7 +54,7 @@ var steps = [
                         </div>
                     </div>
                     <div className="right narrow">
-                        <button className="button" id="remove-button" onClick={component.onRemoveClick}>Remove</button>
+                        <button className="button" id="remove-button" onClick={component.createExecutable(component.onRemoveClick, currentContact.Id)}>Remove</button>
                     </div>
                 </div>
             );
@@ -69,7 +69,7 @@ var steps = [
             </div>
         );
     },
-    //contact found
+    //1:contact found
     function (component) {
         return (
             <div className="row">
@@ -83,16 +83,32 @@ var steps = [
                     </div>
                 </div>
                 <div className="right narrow">
-                    <button id="invite-button" className={component.state.inviteButtonStyle} onClick={component.onInvite}>{component.state.inviteButtonValue}</button>
+                    <button id="invite-button" className="button" type="button" disabled={component.state.inviteButtonStyle} onClick={component.onInvite}>{component.state.inviteButtonValue}</button>
                 </div>
             </div>
         );
     },
-    //contact not found
+    //2:Invalid email
     function (component) {
         return (
             <div className="row">
-                Contact not found. <a href="#">Send invite with invitation code?</a>
+                {component.state.toastMessage}
+            </div>
+        );
+    },
+    //3:contact not found
+    function (component) {
+        return (
+            <div className="row">
+                {component.state.toastMessage} <div className="link" onClick={component.onNewInvite}>Send connection request to {component.state.contactEmail}?</div>
+            </div>
+        );
+    },
+    //4:Invitation sent
+    function (component) {
+        return (
+            <div className="row">
+                Connection request sent to {component.state.contactEmail} successfully.
             </div>
         );
     }
@@ -107,22 +123,19 @@ var Connections = React.createClass({
         return {
             step: 0,
             inviteButtonValue: 'Invite',
-            inviteButtonStyle: 'button',
+            inviteButtonStyle: '',
             sessionToken: AppStateStore.getSessionData().sessionToken,
             userId: AppStateStore.getSessionData().id,
             contacts: [],
-            requests: []
+            requests: [],
+            searchString: '',
+            toastMessage: undefined,
+            contactEmail: ''
         };
     },
-    //TODO: remove temp
-    onTempReqId: function(event){
-        this.setState({
-            tempReqId: event.target.value
-        });
-    },
-    onAcceptClick: function(event) {
+    onAcceptClick: function(requestId, event) {
+    console.log("onAcceptClick", requestId, event);
     var sessionToken = this.state.sessionToken,
-        requestId   = this.state.tempReqId,
         status      = 1;
 
     var component   = this;
@@ -133,6 +146,7 @@ var Connections = React.createClass({
             function(res) {
                 if (res.ok) {
                     if (res.body.Result) {
+                        console.log("Response from AcceptContactRequest");
                         component.componentDidMount();
                     } else {
                         console.log(res.body.InfoMessages[0].Text);
@@ -142,10 +156,9 @@ var Connections = React.createClass({
                 }
             });
     },
-    onDeclineClick: function(event) {
+    onDeclineClick: function(requestId, event) {
     var sessionToken    = this.state.sessionToken,
-        requestId   = this.state.tempReqId,
-        status      = 0;
+        status          = 0;
 
     var component   = this;
         ContactService.approveDenyContactRequest(
@@ -155,6 +168,7 @@ var Connections = React.createClass({
             function(res) {
                 if (res.ok) {
                     if (res.body.Result) {
+                        console.log("Response from DeclineContactRequest");
                         component.componentDidMount;
                     } else {
                         console.log(res.body.InfoMessages[0].Text);
@@ -164,8 +178,9 @@ var Connections = React.createClass({
                 }
             });
     },
-    onRemoveClick: function(event, contactId) {
+    onRemoveClick: function(contactId, event) {
         var sessionToken    = this.state.sessionToken,
+            userId          = this.state.userId,
             component = this;
         ContactService.deleteContactByUserId(
             userId,
@@ -174,7 +189,7 @@ var Connections = React.createClass({
             function(res) {
                 if (res.ok) {
                     if (res.body.Result) {
-                        console.log('Response for getUserByEmail', JSON.stringify(res.body));
+                        console.log('Response for deleteContactByUserId', JSON.stringify(res.body));
                         //TODO call getUserContactsByUserId separtely
                         component.componentDidMount;
                     } else {
@@ -186,9 +201,30 @@ var Connections = React.createClass({
             })
     },
     onSearch: function(event) {
-        this.setState({email: event.target.value});
+        this.setState({
+            searchString: event.target.value,
+            inviteButtonValue: 'Invite',
+            inviteButtonStyle: ''
+        });
+
+        var timer = null;
+        clearTimeout(timer);
+        timer = setTimeout(this.validateEmail(), 500)
+    },
+    validateEmail: function() {
+        var email       = this.state.searchString,
+            component   = this;
+        if (!Validator.isEmail(email)) {
+            component.setState({
+                toastMessage: 'Enter a valid email address.',
+                step: 2
+            });
+            return;
+        } else this.searchEmail();
+    },
+    searchEmail: function() {
         var sessionToken    = this.state.sessionToken,
-            email = this.state.email,
+            email = this.state.searchString,
             component = this;
 
         ContactService.getUserByEmail(
@@ -203,12 +239,14 @@ var Connections = React.createClass({
                             contactId: res.body.Result.Id,
                             firstName: res.body.Result.FirstName,
                             lastName: res.body.Result.LastName,
-                            contactEmail: res.body.Result.Email,
+                            contactEmail: res.body.Result.Email
                         });
                     } else {
                         //No contact found
                         component.setState({
-                            step: 2
+                            step: 3,
+                            toastMessage: 'Contact not found.',
+                            contactEmail: component.state.searchString
                         });
                     }
                     console.log('Response for getUserByEmail', JSON.stringify(res.body));
@@ -231,12 +269,33 @@ var Connections = React.createClass({
                 if (res.ok) {
                     //TODO: Review: experiment
                     component.setState({
-                        inviteButtonValue: 'Invitation sent, RequestId: '+ res.body.Result.Id, //TODO: remove temp
-                        inviteButtonStyle: 'button disabled'
+                        inviteButtonValue: 'Invitation sent',
+                        inviteButtonStyle: 'disabled'
                     });
                     console.log('Response for addContactRequest', JSON.stringify(res.body));
                 } else {
                     console.log('Error at addContactRequest', res.text);
+                }
+            });
+    },
+    onNewInvite: function(event) {
+        var requesterId     = this.state.userId,
+            sessionToken    = this.state.sessionToken,
+            requesteeEmail  = this.state.contactEmail;
+
+        var component       = this;
+        ContactService.sendInviteToEmail(
+            requesterId,
+            requesteeEmail,
+            sessionToken,
+            function(res) {
+                if (res.ok) {
+                    component.setState({
+                        step: 4
+                    });
+                    console.log('Response for sendInviteToEmail', JSON.stringify(res.body));
+                } else {
+                    console.log('Error at sendInviteToEmail', res.text);
                 }
             });
     },
@@ -247,6 +306,7 @@ var Connections = React.createClass({
 
         Actions.changePageTitle('Connections');
         //Get Add requests
+        console.log('Get Add requests');
         ContactService.getAddRequestsByUserId(
             userId,
             sessionToken,
@@ -287,10 +347,10 @@ var Connections = React.createClass({
             <div className="tab-content">
                 <div className="row">
                     <div className="left wide">
-                        <input type="text" value={this.state.email} className="textbox" placeholder="Search Contact"  onChange={this.onSearch} />
+                        <input type="text" id="search-text" value={this.state.email} className="textbox" placeholder="Enter email address to add contact"  onChange={this.onSearch} />
                     </div>
                     <div className="right narrow">
-                        <Link to="about" className="button"><i className="fa fa-plus"></i> Add Members</Link>
+
                     </div>
                 </div>
                 {(steps[this.state.step])(this)}
