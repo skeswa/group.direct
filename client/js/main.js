@@ -18,6 +18,9 @@ var Public      = require('./components/public'),
     Contact     = require('./components/public/contact'),
     Login       = require('./components/public/login'),
     Terms       = require('./components/public/terms'),
+    Aphelia     = require('./components/public/aphelia'),
+    GVC       = require('./components/public/gvc'),
+    R4R       = require('./components/public/r4r'),
     Privacy     = require('./components/public/privacy'),
     Services    = require('./components/public/services'),
     Register    = require('./components/public/register'),
@@ -42,6 +45,9 @@ var sitemap = (
             <Route name="signin" handler={Login}/>
             <Route name="signup" handler={Register}/>
             <Route name="contact" handler={Contact}/>
+            <Route name="aphelia" handler={Aphelia}/>
+            <Route name="gvc" handler={GVC}/>
+            <Route name="r4r" handler={R4R}/>
             <Route name="terms" handler={Terms}/>
             <Route name="privacy" handler={Privacy}/>
             <Route name="services" handler={Services}/>

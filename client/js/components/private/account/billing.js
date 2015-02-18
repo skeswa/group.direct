@@ -145,13 +145,13 @@ var Billing = React.createClass({
                             <span className="column2 caps">License</span>
                         </div>
                         <div className="row">
-                            <div className="column1"><input value="1" type="text" className="textbox" /></div>
-                            <span className="column2">Free License - $0/month per user</span>
+                            <div className="column1 red"><input value="1" type="text" className="textbox" /></div>
+                            <span className="column2">Basic License - $0/month per user</span>
                             <span className="column3">$0.00</span>
                         </div>
                         <div className="row">
                             <div className="column1"><input value="0" type="text" className="textbox" /></div>
-                            <span className="column2">Free License - $5/month per user</span>
+                            <span className="column2">Basic License - $5/month per user</span>
                             <span className="column3">$0.00</span>
                         </div>
                         <div className="row">
@@ -165,19 +165,19 @@ var Billing = React.createClass({
                         </div>
                         <div className="row empty"></div>
 
-                        <div className="app-header"><a name="gvc"><i className="fa fa-chevron-down"></i> Group Video Connec</a></div>
+                        <div className="app-header"><a name="gvc"><i className="fa fa-chevron-down"></i> Group Video Connect</a></div>
                         <div className="row">
                             <div className="column1"></div>
                             <span className="column2 caps">License</span>
                         </div>
                         <div className="row">
-                            <div className="column1"><input value="1" type="text" className="textbox" /></div>
-                            <span className="column2">Free License - $0/month per user</span>
+                            <div className="column1 red"><input value="1" type="text" className="textbox" /></div>
+                            <span className="column2">Basic License - $0/month per user</span>
                             <span className="column3">$0.00</span>
                         </div>
                         <div className="row">
                             <div className="column1"><input value="0" type="text" className="textbox" /></div>
-                            <span className="column2">Free License - $5/month per user</span>
+                            <span className="column2">Basic License - $5/month per user</span>
                             <span className="column3">$0.00</span>
                         </div>
                         <div className="row">
@@ -196,13 +196,13 @@ var Billing = React.createClass({
                             <span className="column2 caps">License</span>
                         </div>
                         <div className="row">
-                            <div className="column1"><input value="1" type="text" className="textbox" /></div>
-                            <span className="column2">Free License - $0/month per user</span>
+                            <div className="column1 red"><input value="1" type="text" className="textbox" /></div>
+                            <span className="column2">Basic License - $0/month per user</span>
                             <span className="column3">$0.00</span>
                         </div>
                         <div className="row">
                             <div className="column1"><input value="0" type="text" className="textbox" /></div>
-                            <span className="column2">Free License - $5/month per user</span>
+                            <span className="column2">Basic License - $5/month per user</span>
                             <span className="column3">$0.00</span>
                         </div>
                         <div className="row">
@@ -221,13 +221,13 @@ var Billing = React.createClass({
                             <span className="column2 caps">License</span>
                         </div>
                         <div className="row">
-                            <div className="column1"><input value="1" type="text" className="textbox" /></div>
-                            <span className="column2">Free License - $0/month per user</span>
+                            <div className="column1 red"><input value="1" type="text" className="textbox" /></div>
+                            <span className="column2">Basic License - $0/month per user</span>
                             <span className="column3">$0.00</span>
                         </div>
                         <div className="row">
                             <div className="column1"><input value="0" type="text" className="textbox" /></div>
-                            <span className="column2">Free License - $5/month per user</span>
+                            <span className="column2">Basic License - $5/month per user</span>
                             <span className="column3">$0.00</span>
                         </div>
                         <div className="row">
@@ -246,13 +246,13 @@ var Billing = React.createClass({
                             <span className="column2 caps">License</span>
                         </div>
                         <div className="row">
-                            <div className="column1"><input value="1" type="text" className="textbox" /></div>
-                            <span className="column2">Free License - $0/month per user</span>
+                            <div className="column1 red"><input value="1" type="text" className="textbox" /></div>
+                            <span className="column2">Basic License - $0/month per user</span>
                             <span className="column3">$0.00</span>
                         </div>
                         <div className="row">
                             <div className="column1"><input value="0" type="text" className="textbox" /></div>
-                            <span className="column2">Free License - $5/month per user</span>
+                            <span className="column2">Basic License - $5/month per user</span>
                             <span className="column3">$0.00</span>
                         </div>
                         <div className="row">
