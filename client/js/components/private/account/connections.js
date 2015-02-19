@@ -207,53 +207,48 @@ var Connections = React.createClass({
             inviteButtonStyle: ''
         });
 
-        var timer = null;
-        clearTimeout(timer);
-        timer = setTimeout(this.validateEmail(), 500)
-    },
-    validateEmail: function() {
-        var email       = this.state.searchString,
+        var timer = null,
+            email = event.target.value,
+            sessionToken    = this.state.sessionToken,
             component   = this;
-        if (!Validator.isEmail(email)) {
-            component.setState({
-                toastMessage: 'Enter a valid email address.',
-                step: 2
-            });
-            return;
-        } else this.searchEmail();
-    },
-    searchEmail: function() {
-        var sessionToken    = this.state.sessionToken,
-            email = this.state.searchString,
-            component = this;
 
-        ContactService.getUserByEmail(
-            email,
-            sessionToken,
-            function(res) {
-                if (res.ok) {
-                    if (res.body.Result) {
-                        //Contact found
-                         component.setState({
-                            step: 1,
-                            contactId: res.body.Result.Id,
-                            firstName: res.body.Result.FirstName,
-                            lastName: res.body.Result.LastName,
-                            contactEmail: res.body.Result.Email
-                        });
+        clearTimeout(timer);
+        timer = setTimeout(function() {
+            if (!Validator.isEmail(email)) {
+                component.setState({
+                    toastMessage: 'Enter a valid email address.',
+                    step: 2
+                });
+            } else {
+                ContactService.getUserByEmail(
+                email,
+                sessionToken,
+                function(res) {
+                    if (res.ok) {
+                        if (res.body.Result) {
+                            //Contact found
+                             component.setState({
+                                step: 1,
+                                contactId: res.body.Result.Id,
+                                firstName: res.body.Result.FirstName,
+                                lastName: res.body.Result.LastName,
+                                contactEmail: res.body.Result.Email
+                            });
+                        } else {
+                            //No contact found
+                            component.setState({
+                                step: 3,
+                                toastMessage: 'Contact not found.',
+                                contactEmail: component.state.searchString
+                            });
+                        }
+                        console.log('Response for getUserByEmail', JSON.stringify(res.body));
                     } else {
-                        //No contact found
-                        component.setState({
-                            step: 3,
-                            toastMessage: 'Contact not found.',
-                            contactEmail: component.state.searchString
-                        });
+                        console.log('Error at getUserByEmail', res.text);
                     }
-                    console.log('Response for getUserByEmail', JSON.stringify(res.body));
-                } else {
-                    console.log('Error at getUserByEmail', res.text);
-                }
-            });
+                });
+            }
+        }, 1000);
     },
     onInvite: function(event) {
         var requesterId     = this.state.userId,
