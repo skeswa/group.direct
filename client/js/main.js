@@ -26,6 +26,7 @@ var Public      = require('./components/public'),
     Register    = require('./components/public/register'),
     Forgot      = require('./components/public/forgot'),
     ConfirmPassword = require('./components/public/confirmpassword')
+    RequestExpired = require('./components/public/requestexpired')
 
     Account         = require('./components/private/account'),
     Profile         = require('./components/private/account/profile'),
@@ -53,6 +54,7 @@ var sitemap = (
             <Route name="services" handler={Services}/>
             <Route name="forgot" handler={Forgot}/>
             <Route name="confirmpassword" handler={ConfirmPassword}/>
+            <Route name="requestexpired" handler={RequestExpired}/>
             <DefaultRoute name="splash" handler={Splash}/>
         </Route>
         <Route name="account" handler={Account}>

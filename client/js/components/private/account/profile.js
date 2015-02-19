@@ -27,12 +27,42 @@ var Profile = React.createClass({
             province: '',
             zip: '',
             country: '',
-            sk: AppStateStore.getSessionData().sessionToken,
+            sessionToken: AppStateStore.getSessionData().sessionToken,
             toastMessage: undefined
         };
     },
     componentDidMount: function() {
         Actions.changePageTitle('Profile');
+        console.log("Profile page sessionToken", this.state.sessionToken);
+        var component = this;
+        ProfileService.getProfileInfo (
+            this.state.userId,
+            this.state.sessionToken,
+            function(res) {
+                if(res.ok) {
+                    // This means everything went just fine
+                    if(res.body.Result) {
+                        component.setState({
+                            phone: res.body.Result.ContactNumber,
+                            address1: res.body.Result.Address1,
+                            address2: res.body.Result.Address2,
+                            city: res.body.Result.City,
+                            province: res.body.Result.State,
+                            zip: res.body.Result.Zipcode,
+                            country: res.body.Result.Country,
+                        });
+                    } else {
+                        if (res.body.InfoMessages[0].Code == 1) {
+                            component.setState({
+                                toastMessage: res.body.InfoMessages[0].Text
+                            });
+                        }
+                    }
+                    console.log('Response from saveProfileInfo', JSON.stringify(res.body));
+                } else {
+                    console.log('Error at saveProfileInfo', res.text);
+                }
+            });
     },
     onFirstNameChanged: function(event){
         this.setState({
@@ -97,7 +127,7 @@ var Profile = React.createClass({
         province        = this.state.province,
         zip             = this.state.zip,
         country         = this.state.country,
-        sessionToken    = this.state.sk;
+        sessionToken    = this.state.sessionToken;
 
     var component = this;
 
