@@ -147,7 +147,14 @@ var Connections = React.createClass({
                 if (res.ok) {
                     if (res.body.Result) {
                         console.log("Response from AcceptContactRequest");
-                        component.componentDidMount();
+                        for(var i=0; i<component.state.requests.length; i++) {
+                            if(component.state.requests[i].RequestId === requestId) {
+                                component.state.contacts.push(component.state.requests[i]);
+                                component.state.requests.splice(i, 1);
+                                component.forceUpdate();
+                                break;
+                            }
+                        }
                     } else {
                         console.log(res.body.InfoMessages[0].Text);
                     }
@@ -169,7 +176,13 @@ var Connections = React.createClass({
                 if (res.ok) {
                     if (res.body.Result) {
                         console.log("Response from DeclineContactRequest");
-                        component.componentDidMount;
+                        for(var i=0; i<component.state.requests.length; i++) {
+                            if(component.state.requests[i].RequestId === requestId) {
+                                component.state.requests.splice(i, 1);
+                                component.forceUpdate();
+                                break;
+                            }
+                        }
                     } else {
                         console.log(res.body.InfoMessages[0].Text);
                     }
@@ -190,8 +203,14 @@ var Connections = React.createClass({
                 if (res.ok) {
                     if (res.body.Result) {
                         console.log('Response for deleteContactByUserId', JSON.stringify(res.body));
-                        //TODO call getUserContactsByUserId separtely
-                        component.componentDidMount;
+                        for(var i=0; i<component.state.contacts.length; i++) {
+                            if(component.state.contacts[i].Id === contactId) {
+                                console.log(component.state.contacts[i].FirstName);
+                                component.state.contacts.splice(i, 1);
+                                component.forceUpdate();
+                                break;
+                            }
+                        }
                     } else {
                         console.log('Error at deleteContactByUserId', res.text);
                     }
