@@ -35,6 +35,11 @@ var Aphelia = React.createClass({
                         <p>You will need to be a registered user of GroupConnect to use Aphelia. You can register at <a href="http://group.direct">http://group.direct</a>. You can use Aphelia as a company-member or just within your own limited group of contacts.</p>
 
                         <p>Aphelia allows you to create jobs, assign them to different users and schedule them. You can also look at your own schedule and the group calendar to schedule new jobs. You can look up other users by expertise, location or availability.</p>
+                        <div className="graphics-holder">
+                            <img src='../static/img/aphelia1.png' />
+                            <img src='../static/img/aphelia2.png' />
+                            <img src='../static/img/aphelia3.png' />
+                        </div>
                     </div>
                 </div>
             </div>

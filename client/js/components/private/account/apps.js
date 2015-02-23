@@ -181,7 +181,7 @@ var Apps = React.createClass({
                 <div className="left narrow">
                     <div className={'row'+(this.state.step === 0 ? ' active' : '')}>
                         <div className="profile-pic" onClick={this.onApheliaClick} >
-                            <img src='../static/img/ic_aphelia.png' />
+                            <img src='../static/img/Aphelia_logo.png' />
                         </div>
                         <div className="top-text-wrapper">
                             <div className="line1" onClick={this.onApheliaClick}>Aphelia</div>
@@ -194,7 +194,7 @@ var Apps = React.createClass({
                     </div>
                     <div className={'row'+(this.state.step === 1 ? ' active' : '')}>
                         <div className="profile-pic" onClick={this.onGvcClick} >
-                            <i className="fa fa-users"></i>
+                            <img src='../static/img/gvc_logo.png' />
                         </div>
                         <div className="top-text-wrapper">
                             <div className="line1" onClick={this.onGvcClick}>GroupVideoConnect</div>
@@ -207,7 +207,7 @@ var Apps = React.createClass({
                     </div>
                     <div className={'row'+(this.state.step === 2 ? ' active' : '')}>
                         <div className="profile-pic" onClick={this.onBiocomClick}>
-                            <i className="fa fa-shield"></i>
+                            <img src='../static/img/biocomalart_logo.png' />
                         </div>
                         <div className="top-text-wrapper">
                             <div className="line1" onClick={this.onBiocomClick}>BioConnect</div>
@@ -220,7 +220,7 @@ var Apps = React.createClass({
                     </div>
                     <div className={'row'+(this.state.step === 3 ? ' active' : '')}>
                         <div className="profile-pic" onClick={this.onR4rClick}>
-                            <i className="fa fa-empire"></i>
+                            <img src='../static/img/report_for_result.png' />
                         </div>
                         <div className="top-text-wrapper">
                             <div className="line1" onClick={this.onR4rClick}>ReportForResults</div>
@@ -233,7 +233,7 @@ var Apps = React.createClass({
                     </div>
                     <div className={'row'+(this.state.step === 4 ? ' active' : '')}>
                         <div className="profile-pic" onClick={this.onCicClick}>
-                            <i className="fa fa-phone-square"></i>
+                            <img src='../static/img/cic_logo.png' />
                         </div>
                         <div className="top-text-wrapper">
                             <div className="line1" onClick={this.onCicClick}>CiscoInstantConnect</div>

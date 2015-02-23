@@ -61,10 +61,10 @@ var steps = [
         }
 
         return (
-            <div>
-                <div className="left">Connection Requests:</div>
+            <div className="row borderless">
+                <div className={'caps'  + (component.state.requests.length ? '' : ' invisible')}>Connection Requests</div>
                 {requestElements}
-                <div className="left">Connections:</div>
+                <div className={'caps' + (component.state.contacts.length ? '' : ' invisible')}>Connections</div>
                 {contactElements}
             </div>
         );

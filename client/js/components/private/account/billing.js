@@ -72,7 +72,7 @@ var Billing = React.createClass({
                     </div>
                     <div className={'row'+(this.state.step === 0 ? ' active' : '')}>
                         <div className="profile-pic" onClick={this.onApheliaClick} >
-                            <a href="#aphelia"><i className="fa fa-puzzle-piece"></i></a>
+                            <a href="#aphelia"><img src='../static/img/Aphelia_logo.png' /></a>
                         </div>
                         <div className="top-text-wrapper">
                             <div className="line1" onClick={this.onApheliaClick}><a href="#aphelia">Aphelia</a></div>
@@ -85,7 +85,7 @@ var Billing = React.createClass({
                     </div>
                     <div className={'row'+(this.state.step === 1 ? ' active' : '')}>
                         <div className="profile-pic" onClick={this.onGvcClick} >
-                            <a href="#gvc"><i className="fa fa-users"></i></a>
+                            <a href="#gvc"><img src='../static/img/gvc_logo.png' /></a>
                         </div>
                         <div className="top-text-wrapper">
                             <div className="line1" onClick={this.onGvcClick}><a href="#gvc">GroupVideoConnect</a></div>
@@ -98,7 +98,7 @@ var Billing = React.createClass({
                     </div>
                     <div className={'row'+(this.state.step === 2 ? ' active' : '')}>
                         <div className="profile-pic" onClick={this.onBiocomClick}>
-                            <a href="#biocom"><i className="fa fa-shield"></i></a>
+                            <a href="#biocom"><img src='../static/img/biocomalart_logo.png' /></a>
                         </div>
                         <div className="top-text-wrapper">
                             <div className="line1" onClick={this.onBiocomClick}><a href="#biocom">BioConnect</a></div>
@@ -111,7 +111,7 @@ var Billing = React.createClass({
                     </div>
                     <div className={'row'+(this.state.step === 3 ? ' active' : '')}>
                         <div className="profile-pic" onClick={this.onR4rClick}>
-                            <a href="#r4r"><i className="fa fa-empire"></i></a>
+                            <a href="#r4r"><img src='../static/img/report_for_result.png' /></a>
                         </div>
                         <div className="top-text-wrapper">
                             <div className="line1" onClick={this.onR4rClick}><a href="#r4r">ReportForResults</a></div>
@@ -124,7 +124,7 @@ var Billing = React.createClass({
                     </div>
                     <div className={'row'+(this.state.step === 4 ? ' active' : '')}>
                         <div className="profile-pic" onClick={this.onCicClick}>
-                            <a href="#cic"><i className="fa fa-phone-square"></i></a>
+                            <a href="#cic"><img src='../static/img/cic_logo.png' /></a>
                         </div>
                         <div className="top-text-wrapper">
                             <div className="line1" onClick={this.onCicClick}><a href="#cic">CiscoInstantConnect</a></div>

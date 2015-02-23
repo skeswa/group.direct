@@ -39,6 +39,11 @@ var GVC = React.createClass({
                             - HD Video Viewing <br />
                             - Video Streaming <br />
                             - Integrated 3rd-party Video Conferencing (Jabber/ooVoo) <br />
+                        <div className="graphics-holder">
+                            <img src='../static/img/gvc1.png' />
+                            <img src='../static/img/gvc2.png' />
+                            <img src='../static/img/gvc3.png' />
+                        </div>
                         <p>Some of the functionalities can be enabled through Technuf Services. Please contact us for customization and enhancement options.</p>
                     </div>
                 </div>

@@ -30,13 +30,18 @@ var Account = React.createClass({
     },
     getInitialState: function() {
         return {
-            value: 'Search contacts'
+            color: "#000"
         };
     },
     componentDidMount: function() {
         var component = this;
     },
     componentWillUnmount: function() {
+    },
+    onTabClick: function() {
+        this.setState({
+            color: "#F9C100"
+        })
     },
     render: function() {
         // Get the route name
@@ -49,15 +54,15 @@ var Account = React.createClass({
                     <div id="content">
                         <div className="title">My Account</div>
                         <div className="tabs">
-                            <Link to="profile">Profile</Link>
+                            <Link to="profile" onClick={this.onTabClick} style={{color: this.state.color}}>Profile</Link>
                             <span className="separator"></span>
-                            <Link to="connections">Connections</Link>
+                            <Link to="connections" onClick={this.onTabClick} style={{color: this.state.color}}>Connections</Link>
                             <span className="separator"></span>
-                            <Link to="settings">Settings</Link>
+                            <Link to="settings" onClick={this.onTabClick} style={{color: this.state.color}}>Settings</Link>
                             <span className="separator"></span>
-                            <Link to="apps">Apps</Link>
+                            <Link to="apps" onClick={this.onTabClick} style={{color: this.state.color}}>Apps</Link>
                             <span className="separator"></span>
-                            <Link to="billing">Billing</Link>
+                            <Link to="billing" onClick={this.onTabClick} style={{color: this.state.color}}>Billing</Link>
                         </div>
                         <RouteHandler component="div" key={routeName}/>
                     </div>
