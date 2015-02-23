@@ -1,30 +1,32 @@
-var gulp = require('gulp'),
+var gulp        = require('gulp'),
     // Generic imports
-    Stream = require('stream'),
-    gutil = require('gulp-util'),
-    path = require('path'),
-    clean = require('rimraf'),
-    plumber = require('gulp-plumber'),
+    Stream      = require('stream'),
+    gutil       = require('gulp-util'),
+    path        = require('path'),
+    clean       = require('rimraf'),
+    plumber     = require('gulp-plumber'),
     // Browserify-related imports
-    browserify = require('browserify'),
-    source = require('vinyl-source-stream'),
-    watchify = require('watchify'),
-    reactify = require('reactify'),
+    browserify  = require('browserify'),
+    source      = require('vinyl-source-stream'),
+    watchify    = require('watchify'),
+    reactify    = require('reactify'),
+    uglify      = require('gulp-uglify'),
+    buffer      = require('vinyl-buffer')
     // LESS-related imports
-    less = require('gulp-less'),
-    sourcemaps = require('gulp-sourcemaps'),
+    less        = require('gulp-less'),
+    sourcemaps  = require('gulp-sourcemaps'),
     // HTML-related imports
-    minify = require('gulp-minify-html'),
+    minify      = require('gulp-minify-html'),
     // Dev-server-related imports
-    nodemon = require('nodemon')
+    nodemon     = require('nodemon')
     // Githook imports
-    express = require('express'),
-    bodyParser = require('body-parser'),
-    crypto = require('crypto'),
-    async = require('async'),
-    exec = require('child_process').exec,
-    git = require('gulp-git'),
-    http = require('http');
+    express     = require('express'),
+    bodyParser  = require('body-parser'),
+    crypto      = require('crypto'),
+    async       = require('async'),
+    exec        = require('child_process').exec,
+    git         = require('gulp-git'),
+    http        = require('http');
 
 var constants = {
     DEV_DB_CONN_STRING:     'postgres://groupdirectdev:groupdirectdev@localhost:5432/groupdirectdev',
@@ -34,20 +36,22 @@ var constants = {
 var helpers = {
     rebundle: function(bundler, done) {
         var time = (new Date()).getTime();
-        gutil.log('Re-bundling js started');
+        gutil.log('Started re-bundling client js');
         bundler
             .bundle(function(err) {
                 if (!err) {
-                    gutil.log('Re-bundling js finished after ' + (((new Date()).getTime() - time) / 1000) + ' seconds');
+                    gutil.log('Finished re-bundling client js after ' + (((new Date()).getTime() - time) / 1000) + ' s');
                     if (done) done();
                 } else {
-                    gutil.log('Re-bundling js FAILED after ' + (((new Date()).getTime() - time) / 1000) + ' seconds');
+                    gutil.log('Failed to re-bundle client js:');
                     console.log(err);
-                    if (done) done();
+                    if (done) done(err);
                 }
             })
             .pipe(plumber())
             .pipe(source(path.join(__dirname, 'main.js')))
+            .pipe(buffer())
+            .pipe(uglify())
             .pipe(gulp.dest(path.join(__dirname, 'client', 'dist', 'js')))
     },
     delay: function(callback) {
