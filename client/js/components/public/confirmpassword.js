@@ -70,35 +70,11 @@ var ConfirmPassword = React.createClass({
             password: event.target.value
         });
     },
-    validatePassword: function() {
-        var password = this.state.password;
-        if (!Validator.matches(password, /((?=.*\d)(?=.*[a-z]).{6,20})/)) {
-            this.setState({
-                toastMessage: 'Password must have one digit, lowercase letter and be between 6 and 20 characters long',
-                password: '',
-                confirmPassword: ''
-            });
-            // Focus and clear the password box
-            this.refs.password.getDOMNode().focus();
-            return;
-        }
-    },
     onConfirmPasswordUpdated: function(event) {
         this.setState({
             toastMessage: undefined,
             confirmPassword: event.target.value
         });
-    },
-    validateConfirmPassword: function() {
-        if (this.state.confirmPassword != this.state.password) {
-            this.setState({
-                toastMessage: 'Passwords did not match.',
-                confirmPassword: ''
-            });
-            return;
-            // Focus and clear the password box
-            //this.refs.confirm-password.getDOMNode().focus();
-        }
     },
     onEnterKeyPress: function(event) {
         if (event.keyCode === 13) {
@@ -112,36 +88,54 @@ var ConfirmPassword = React.createClass({
     submitRequest: function() {
         //get token from query string
         var token = url.getParameterByName('token');
-        console.log('token', token);
         var password = this.state.password;
 
         var component = this;
 
-        this.validatePassword();
-        this.validateConfirmPassword();
-        AuthService.resetPassword(
-            token,
-            password,
-            function(res) {
-                if (res.ok) {
-                    //everything went fine
-                    if (res.body.Result) {
-                        component.setState({
-                            step: 1
-                        });
+        //this.validatePassword();
+        if (!Validator.matches(password, /((?=.*\d)(?=.*[a-z]).{6,20})/)) {
+            this.setState({
+                toastMessage: 'Password must have one digit, lowercase letter and be between 6 and 20 characters long',
+                password: '',
+                confirmPassword: ''
+            });
+            // Focus and clear the password box
+            this.refs.password.getDOMNode().focus();
+            return;
+        } else if (this.state.confirmPassword != this.state.password) {
+            this.setState({
+                toastMessage: 'Passwords did not match.',
+                confirmPassword: ''
+            });
+            return;
+            // Focus and clear the password box
+            //this.refs.confirm-password.getDOMNode().focus();
+        } else {
+            AuthService.resetPassword(
+                token,
+                password,
+                function(res) {
+                    if (res.ok) {
+                        //everything went fine
+                        if (res.body.Result) {
+                            console.log("Response from resetPassword", JSON.stringify(res.body));
+                            component.setState({
+                                step: 1
+                            });
+                        } else {
+                            //something went wrong
+                            component.setState({
+                                toastMessage: res.body.InfoMessages[0].Text
+                            });
+                        }
                     } else {
                         //something went wrong
                         component.setState({
                             step: 2
                         });
                     }
-                } else {
-                    //something went wrong
-                    component.setState({
-                        step: 2
-                    });
-                }
-        });
+            });
+        }
     },
     render: function() {
         return (

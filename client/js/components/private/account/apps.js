@@ -22,12 +22,12 @@ var steps = [
                         <div className="subtitle">Aphelia App Settings</div>
                         <div className="field">
                             <div className="label">Send email</div>
-                            <Link to="about" className="button">Once an hour  <i className="fa fa-chevron-down"></i></Link>
+                            <Link to="notice" className="button">Once an hour  <i className="fa fa-chevron-down"></i></Link>
                         </div>
                     </div>
                     <div className="right">
                         <div className="field">
-                            <div><Link to="about">Application Description</Link></div>
+                            <div><Link to="notice">Application Description</Link></div>
                             <div className="get-the-app">Get the app</div>
                             <a className="get-for-ios" href="#"/>
                             <a className="get-for-android" href="#"/>
@@ -44,12 +44,12 @@ var steps = [
                         <div className="subtitle">GVC App Settings</div>
                         <div className="field">
                             <div className="label">Send email</div>
-                            <Link to="about" className="button">Once an hour  <i className="fa fa-chevron-down"></i></Link>
+                            <Link to="notice" className="button">Once an hour  <i className="fa fa-chevron-down"></i></Link>
                         </div>
                     </div>
                     <div className="right">
                         <div className="field">
-                            <div><Link to="about">Application Description</Link></div>
+                            <div><Link to="notice">Application Description</Link></div>
                             <div className="get-the-app">Get the app</div>
                             <a className="get-for-ios" href="#"/>
                             <a className="get-for-android" href="#"/>
@@ -66,12 +66,12 @@ var steps = [
                         <div className="subtitle">Biocom App Settings</div>
                         <div className="field">
                             <div className="label">Send email</div>
-                            <Link to="about" className="button">Once an hour  <i className="fa fa-chevron-down"></i></Link>
+                            <Link to="notice" className="button">Once an hour  <i className="fa fa-chevron-down"></i></Link>
                         </div>
                     </div>
                     <div className="right">
                         <div className="field">
-                            <div><Link to="about">Application Description</Link></div>
+                            <div><Link to="notice">Application Description</Link></div>
                             <div className="get-the-app">Get the app</div>
                             <a className="get-for-ios" href="#"/>
                             <a className="get-for-android" href="#"/>
@@ -88,12 +88,12 @@ var steps = [
                         <div className="subtitle">R4R App Settings</div>
                         <div className="field">
                             <div className="label">Send email</div>
-                            <Link to="about" className="button">Once an hour  <i className="fa fa-chevron-down"></i></Link>
+                            <Link to="notice" className="button">Once an hour  <i className="fa fa-chevron-down"></i></Link>
                         </div>
                     </div>
                     <div className="right">
                         <div className="field">
-                            <div><Link to="about">Application Description</Link></div>
+                            <div><Link to="notice">Application Description</Link></div>
                             <div className="get-the-app">Get the app</div>
                             <a className="get-for-ios" href="#"/>
                             <a className="get-for-android" href="#"/>
@@ -110,12 +110,12 @@ var steps = [
                         <div className="subtitle">CIC App Settings</div>
                         <div className="field">
                             <div className="label">Send email</div>
-                            <Link to="about" className="button">Once an hour  <i className="fa fa-chevron-down"></i></Link>
+                            <Link to="notice" className="button">Once an hour  <i className="fa fa-chevron-down"></i></Link>
                         </div>
                     </div>
                     <div className="right">
                         <div className="field">
-                            <div><Link to="about">Application Description</Link></div>
+                            <div><Link to="notice">Application Description</Link></div>
                             <div className="get-the-app">Get the app</div>
                             <a className="get-for-ios" href="#"/>
                             <a className="get-for-android" href="#"/>

@@ -239,13 +239,13 @@ var Profile = React.createClass({
                         </div>
                         <div className="top-text-wrapper">
                             <div className="line1">Group.Direct Demo Company</div>
-                            <div className="line2 link">Edit info</div>
+                            <div className="line2 link"><a href='notice'>Edit info</a></div>
                         </div>
                     </div>
                     <div className="row">
 
                         <div className="top-text-wrapper">
-                            <div className="line1"><i className="fa fa-plus-square-o"></i>  Create or Join another company</div>
+                            <div className="line1"><a href='notice'><i className="fa fa-plus-square-o"></i>  Create or Join another company</a></div>
                         </div>
                     </div>
                 </div>

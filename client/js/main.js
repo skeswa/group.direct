@@ -33,7 +33,8 @@ var Public      = require('./components/public'),
     Connections     = require('./components/private/account/connections'),
     Settings        = require('./components/private/account/settings'),
     Apps            = require('./components/private/account/apps'),
-    Billing         = require('./components/private/account/billing');
+    Billing         = require('./components/private/account/billing'),
+    Notice          = require('./components/private/account/notice');
 
 // Authentication-required page components
 // TODO make the internal pages a thing
@@ -63,6 +64,7 @@ var sitemap = (
             <Route name="settings" handler={Settings}/>
             <Route name="apps" handler={Apps}/>
             <Route name="billing" handler={Billing}/>
+            <Route name="notice" handler={Notice}/>
             <Redirect from="*" to="apps" />
         </Route>
         <NotFoundRoute name="404" handler={NotFound}/>

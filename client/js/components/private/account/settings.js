@@ -128,7 +128,7 @@ var Settings = React.createClass({
                     <div className="subtitle">Notification</div>
                     <div className="field">
                         <div className="label">Send email</div>
-                            <Link to="about" className="button">Once an hour  <i className="fa fa-chevron-down"></i> </Link>
+                            <Link to="notice" className="button">Once an hour  <i className="fa fa-chevron-down"></i> </Link>
                     </div>
                 </div>
             </div>

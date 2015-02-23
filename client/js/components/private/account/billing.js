@@ -1,16 +1,14 @@
 /** @jsx React.DOM */
 var React           = require('react'),
-    Router          = require('react-router');
+    Navigation      = require('react-router').Navigation;
 
 var Actions         = require('../../../actions');
 
 var AuthMixin       = require('../../../mixins/auth');
 
-// React-router variables
-var Link            = Router.Link;
-
 var Billing = React.createClass({
     mixins: [AuthMixin],
+    mixins: [Navigation],
     getInitialState: function() {
         return {
             step: 6
@@ -25,6 +23,7 @@ var Billing = React.createClass({
         this.setState({
             step: 5
         });
+        this.transitionTo('notice');
     },
     onApheliaClick: function() {
         this.setState({
@@ -78,7 +77,7 @@ var Billing = React.createClass({
                         <div className="top-text-wrapper">
                             <div className="line1" onClick={this.onApheliaClick}><a href="#aphelia">Aphelia</a></div>
                             <div className="line2">
-                                <span>Free</span>
+                                <span>Basic</span>
                                 <span className="separator"></span>
                                 <span className="link" onClick={this.onUpgradeClick}>Upgrade License</span>
                             </div>
@@ -91,7 +90,7 @@ var Billing = React.createClass({
                         <div className="top-text-wrapper">
                             <div className="line1" onClick={this.onGvcClick}><a href="#gvc">GroupVideoConnect</a></div>
                             <div className="line2">
-                                <span>Free</span>
+                                <span>Basic</span>
                                 <span className="separator"></span>
                                 <span className="link" onClick={this.onUpgradeClick}>Upgrade License</span>
                             </div>
@@ -104,7 +103,7 @@ var Billing = React.createClass({
                         <div className="top-text-wrapper">
                             <div className="line1" onClick={this.onBiocomClick}><a href="#biocom">BioConnect</a></div>
                             <div className="line2">
-                                <span>Free</span>
+                                <span>Basic</span>
                                 <span className="separator"></span>
                                 <span className="link" onClick={this.onUpgradeClick}>Upgrade License</span>
                             </div>
@@ -117,7 +116,7 @@ var Billing = React.createClass({
                         <div className="top-text-wrapper">
                             <div className="line1" onClick={this.onR4rClick}><a href="#r4r">ReportForResults</a></div>
                             <div className="line2">
-                                <span>Free</span>
+                                <span>Basic</span>
                                 <span className="separator"></span>
                                 <span className="link" onClick={this.onUpgradeClick}>Upgrade License</span>
                             </div>
@@ -130,7 +129,7 @@ var Billing = React.createClass({
                         <div className="top-text-wrapper">
                             <div className="line1" onClick={this.onCicClick}><a href="#cic">CiscoInstantConnect</a></div>
                             <div className="line2">
-                                <span>Free</span>
+                                <span>Basic</span>
                                 <span className="separator"></span>
                                 <span className="link" onClick={this.onUpgradeClick}>Upgrade License</span>
                             </div>
