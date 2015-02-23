@@ -60,22 +60,22 @@ var helpers = {
 };
 
 // Compiles the client js
-gulp.task('browserify', function() {
+gulp.task('browserify', function(cb) {
     var bundler = browserify({
         cache: {},
         packageCache: {},
         fullPaths: true
     });
-    // React middleware for JSX
+    // JSX compilation middleware
     bundler.transform(reactify);
     // Add the entry point
     bundler.add(path.join(__dirname, 'client', 'js', 'main.js'));
     // Perform initial rebundle
-    return helpers.rebundle(bundler);
+    return helpers.rebundle(bundler, cb);
 });
 
 // Watches and recompiles client js
-gulp.task('watchify', function() {
+gulp.task('watchify', function(cb) {
     var bundler = browserify({
         cache: {},
         packageCache: {},
@@ -84,7 +84,7 @@ gulp.task('watchify', function() {
     });
     // Pass the browserify bundler to watchify
     bundler = watchify(bundler);
-    // React middleware for JSX
+    // JSX compilation middleware
     bundler.transform(reactify);
     // Bundlize on updates
     bundler.on('update', function() {
@@ -93,7 +93,7 @@ gulp.task('watchify', function() {
     // Add the entry point
     bundler.add(path.join(__dirname, 'client', 'js', 'main.js'));
     // Perform initial rebundle
-    return helpers.rebundle(bundler);
+    return helpers.rebundle(bundler, cb);
 });
 
 // Compiles the client less
