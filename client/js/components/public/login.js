@@ -70,7 +70,7 @@ var Login = React.createClass({
                             'Check your connection status and try again.'
                     });
                 } else {
-                    if (res.status === 401) {
+                    if (!res.body.Result) { //TODO: Implement (res.status === 401) {
                         // Bad credentials
                         component.setState({
                             waiting: false,

@@ -1,6 +1,18 @@
 var request = require('superagent');
 
 var ProfileService = {
+    getProfileInfo: function(
+        userId,
+        sessionToken,
+        callback) {
+        request
+            .post('/GroupDirectServices/ApheliaIUserService.svc/GetProfileInfo')
+            .send({
+                userId: userId,
+                st: sessionToken
+            })
+            .end(callback);
+    },
     saveProfileInfo: function(
         userId,
         firstName,

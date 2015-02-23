@@ -39,10 +39,15 @@
         .huge {
                 font-size: 8em;
                 color: #FFF3D9;
-            }
+        }
         .big {
             font-size: 20px;
             font-weight: 600;
+        }
+        .link {
+            display: inline;
+            color: #F9C100;
+            cursor: pointer;
         }
         .tabs {
             margin-bottom: 10px;
@@ -124,7 +129,7 @@
             font-style: italic;
             padding: 0 0 0 10px;
             &.visible {
-                display: inline;
+                display: inline-block;
             }
         }
         .separator {
@@ -166,8 +171,11 @@
             &:active {
                 background: linear-gradient(to bottom, darken(#f0f0f0, 2%) 0%, darken(#d6d6d6, 2%) 100%);
             }
-            &.disabled {
+            &:disabled {
                 color: #999;
+                &:hover {
+                    background: linear-gradient(to bottom, darken(#f0f0f0, 2%) 0%, darken(#d6d6d6, 2%) 100%);
+                }
             }
         }
         .row {
@@ -215,6 +223,7 @@
             color: #ccc;
             &:focus {
                 .mixin-form-textbox-focused;
+                color: #333;
             }
         }
         .left, .right {
@@ -295,6 +304,12 @@
                 .column1 {
                     display: inline-block;
                     width: 6%;
+                    &.red {
+                        .textbox {
+                            border: 2px solid #EF7634;
+                            color: #EF7634;
+                        }
+                    }
                 }
                 .column2 {
                     display: inline-block;

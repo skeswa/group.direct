@@ -53,7 +53,7 @@ var Splash = React.createClass({
                 </Link>
                     <div className="links">
                         <div className="link" data-reference="gptt">Verticals</div>
-                        <div className="link" data-reference="apps">Apps</div>
+                        <div className="link" data-reference="apps"><a href="#apps">Apps</a></div>
                     </div>
                     <div className="nav">
                         <Link to="about">About Us</Link>
@@ -78,7 +78,7 @@ var Splash = React.createClass({
                     </div>
                 </section>
                 <section className="features">
-                    <div className="title">Product Features</div>
+                    <div className="title"><a name="apps">Product Features</a></div>
                     <div className="subtitle">The features of our technology</div>
                     <div className="feature">
                         <div className="card">
@@ -95,7 +95,7 @@ var Splash = React.createClass({
                                 <i className="fa fa-video-camera"/>
                             </div>
                             <div className="title">Real&#8209;time<br/>HD&nbsp;Video</div>
-                            <div className="link button" data-reference="gptt">Learn More</div>
+                            <div className="link button" data-reference="gptt"><a href='gvc'>Learn More</a></div>
                         </div>
                     </div>
                     <div className="feature">
@@ -104,7 +104,7 @@ var Splash = React.createClass({
                                 <i className="fa fa-tasks"/>
                             </div>
                             <div className="title">Personal &amp; Group<br/>Schedule Management</div>
-                            <div className="link button" data-reference="gptt">Learn More</div>
+                            <div className="link button" data-reference="gptt"><a href='aphelia'>Learn More</a></div>
                         </div>
                     </div>
                     <div className="feature">
@@ -122,7 +122,7 @@ var Splash = React.createClass({
                                 <i className="fa fa-warning"/>
                             </div>
                             <div className="title">Community<br/>Self&#8209;Reporting</div>
-                            <div className="link button" data-reference="gptt">Learn More</div>
+                            <div className="link button" data-reference="gptt"><a href='r4r'>Learn More</a></div>
                         </div>
                     </div>
                 </section>

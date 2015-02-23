@@ -3,13 +3,17 @@
 
 #splash.page {
     .mixin-page;
-
     .header {
         padding: 70px 50px;
         background: transparent;
         position: absolute;
         top: 0px;
         width: 100%;
+        .link {
+            a {
+                color: #4A4A4A!important;
+            }
+        }
     }
 
     section.intro {
@@ -50,7 +54,6 @@
                     .title {
                         color: @slate-gray;
                         font-size: 42px;
-
                     }
                     .subtitle {
                         margin-top: 20px;
@@ -95,7 +98,9 @@
 
         .title {
             .mixin-section-title;
-
+                a {
+                    color: @slate-gray!important;
+                }
             width: 100%;
         }
         .subtitle {
