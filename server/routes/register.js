@@ -35,14 +35,31 @@ exports.route = function(app) {
 
     app.get('/reset', function(req, res) {
         // Call the activation endpoint
-        var token = req.query.token;
+        var token = req.query.token,
+            reset = req.query.reset;
         // Redirect back to the login page if the parameters were not included
-        if (!token) {
+        if (!token || !reset) {
             return res.redirect('/signin');
         } else {
-            return res.redirect('/confirmpassword?token='+token);
+            if (reset == 'true'){
+                //if(isTokenValid)
+                return res.redirect('/confirmpassword?token='+token);
+                //else TODO return res.redirect('/request-expired')
+            } else {
+                request
+                    .post('http://54.200.112.228/GroupDirectServices/ApheliaIUserService.svc/DiactivateRestPassowrdToken')
+                    .send({
+                        token: token
+                    })
+                    .end(function (response) {
+                        if (!response.ok) {
+                            log.error('We got an invalid response from the backend on activation:', response.body);
+                        }
+                        console.log('Response for DiactivateRestPassowrdToken', JSON.stringify(response.body));
+                        return res.redirect('/signin');
+                    });
+            }
         }
-
     });
 
     app.post('/api/register/user', function(req, res) {
