@@ -33,7 +33,7 @@ var Header = React.createClass({
                     </div>
                 </Link>
                 <div className="nav">
-                    <div className="logout" onClick={this.logout}>Log out</div>
+                    <div className="logout" onClick={this.logout}>Sign out</div>
                     <div className="separator"></div>
                     <a target="_blank" href={"http://apps.group.direct?sk=" + this.state.sk}>Application Console</a>
                     <div className="separator"></div>

@@ -83,7 +83,7 @@ var steps = [
                     </div>
                 </div>
                 <div className="right narrow">
-                    <button id="invite-button" className="button" type="button" disabled={component.state.inviteButtonStyle} onClick={component.onInvite}>{component.state.inviteButtonValue}</button>
+                    <button id="invite-button" className={"button" + (component.state.inviteButtonValue ? '': ' invisible')} type="button" disabled={component.state.inviteButtonStyle} onClick={component.onInvite}>{component.state.inviteButtonValue}</button>
                 </div>
             </div>
         );
@@ -241,10 +241,12 @@ var Connections = React.createClass({
             } else {
                 ContactService.getUserByEmail(
                 email,
+                component.state.userId,
                 sessionToken,
                 function(res) {
                     if (res.ok) {
                         if (res.body.Result) {
+                            console.log("Contact found", res.body.Result.ConnectionStatus);
                             //Contact found
                              component.setState({
                                 step: 1,
@@ -253,6 +255,23 @@ var Connections = React.createClass({
                                 lastName: res.body.Result.LastName,
                                 contactEmail: res.body.Result.Email
                             });
+                            if (res.body.Result.ConnectionStatus == 1) {
+                                 component.setState({
+                                    inviteButtonValue: 'Add Request Pending',
+                                    inviteButtonStyle: 'disabled'
+                                });
+                            }
+                            if (res.body.Result.ConnectionStatus == 2) {
+                                 component.setState({
+                                    inviteButtonValue: 'Connected',
+                                    inviteButtonStyle: 'disabled'
+                                });
+                            }
+                            if (res.body.Result.Email == AppStateStore.getSessionData().email) {
+                                 component.setState({
+                                    inviteButtonValue: undefined
+                                });
+                            }
                         } else {
                             //No contact found
                             component.setState({
@@ -281,7 +300,6 @@ var Connections = React.createClass({
             sessionToken,
             function(res) {
                 if (res.ok) {
-                    //TODO: Review: experiment
                     component.setState({
                         inviteButtonValue: 'Invitation sent',
                         inviteButtonStyle: 'disabled'

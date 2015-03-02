@@ -7,18 +7,7 @@
         left: 0px;
         right: 0px;
         bottom: 0px;
-        //TODO: remove temp
-        .temp {
-            display: inline-block!important;
-            width: 30%!important;
-            height: 25px!important;
-            padding: 6px 8px!important;
-
-            &:focus {
-                padding: 6px 8px!important;
-                border-width: 1px!important;
-            }
-        }
+        background: linear-gradient(to top, #B1C6C4 0%, #F9E9D7 100%) repeat scroll 0% 0% transparent;
         .title {
             .mixin-section-title;
         }
@@ -54,7 +43,21 @@
             cursor: pointer;
         }
         .tabs {
-            margin-bottom: 10px;
+            float: left;
+            height: 100%;
+            background: linear-gradient(to top, #B1C6C4 0%, #F9E9D7 100%) repeat scroll 0% 0% transparent;
+            a {
+                display: block;
+                text-align: left;
+                padding: 5px 30px;
+                color: #4A4A4A;
+                &:hover {
+                    background: rgba(0, 0, 0, 0.03);
+                }
+                &.active{
+                    background: #fff;
+                }
+            }
             .tab {
                 background: none;
                 border:none;
@@ -68,8 +71,12 @@
             }
         }
         .tab-content {
-            width: 80%;
-            display: inline-block;
+            border-radius: 4px;
+            background: none repeat scroll 0% 0% #FFF;
+            padding: 10px;
+            overflow: auto;
+            margin-right: 10px;
+            height: 94%;
             .form {
                 margin-top: 10px;
                 margin-bottom: 20px;
@@ -235,7 +242,7 @@
             }
         }
         .left, .right {
-            padding: 10px;
+            padding: 8px;
             width: 45%;
             .row {
                 width: 95%;
@@ -248,14 +255,12 @@
             }
             &.narrow {
                 background: none repeat scroll 0% 0% rgb(244, 241, 241);
-                position: fixed;
-                width: 18%;
+                width: 22%;
                 top: 24%;
                 border-radius: 4px;
                 .row {
                     padding: 5px;
                     border-radius: 4px;
-                    margin-top: -6px;
                     &.active {
                         background: none repeat scroll 0% 0% #fff;
                     }

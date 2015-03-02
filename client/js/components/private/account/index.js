@@ -30,18 +30,12 @@ var Account = React.createClass({
     },
     getInitialState: function() {
         return {
-            color: "#000"
         };
     },
     componentDidMount: function() {
         var component = this;
     },
     componentWillUnmount: function() {
-    },
-    onTabClick: function() {
-        this.setState({
-            color: "#F9C100"
-        })
     },
     render: function() {
         // Get the route name
@@ -52,17 +46,12 @@ var Account = React.createClass({
                 <Header />
                 <div id="account" className="page">
                     <div id="content">
-                        <div className="title">My Account</div>
                         <div className="tabs">
-                            <Link to="profile" onClick={this.onTabClick} style={{color: this.state.color}}>Profile</Link>
-                            <span className="separator"></span>
-                            <Link to="connections" onClick={this.onTabClick} style={{color: this.state.color}}>Connections</Link>
-                            <span className="separator"></span>
-                            <Link to="settings" onClick={this.onTabClick} style={{color: this.state.color}}>Settings</Link>
-                            <span className="separator"></span>
-                            <Link to="apps" onClick={this.onTabClick} style={{color: this.state.color}}>Apps</Link>
-                            <span className="separator"></span>
-                            <Link to="billing" onClick={this.onTabClick} style={{color: this.state.color}}>Billing</Link>
+                            <Link to="profile">Profile</Link>
+                            <Link to="connections">Connections</Link>
+                            <Link to="settings">Settings</Link>
+                            <Link to="apps">Apps</Link>
+                            <Link to="billing">Billing</Link>
                         </div>
                         <RouteHandler component="div" key={routeName}/>
                     </div>
