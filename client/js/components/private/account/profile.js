@@ -43,6 +43,9 @@ var Profile = React.createClass({
                     // This means everything went just fine
                     if(res.body.Result) {
                         component.setState({
+                            firstName: res.body.Result.FirstName,
+                            lastName: res.body.Result.LastName,
+                            email: res.body.Result.Email,
                             phone: res.body.Result.ContactNumber,
                             address1: res.body.Result.Address1,
                             address2: res.body.Result.Address2,

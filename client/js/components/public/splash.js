@@ -44,8 +44,8 @@ var Splash = React.createClass({
             <div id="splash" className="page">
                 <div className="header">
                     <Link to="splash" className="logo">
-                        <div className="profile-pic" onClick={this.onBiocomClick}>
-                            <i className="fa fa-users"></i>
+                        <div className="profile-pic">
+                            <img src='../static/img/gvc_logo.png' />
                         </div>
                         <div className="logo-text">
                             GroupConnect <sup>BETA</sup>

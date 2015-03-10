@@ -1,0 +1,194 @@
+{
+  "ErrorMessages": [],
+  "InfoMessages": [],
+  "IsOperationSuccessful": true,
+  "IsResult": true,
+  "StatusMessages": [],
+  "WarnMessages": [],
+  "ResultSet": [
+    {
+        "routeName": "Bridgewater - Sierra Bonita",
+        "fromAddress": "255 Bridgewater Dr, Germantown",
+        "toAddress": "196 Sierra Bonita, Germantown",
+        "stops": [
+            {
+                "id": 1,
+                "name": "River Dr."
+            },
+            {
+                "id": 2,
+                "name": "Decoro Dr."
+            },
+            {
+                "id": 3,
+                "name": "Holly"
+            },
+            {
+                "id": 4,
+                "name": "Golden Valley"
+            }
+        ]
+    },
+    {
+        "routeName": "Route Two",
+        "fromAddress": "255 Bridgewater Dr, Germantown",
+        "toAddress": "196 Sierra Bonita, Germantown",
+        "stops": [
+            {
+                "id": 1,
+                "name": "River Dr."
+            },
+            {
+                "id": 2,
+                "name": "Decoro Dr."
+            },
+            {
+                "id": 3,
+                "name": "Holly"
+            },
+            {
+                "id": 4,
+                "name": "Golden Valley"
+            }
+        ]
+    },
+    {
+        "routeName": "Route Three",
+        "fromAddress": "255 Bridgewater Dr, Germantown",
+        "toAddress": "196 Sierra Bonita, Germantown",
+        "stops": [
+            {
+                "id": 1,
+                "name": "River Dr."
+            },
+            {
+                "id": 2,
+                "name": "Decoro Dr."
+            },
+            {
+                "id": 3,
+                "name": "Holly"
+            },
+            {
+                "id": 4,
+                "name": "Golden Valley"
+            }
+        ]
+    },
+    {
+        "routeName": "Route Four",
+        "fromAddress": "255 Bridgewater Dr, Germantown",
+        "toAddress": "196 Sierra Bonita, Germantown",
+        "stops": [
+            {
+                "id": 1,
+                "name": "River Dr."
+            },
+            {
+                "id": 2,
+                "name": "Decoro Dr."
+            },
+            {
+                "id": 3,
+                "name": "Holly"
+            },
+            {
+                "id": 4,
+                "name": "Golden Valley"
+            }
+        ]
+    },
+    {
+        "routeName": "Route Five",
+        "fromAddress": "255 Bridgewater Dr, Germantown",
+        "toAddress": "196 Sierra Bonita, Germantown",
+        "stops": [
+            {
+                "id": 1,
+                "name": "River Dr."
+            },
+            {
+                "id": 2,
+                "name": "Decoro Dr."
+            },
+            {
+                "id": 3,
+                "name": "Holly"
+            },
+            {
+                "id": 4,
+                "name": "Golden Valley"
+            }
+        ]
+    },
+    {
+        "routeName": "Route Six",
+        "fromAddress": "255 Bridgewater Dr, Germantown",
+        "toAddress": "196 Sierra Bonita, Germantown",
+        "stops": [
+            {
+                "id": 1,
+                "name": "River Dr."
+            },
+            {
+                "id": 2,
+                "name": "Decoro Dr."
+            },
+            {
+                "id": 3,
+                "name": "Holly"
+            },
+            {
+                "id": 4,
+                "name": "Golden Valley"
+            }
+        ]
+    },
+    {
+        "routeName": "Route Seven",
+        "fromAddress": "255 Bridgewater Dr, Germantown",
+        "toAddress": "196 Sierra Bonita, Germantown",
+        "stops": [
+            {
+                "id": 1,
+                "name": "River Dr."
+            },
+            {
+                "id": 2,
+                "name": "Decoro Dr."
+            },
+            {
+                "id": 3,
+                "name": "Holly"
+            },
+            {
+                "id": 4,
+                "name": "Golden Valley"
+            }
+        ]
+    },
+    {
+        "routeName": "Route Eight",
+        "fromAddress": "255 Bridgewater Dr, Germantown",
+        "toAddress": "196 Sierra Bonita, Germantown",
+        "stops": [
+            {
+                "id": 1,
+                "name": "River Dr."
+            },
+            {
+                "id": 2,
+                "name": "Decoro Dr."
+            },
+            {
+                "id": 3,
+                "name": "Holly"
+            },
+            {
+                "id": 4,
+                "name": "Golden Valley"
+            }
+        ]
+    }
+]
+}

@@ -217,7 +217,7 @@ var Connections = React.createClass({
                 } else {
                     console.log('Error at deleteContactByUserId', res.text);
                 }
-            })
+            });
     },
     onSearch: function(event) {
         this.setState({
@@ -338,7 +338,6 @@ var Connections = React.createClass({
 
         Actions.changePageTitle('Connections');
         //Get Add requests
-        console.log('Get Add requests');
         ContactService.getAddRequestsByUserId(
             userId,
             sessionToken,

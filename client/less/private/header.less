@@ -16,12 +16,30 @@
                 letter-spacing: 0.5px;
                 display: inline-block;
                 padding: 8px 5px;
+                a {
+                    color: @slate-gray;
+                }
+            }
+            .logo-image {
+                float: left;
+                display: inline-block;
+                padding: 5px;
+                letter-spacing: 0px;
+                line-height: 0;
+                min-height: 30px;
+                min-width: 30px;
+                text-align: center;
+                border-radius: 50px;
+                cursor: pointer;
+                img {
+                    height: 45px;
+                    opacity: 0.8;
+                }
             }
             .profile-pic {
                 float: left;
                 display: inline-block;
                 padding: 5px;
-                border: 4px double rgb(77, 77, 77);
                 letter-spacing: 0px;
                 line-height: 0;
                 min-height: 30px;
@@ -34,6 +52,17 @@
                     font-size: 1.4em;
                     padding: 6px 4px 4px;
                 }
+                 img {
+                    height: 45px;
+                    opacity: 0.8;
+                }
+            }
+            .arrow {
+                float: left;
+                background-image: url("../static/img/console-sprites.png");
+                background-position: right -1862px;
+                background-repeat: no-repeat;
+                margin: 0px 17px 0px 0px;
             }
         }
         .links {
