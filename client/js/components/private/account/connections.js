@@ -255,7 +255,7 @@ var Connections = React.createClass({
                                 lastName: res.body.Result.LastName,
                                 contactEmail: res.body.Result.Email
                             });
-                            if (res.body.Result.ConnectionStatus == 1) {
+                            if (res.body.Result.ConnectionStatus == 1 || res.body.Result.ConnectionStatus == 3) {
                                  component.setState({
                                     inviteButtonValue: 'Add Request Pending',
                                     inviteButtonStyle: 'disabled'
