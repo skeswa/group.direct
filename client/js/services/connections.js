@@ -4,6 +4,7 @@ var ContactService = {
     //search
     getUserByEmail: function(
         email,
+        userId,
         sessionToken,
         callback) {
         // Build the request
@@ -11,6 +12,7 @@ var ContactService = {
             .post('/GroupDirectServices/ContactService.svc/GetUserByEmail')
             .send({
                 email: email,
+                userId: userId,
                 st: sessionToken
             })
             // Submit the request

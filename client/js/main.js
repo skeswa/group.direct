@@ -25,16 +25,22 @@ var Public      = require('./components/public'),
     Services    = require('./components/public/services'),
     Register    = require('./components/public/register'),
     Forgot      = require('./components/public/forgot'),
-    ConfirmPassword = require('./components/public/confirmpassword')
-    RequestExpired = require('./components/public/requestexpired')
+    ConfirmPassword = require('./components/public/confirmpassword'),
+    RequestExpired = require('./components/public/requestexpired'),
 
     Account         = require('./components/private/account'),
     Profile         = require('./components/private/account/profile'),
     Connections     = require('./components/private/account/connections'),
     Settings        = require('./components/private/account/settings'),
     Apps            = require('./components/private/account/apps'),
-    Billing         = require('./components/private/account/billing');
+    Billing         = require('./components/private/account/billing'),
+    Notice          = require('./components/private/account/notice'),
 
+    Console         = require('./components/private/console'),
+    Routes          = require('./components/private/console/routes'),
+    Drivers          = require('./components/private/console/drivers'),
+    Vehicles          = require('./components/private/console/vehicles'),
+    Students          = require('./components/private/console/students');
 // Authentication-required page components
 // TODO make the internal pages a thing
 
@@ -63,7 +69,14 @@ var sitemap = (
             <Route name="settings" handler={Settings}/>
             <Route name="apps" handler={Apps}/>
             <Route name="billing" handler={Billing}/>
+            <Route name="notice" handler={Notice}/>
             <Redirect from="*" to="apps" />
+        </Route>
+        <Route name="console" handler={Console}>
+            <Route name="routes" handler={Routes}/>
+            <Route name="drivers" handler={Drivers}/>
+            <Route name="vehicles" handler={Vehicles}/>
+            <Route name="students" handler={Students}/>
         </Route>
         <NotFoundRoute name="404" handler={NotFound}/>
     </Route>

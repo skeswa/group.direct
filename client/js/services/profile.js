@@ -51,6 +51,23 @@ var ProfileService = {
                 st: sessionToken
             })
             .end(callback);
+    },
+//Settings screen services - move to separate file if it gets longer
+    updatePassword: function(
+        userId,
+        currentPassword,
+        newPassword,
+        sessionToken,
+        callback) {
+        request
+            .post('/GroupDirectServices/ApheliaIUserService.svc/UpdatePassword')
+            .send({
+                userId: userId,
+                currentPassword: currentPassword,
+                newPassword: newPassword,
+                st: sessionToken
+            })
+            .end(callback)
     }
 };
 

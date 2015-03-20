@@ -4,7 +4,10 @@ var fs          = require('fs'),
     request     = require('superagent');
 
 //Used for dummy service
-//var userContactsByIdData = require('../data/userContactsById.json');
+var getRoutesData = require('../data/getRoutes.json'),
+    getDriversData = require('../data/getDrivers.json'),
+    getVehiclesData = require('../data/getVehicles.json'),
+    getStudentsData = require('../data/getStudents.json');
 
 var log     = require('../log');
 
@@ -27,9 +30,18 @@ exports.route = function(app) {
         });
     };
     //Used for dummy service
-    // app.post('/GroupDirectServices/ContactService.svc/GetUserContactsByUserId', function(req, res){
-    //     res.status(200).json(userContactsByIdData);
-    // });
+    app.post('/GroupDirectServices/SchoolBusService.svc/getRoutes', function(req, res){
+        res.status(200).json(getRoutesData);
+    });
+    app.post('/GroupDirectServices/SchoolBusService.svc/getDrivers', function(req, res){
+        res.status(200).json(getDriversData);
+    });
+    app.post('/GroupDirectServices/SchoolBusService.svc/getVehicles', function(req, res){
+        res.status(200).json(getVehiclesData);
+    });
+    app.post('/GroupDirectServices/SchoolBusService.svc/getStudents', function(req, res){
+        res.status(200).json(getStudentsData);
+    });
     app.get('/GroupDirectServices/*', serviceProxy);
     app.post('/GroupDirectServices/*', serviceProxy);
 };

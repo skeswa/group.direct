@@ -40,6 +40,7 @@
     "express": "^4.10.2",
     "express-session": "^1.9.3",
     "flux": "^2.0.1",
+    "mandrill-api": "^1.0.41",
     "object-assign": "^1.0.0",
     "passport": "^0.2.1",
     "passport-local": "^1.0.0",

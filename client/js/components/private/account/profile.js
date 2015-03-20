@@ -43,6 +43,9 @@ var Profile = React.createClass({
                     // This means everything went just fine
                     if(res.body.Result) {
                         component.setState({
+                            firstName: res.body.Result.FirstName,
+                            lastName: res.body.Result.LastName,
+                            email: res.body.Result.Email,
                             phone: res.body.Result.ContactNumber,
                             address1: res.body.Result.Address1,
                             address2: res.body.Result.Address2,
@@ -239,13 +242,13 @@ var Profile = React.createClass({
                         </div>
                         <div className="top-text-wrapper">
                             <div className="line1">Group.Direct Demo Company</div>
-                            <div className="line2 link">Edit info</div>
+                            <div className="line2 link"><a href='notice'>Edit info</a></div>
                         </div>
                     </div>
                     <div className="row">
 
                         <div className="top-text-wrapper">
-                            <div className="line1"><i className="fa fa-plus-square-o"></i>  Create or Join another company</div>
+                            <div className="line1"><a href='notice'><i className="fa fa-plus-square-o"></i>  Create or Join another company</a></div>
                         </div>
                     </div>
                 </div>

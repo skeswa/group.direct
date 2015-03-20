@@ -97,6 +97,7 @@ var Login = React.createClass({
                         });
                         // Move to the account screen
                         component.transitionTo('apps');
+                        console.log('sessionToken', res.body.Result.SessionToken);
                     } else {
                         // Stop waiting
                         component.setState({
@@ -109,7 +110,7 @@ var Login = React.createClass({
                 }
             });
         }
-    console.log('sessionToken', this.state.sessionToken);
+
     console.log( 'username', this.state.userName);
     },
     render: function() {

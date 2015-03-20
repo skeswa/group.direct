@@ -61,10 +61,10 @@ var steps = [
         }
 
         return (
-            <div>
-                <div className="left">Connection Requests:</div>
+            <div className="row borderless">
+                <div className={'caps'  + (component.state.requests.length ? '' : ' invisible')}>Connection Requests</div>
                 {requestElements}
-                <div className="left">Connections:</div>
+                <div className={'caps' + (component.state.contacts.length ? '' : ' invisible')}>Connections</div>
                 {contactElements}
             </div>
         );
@@ -83,7 +83,7 @@ var steps = [
                     </div>
                 </div>
                 <div className="right narrow">
-                    <button id="invite-button" className="button" type="button" disabled={component.state.inviteButtonStyle} onClick={component.onInvite}>{component.state.inviteButtonValue}</button>
+                    <button id="invite-button" className={"button" + (component.state.inviteButtonValue ? '': ' invisible')} type="button" disabled={component.state.inviteButtonStyle} onClick={component.onInvite}>{component.state.inviteButtonValue}</button>
                 </div>
             </div>
         );
@@ -147,7 +147,14 @@ var Connections = React.createClass({
                 if (res.ok) {
                     if (res.body.Result) {
                         console.log("Response from AcceptContactRequest");
-                        component.componentDidMount();
+                        for(var i=0; i<component.state.requests.length; i++) {
+                            if(component.state.requests[i].RequestId === requestId) {
+                                component.state.contacts.push(component.state.requests[i]);
+                                component.state.requests.splice(i, 1);
+                                component.forceUpdate();
+                                break;
+                            }
+                        }
                     } else {
                         console.log(res.body.InfoMessages[0].Text);
                     }
@@ -169,7 +176,13 @@ var Connections = React.createClass({
                 if (res.ok) {
                     if (res.body.Result) {
                         console.log("Response from DeclineContactRequest");
-                        component.componentDidMount;
+                        for(var i=0; i<component.state.requests.length; i++) {
+                            if(component.state.requests[i].RequestId === requestId) {
+                                component.state.requests.splice(i, 1);
+                                component.forceUpdate();
+                                break;
+                            }
+                        }
                     } else {
                         console.log(res.body.InfoMessages[0].Text);
                     }
@@ -190,15 +203,21 @@ var Connections = React.createClass({
                 if (res.ok) {
                     if (res.body.Result) {
                         console.log('Response for deleteContactByUserId', JSON.stringify(res.body));
-                        //TODO call getUserContactsByUserId separtely
-                        component.componentDidMount;
+                        for(var i=0; i<component.state.contacts.length; i++) {
+                            if(component.state.contacts[i].Id === contactId) {
+                                console.log(component.state.contacts[i].FirstName);
+                                component.state.contacts.splice(i, 1);
+                                component.forceUpdate();
+                                break;
+                            }
+                        }
                     } else {
                         console.log('Error at deleteContactByUserId', res.text);
                     }
                 } else {
                     console.log('Error at deleteContactByUserId', res.text);
                 }
-            })
+            });
     },
     onSearch: function(event) {
         this.setState({
@@ -222,10 +241,12 @@ var Connections = React.createClass({
             } else {
                 ContactService.getUserByEmail(
                 email,
+                component.state.userId,
                 sessionToken,
                 function(res) {
                     if (res.ok) {
                         if (res.body.Result) {
+                            console.log("Contact found", res.body.Result.ConnectionStatus);
                             //Contact found
                              component.setState({
                                 step: 1,
@@ -234,6 +255,23 @@ var Connections = React.createClass({
                                 lastName: res.body.Result.LastName,
                                 contactEmail: res.body.Result.Email
                             });
+                            if (res.body.Result.ConnectionStatus == 1 || res.body.Result.ConnectionStatus == 3) {
+                                 component.setState({
+                                    inviteButtonValue: 'Add Request Pending',
+                                    inviteButtonStyle: 'disabled'
+                                });
+                            }
+                            if (res.body.Result.ConnectionStatus == 2) {
+                                 component.setState({
+                                    inviteButtonValue: 'Connected',
+                                    inviteButtonStyle: 'disabled'
+                                });
+                            }
+                            if (res.body.Result.Email == AppStateStore.getSessionData().email) {
+                                 component.setState({
+                                    inviteButtonValue: undefined
+                                });
+                            }
                         } else {
                             //No contact found
                             component.setState({
@@ -262,7 +300,6 @@ var Connections = React.createClass({
             sessionToken,
             function(res) {
                 if (res.ok) {
-                    //TODO: Review: experiment
                     component.setState({
                         inviteButtonValue: 'Invitation sent',
                         inviteButtonStyle: 'disabled'
@@ -301,7 +338,6 @@ var Connections = React.createClass({
 
         Actions.changePageTitle('Connections');
         //Get Add requests
-        console.log('Get Add requests');
         ContactService.getAddRequestsByUserId(
             userId,
             sessionToken,

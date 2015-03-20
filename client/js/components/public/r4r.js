@@ -35,6 +35,11 @@ var R4R = React.createClass({
                         </ul>
 
                         <p>As an organization get closer to your constituents and customers by providing them an opportunity to collaboratively file reports. Reward them for good feedback and get back to them as soon as possible given the customer support infrastructure you can afford.</p>
+                        <div className="graphics-holder">
+                            <img src='../static/img/report_for_result1.png' />
+                            <img src='../static/img/report_for_result2.png' />
+                            <img src='../static/img/report_for_result3.png' />
+                        </div>
                         <p>ReportForResults allows you to do all of this. It is a component App of the GroupConnect Operational Communication and Collaboration suite, that allows crowd-sourced Incident Reporting.</p>
                         <p>In ReportForResults, users can create an incident or file a issue by specifying a description, and location. If there is an existing Report on the same issue, they can comment on the existing issue. They can request phone call-back or a Text Chat with a Responder.</p>
                         <p>ReportForResults is different from traditional HelpDesk or Call-Center products. It is designed for nimble responses back to any user at any given location.</p>

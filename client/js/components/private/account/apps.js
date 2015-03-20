@@ -13,131 +13,10 @@ var Link            = Router.Link;
 // Include internal tabs
 var Notice          = require('./notice');
 
-var steps = [
-    //First Step: Aphelia
-    function (component) {
-        return (
-            <div className="right wide">
-                    <div className="left">
-                        <div className="subtitle">Aphelia App Settings</div>
-                        <div className="field">
-                            <div className="label">Send email</div>
-                            <Link to="about" className="button">Once an hour  <i className="fa fa-chevron-down"></i></Link>
-                        </div>
-                    </div>
-                    <div className="right">
-                        <div className="field">
-                            <div><Link to="about">Application Description</Link></div>
-                            <div className="get-the-app">Get the app</div>
-                            <a className="get-for-ios" href="#"/>
-                            <a className="get-for-android" href="#"/>
-                        </div>
-                    </div>
-                </div>
-        );
-    },
-    //Second Step: GVC
-    function (component) {
-        return (
-            <div className="right wide">
-                    <div className="left">
-                        <div className="subtitle">GVC App Settings</div>
-                        <div className="field">
-                            <div className="label">Send email</div>
-                            <Link to="about" className="button">Once an hour  <i className="fa fa-chevron-down"></i></Link>
-                        </div>
-                    </div>
-                    <div className="right">
-                        <div className="field">
-                            <div><Link to="about">Application Description</Link></div>
-                            <div className="get-the-app">Get the app</div>
-                            <a className="get-for-ios" href="#"/>
-                            <a className="get-for-android" href="#"/>
-                        </div>
-                    </div>
-                </div>
-        );
-    },
-    //Third Step: Biocom
-    function (component) {
-        return (
-            <div className="right wide">
-                    <div className="left">
-                        <div className="subtitle">Biocom App Settings</div>
-                        <div className="field">
-                            <div className="label">Send email</div>
-                            <Link to="about" className="button">Once an hour  <i className="fa fa-chevron-down"></i></Link>
-                        </div>
-                    </div>
-                    <div className="right">
-                        <div className="field">
-                            <div><Link to="about">Application Description</Link></div>
-                            <div className="get-the-app">Get the app</div>
-                            <a className="get-for-ios" href="#"/>
-                            <a className="get-for-android" href="#"/>
-                        </div>
-                    </div>
-                </div>
-        );
-    },
-    //Fourth Step: R4R
-    function (component) {
-        return (
-            <div className="right wide">
-                    <div className="left">
-                        <div className="subtitle">R4R App Settings</div>
-                        <div className="field">
-                            <div className="label">Send email</div>
-                            <Link to="about" className="button">Once an hour  <i className="fa fa-chevron-down"></i></Link>
-                        </div>
-                    </div>
-                    <div className="right">
-                        <div className="field">
-                            <div><Link to="about">Application Description</Link></div>
-                            <div className="get-the-app">Get the app</div>
-                            <a className="get-for-ios" href="#"/>
-                            <a className="get-for-android" href="#"/>
-                        </div>
-                    </div>
-                </div>
-        );
-    },
-    //Fifth Step: CIC
-    function (component) {
-        return (
-            <div className="right wide">
-                    <div className="left">
-                        <div className="subtitle">CIC App Settings</div>
-                        <div className="field">
-                            <div className="label">Send email</div>
-                            <Link to="about" className="button">Once an hour  <i className="fa fa-chevron-down"></i></Link>
-                        </div>
-                    </div>
-                    <div className="right">
-                        <div className="field">
-                            <div><Link to="about">Application Description</Link></div>
-                            <div className="get-the-app">Get the app</div>
-                            <a className="get-for-ios" href="#"/>
-                            <a className="get-for-android" href="#"/>
-                        </div>
-                    </div>
-                </div>
-        );
-    },
-    // Sixth Step: Notice
-    function(component) {
-        return(
-            <Notice />
-        );
-    }
-];
-
 var Apps = React.createClass({
     mixins: [AuthMixin],
     getInitialState: function() {
         return {
-            step: 0,
-            //sk: AppStateStore.getSessionData().sessionToken
         };
     },
     componentDidMount: function() {
@@ -145,107 +24,134 @@ var Apps = React.createClass({
     },
     componentWillUnmount: function() {
     },
-    onUpgradeClick: function() {
-        this.setState({
-            step: 5
-        });
-    },
-    onApheliaClick: function() {
-        this.setState({
-            step: 0
-        });
-    },
-    onGvcClick: function() {
-        this.setState({
-            step: 1
-        });
-    },
-    onBiocomClick: function() {
-        this.setState({
-            step: 2
-        });
-    },
-    onR4rClick: function() {
-        this.setState({
-            step: 3
-        });
-    },
-    onCicClick: function() {
-        this.setState({
-            step: 4
-        });
-    },
     render: function() {
         return (
             <div className="tab-content">
-                <div className="left narrow">
-                    <div className={'row'+(this.state.step === 0 ? ' active' : '')}>
-                        <div className="profile-pic" onClick={this.onApheliaClick} >
-                            <img src='../static/img/ic_aphelia.png' />
+                <div>
+                    <div className="app-group">
+                        <div className="subtitle">Base Apps:</div>
+                        <div className="app-block">
+                            <div className="profile-pic" >
+                                <Link to="notice"><img src='../static/img/Btn_Video.png' /></Link>
+                            </div>
+                            <div className="top-text-wrapper">
+                                <div className="line1"><Link to="notice">Video Connect</Link></div>
+                                <div className="line2">
+                                    <span>Free</span>
+                                    <span className="separator"></span>
+                                    <span className="link">Upgrade License</span>
+                                </div>
+                            </div>
                         </div>
-                        <div className="top-text-wrapper">
-                            <div className="line1" onClick={this.onApheliaClick}>Aphelia</div>
-                            <div className="line2">
-                                <span>Free</span>
-                                <span className="separator"></span>
-                                <span className="link" onClick={this.onUpgradeClick}>Upgrade License</span>
+                        <div className="app-block">
+                            <div className="profile-pic">
+                                <Link to="notice"><img src='../static/img/Btn_Dispatch.png' /></Link>
+                            </div>
+                            <div className="top-text-wrapper">
+                                <div className="line1"><Link to="notice">Group Connect</Link></div>
+                                <div className="line2">
+                                    <span>Free</span>
+                                    <span className="separator"></span>
+                                    <span className="link">Upgrade License</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div className="app-block">
+                            <div className="profile-pic" >
+                                <Link to="notice"><i className="fa fa-th-list"></i></Link>
+                            </div>
+                            <div className="top-text-wrapper">
+                                <div className="line1"><Link to="notice">Job Scheduler</Link></div>
+                                <div className="line2">
+                                    <span>Free</span>
+                                    <span className="separator"></span>
+                                    <span className="link" >Upgrade License</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div className="app-block">
+                            <div className="profile-pic">
+                                <Link to="notice"><i className="fa fa-exclamation-triangle"></i></Link>
+                            </div>
+                            <div className="top-text-wrapper">
+                                <div className="line1"><Link to="notice">Report For Results</Link></div>
+                                <div className="line2">
+                                    <span>Free</span>
+                                    <span className="separator"></span>
+                                    <span className="link">Upgrade License</span>
+                                </div>
                             </div>
                         </div>
                     </div>
-                    <div className={'row'+(this.state.step === 1 ? ' active' : '')}>
-                        <div className="profile-pic" onClick={this.onGvcClick} >
-                            <i className="fa fa-users"></i>
-                        </div>
-                        <div className="top-text-wrapper">
-                            <div className="line1" onClick={this.onGvcClick}>GroupVideoConnect</div>
-                            <div className="line2">
-                                <span>Free</span>
-                                <span className="separator"></span>
-                                <span className="link" onClick={this.onUpgradeClick}>Upgrade License</span>
+                    <div className="app-group">
+                        <div className="subtitle">Vertical Apps:</div>
+                        <div className="app-block">
+                            <div className="profile-pic" >
+                                <Link to="notice"><i className="fa fa-users"></i></Link>
+                            </div>
+                            <div className="top-text-wrapper">
+                                <div className="line1"><Link to="notice">Field Connect</Link></div>
+                                <div className="line2">
+                                    <span>Free</span>
+                                    <span className="separator"></span>
+                                    <span className="link" >Upgrade License</span>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                    <div className={'row'+(this.state.step === 2 ? ' active' : '')}>
-                        <div className="profile-pic" onClick={this.onBiocomClick}>
-                            <i className="fa fa-shield"></i>
-                        </div>
-                        <div className="top-text-wrapper">
-                            <div className="line1" onClick={this.onBiocomClick}>BioConnect</div>
-                            <div className="line2">
-                                <span>Free</span>
-                                <span className="separator"></span>
-                                <span className="link" onClick={this.onUpgradeClick}>Upgrade License</span>
+                        <div className="app-block">
+                            <div className="profile-pic" >
+                                <Link to="routes"><img src='../static/img/Bus_Icon.png' /></Link>
+                            </div>
+                            <div className="top-text-wrapper">
+                                <div className="line1"><Link to="routes"><b>School Bus Connect</b></Link></div>
+                                <div className="line2">
+                                    <span>Free</span>
+                                    <span className="separator"></span>
+                                    <span className="link">Upgrade License</span>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                    <div className={'row'+(this.state.step === 3 ? ' active' : '')}>
-                        <div className="profile-pic" onClick={this.onR4rClick}>
-                            <i className="fa fa-empire"></i>
-                        </div>
-                        <div className="top-text-wrapper">
-                            <div className="line1" onClick={this.onR4rClick}>ReportForResults</div>
-                            <div className="line2">
-                                <span>Free</span>
-                                <span className="separator"></span>
-                                <span className="link" onClick={this.onUpgradeClick}>Upgrade License</span>
+                        <div className="app-block">
+                            <div className="profile-pic">
+                                <Link to="notice"><img src='../static/img/Aphelia_logo.png' /></Link>
+                            </div>
+                            <div className="top-text-wrapper">
+                                <div className="line1"><Link to="notice">Campus Connect</Link></div>
+                                <div className="line2">
+                                    <span>Free</span>
+                                    <span className="separator"></span>
+                                    <span className="link">Upgrade License</span>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                    <div className={'row'+(this.state.step === 4 ? ' active' : '')}>
-                        <div className="profile-pic" onClick={this.onCicClick}>
-                            <i className="fa fa-phone-square"></i>
+                        <div className="app-block">
+                            <div className="profile-pic">
+                                <Link to="notice"><img src='../static/img/biocomalart_logo.png' /></Link>
+                            </div>
+                            <div className="top-text-wrapper">
+                                <div className="line1"><Link to="notice">Bio Connect</Link></div>
+                                <div className="line2">
+                                    <span>Free</span>
+                                    <span className="separator"></span>
+                                    <span className="link">Upgrade License</span>
+                                </div>
+                            </div>
                         </div>
-                        <div className="top-text-wrapper">
-                            <div className="line1" onClick={this.onCicClick}>CiscoInstantConnect</div>
-                            <div className="line2">
-                                <span>Free</span>
-                                <span className="separator"></span>
-                                <span className="link" onClick={this.onUpgradeClick}>Upgrade License</span>
+                        <div className="app-block">
+                            <div className="profile-pic">
+                                 <Link to="notice"><i className="fa fa-user-md"></i></Link>
+                            </div>
+                            <div className="top-text-wrapper">
+                                <div className="line1"><Link to="notice">Holster Connect</Link></div>
+                                <div className="line2">
+                                    <span>Free</span>
+                                    <span className="separator"></span>
+                                    <span className="link">Upgrade License</span>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
-                {(steps[this.state.step])(this)}
             </div>
         );
     }

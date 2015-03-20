@@ -30,7 +30,6 @@ var Account = React.createClass({
     },
     getInitialState: function() {
         return {
-            value: 'Search contacts'
         };
     },
     componentDidMount: function() {
@@ -47,16 +46,11 @@ var Account = React.createClass({
                 <Header />
                 <div id="account" className="page">
                     <div id="content">
-                        <div className="title">My Account</div>
                         <div className="tabs">
                             <Link to="profile">Profile</Link>
-                            <span className="separator"></span>
                             <Link to="connections">Connections</Link>
-                            <span className="separator"></span>
                             <Link to="settings">Settings</Link>
-                            <span className="separator"></span>
                             <Link to="apps">Apps</Link>
-                            <span className="separator"></span>
                             <Link to="billing">Billing</Link>
                         </div>
                         <RouteHandler component="div" key={routeName}/>
