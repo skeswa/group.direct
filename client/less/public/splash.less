@@ -2,7 +2,12 @@
 @import "../colors";
 
 #splash.page {
-    .mixin-page;
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    right: 0px;
+    text-align: center;
+
     .header {
         padding: 70px 50px;
         background: transparent;
@@ -19,6 +24,7 @@
         position: relative;
         width: 100%;
         height: 100%;
+        overflow: hidden;
         background: linear-gradient(to bottom, #b1c6c4 0%, #a89d90 100%);
 
         .spotlight {
@@ -47,6 +53,7 @@
                 height: 100%;
 
                 .title-centerer {
+                    position: relative;
                     display: table-cell;
                     vertical-align: middle;
 
@@ -93,6 +100,7 @@
         background: #dddddd;
         box-sizing: border-box;
         padding: 50px;
+        padding-top: 80px;
         text-align: center;
 
         .title {
@@ -108,6 +116,7 @@
             width: 100%;
         }
         .feature {
+            position: relative;
             display: inline-block;
             width: 33%;
             box-sizing: border-box;
@@ -180,6 +189,10 @@
     section.r4r {
         .mixin-splash-section;
 
+        background: white;
+        overflow: hidden;
+        padding-top: 0px;
+
         &.green {
             border-top-color: darken(#b1c6ba, 20%);
         }
@@ -198,6 +211,7 @@
 
         .title {
             text-align: left;
+            margin-top: 50px;
             margin-bottom: 10px;
 
             .icon {

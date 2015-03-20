@@ -36,6 +36,7 @@ var Splash = React.createClass({
     },
     componentDidMount: function() {
         Actions.changePageTitle();
+        skrollr.init();
     },
     componentWillUnmount: function() {
     },
@@ -50,7 +51,7 @@ var Splash = React.createClass({
                         <div className="logo-text">
                             GroupConnect <sup>BETA</sup>
                         </div>
-                </Link>
+                    </Link>
                     <div className="links">
                         <div className="link" data-reference="gptt">Verticals</div>
                         <div className="link" data-reference="apps"><a href="#apps">Apps</a></div>
@@ -62,25 +63,48 @@ var Splash = React.createClass({
                         <Link className="button" to="signup">Sign Up</Link>
                     </div>
                 </div>
-                <section className="intro">
+                <section id="intro-slide" className="intro">
                     <div className="spotlight"/>
                     <div className="message">
                         <div className="title-wrapper">
-                            <div className="title-centerer">
+                            <div
+                                className="title-centerer"
+                                data-center="bottom: 0px; opacity: 1; transform: scale(1);"
+                                data-top="bottom: 200px; opacity: 0; transform: scale(1.1);"
+                                data-anchor-target="#intro-slide .title">
                                 <div className="title">Apps for Instant Communications, Monitoring, Coordination &amp; Collaboration.</div>
                                 <div className="subtitle">User-centric Internet of Things with Push-to-Talk, Sensors, Radios and Video</div>
                             </div>
                         </div>
                     </div>
-                    <div className="scroll-down">
+                    <div
+                        className="scroll-down"
+                        data-bottom="bottom: 0px; opacity: 1; transform: scale(1);"
+                        data-top-bottom="bottom: 200px; opacity: 0; transform: scale(1.1);">
                         <div className="text">Scroll Down</div>
                         <i className="fa fa-chevron-down"/>
                     </div>
                 </section>
-                <section className="features">
-                    <div className="title"><a name="apps">Product Features</a></div>
-                    <div className="subtitle">The features of our technology</div>
-                    <div className="feature">
+                <section id="features-section" className="features">
+                    <div
+                        className="title"
+                        data-center-top="opacity: 0;"
+                        data-center="opacity: 1;"
+                        data-anchor-target="#features-section">
+                        <a name="apps">Product Features</a>
+                    </div>
+                    <div
+                        className="subtitle"
+                        data-center-top="opacity: 0;"
+                        data-center="opacity: 1;"
+                        data-anchor-target="#features-section">
+                        The features of our technology
+                    </div>
+                    <div
+                        className="feature"
+                        data-center-top="opacity: 0; top: 100px;"
+                        data-center="opacity: 1; top: 0px;"
+                        data-anchor-target="#features-section">
                         <div className="card">
                             <div className="icon green">
                                 <i className="fa fa-bullhorn"/>
@@ -89,7 +113,11 @@ var Splash = React.createClass({
                             <div className="link button" data-reference="gptt">Learn More</div>
                         </div>
                     </div>
-                    <div className="feature">
+                    <div
+                        className="feature"
+                        data-center-top="opacity: 0; top: 100px;"
+                        data-center="opacity: 1; top: 0px;"
+                        data-anchor-target="#features-section">
                         <div className="card">
                             <div className="icon blue">
                                 <i className="fa fa-video-camera"/>
@@ -98,7 +126,11 @@ var Splash = React.createClass({
                             <div className="link button" data-reference="gptt"><a href='gvc'>Learn More</a></div>
                         </div>
                     </div>
-                    <div className="feature">
+                    <div
+                        className="feature"
+                        data-center-top="opacity: 0; top: 100px;"
+                        data-center="opacity: 1; top: 0px;"
+                        data-anchor-target="#features-section">
                         <div className="card">
                             <div className="icon gray shimmed">
                                 <i className="fa fa-tasks"/>
@@ -107,7 +139,11 @@ var Splash = React.createClass({
                             <div className="link button" data-reference="gptt"><a href='aphelia'>Learn More</a></div>
                         </div>
                     </div>
-                    <div className="feature">
+                    <div
+                        className="feature"
+                        data-center-top="opacity: 0; top: 100px;"
+                        data-center="opacity: 1; top: 0px;"
+                        data-anchor-target="#features-section">
                         <div className="card">
                             <div className="icon orange">
                                 <i className="fa fa-area-chart"/>
@@ -116,7 +152,11 @@ var Splash = React.createClass({
                             <div className="link button" data-reference="gptt">Learn More</div>
                         </div>
                     </div>
-                    <div className="feature">
+                    <div
+                        className="feature"
+                        data-center-top="opacity: 0; top: 100px;"
+                        data-center="opacity: 1; top: 0px;"
+                        data-anchor-target="#features-section">
                         <div className="card">
                             <div className="icon dark-green">
                                 <i className="fa fa-warning"/>
@@ -126,7 +166,10 @@ var Splash = React.createClass({
                         </div>
                     </div>
                 </section>
-                <section className="gptt green">
+                <section
+                    className="gptt green"
+                    data-center-top="height: 0px; padding-bottom: 0px;"
+                    data-center="height: 430px; padding-bottom: 50px;">
                     <div className="title">
                         <div className="icon">
                             <i className="fa fa-bullhorn"/>
@@ -162,7 +205,10 @@ var Splash = React.createClass({
                         </div>
                     </div>
                 </section>
-                <section className="gvc blue">
+                <section
+                    className="gvc blue"
+                    data-center-top="height: 0px; padding-bottom: 0px;"
+                    data-center="height: 430px; padding-bottom: 50px;">
                     <div className="title">
                         <div className="icon">
                             <i className="fa fa-video-camera"/>
@@ -181,7 +227,10 @@ var Splash = React.createClass({
                         )
                     }
                 </section>
-                <section className="aphelia gray">
+                <section
+                    className="aphelia gray"
+                    data-center-top="height: 0px; padding-bottom: 0px;"
+                    data-center="height: 430px; padding-bottom: 50px;">
                     <div className="title">
                         <div className="icon">
                             <i className="fa fa-tasks"/>
@@ -201,7 +250,10 @@ var Splash = React.createClass({
                         )
                     }
                 </section>
-                <section className="bioconnect orange">
+                <section
+                    className="bioconnect orange"
+                    data-center-top="height: 0px; padding-bottom: 0px;"
+                    data-center="height: 430px; padding-bottom: 50px;">
                     <div className="title">
                         <div className="icon">
                             <i className="fa fa-area-chart"/>
@@ -220,7 +272,10 @@ var Splash = React.createClass({
                         )
                     }
                 </section>
-                <section className="r4r dark-green">
+                <section
+                    className="r4r dark-green"
+                    data-center-top="height: 0px; padding-bottom: 0px;"
+                    data-center="height: 430px; padding-bottom: 50px;">
                     <div className="title">
                         <div className="icon">
                             <i className="fa fa-warning"/>

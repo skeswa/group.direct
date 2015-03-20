@@ -2,9 +2,10 @@
 // always refers to the "thisRef" parameter.
 var localize = function(thisRef, fn) {
     if (typeof(fn) === 'function') {
-    return function() {
-        fn.apply(thisRef, arguments);
-    };
+        return function() {
+            fn.bind(thisRef);
+        }
+    }
 };
 
 // Makes all the functions in the listeners object of

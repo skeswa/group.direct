@@ -140,16 +140,36 @@ gulp.task('images-delayed', function() {
     }, 500);
 });
 
+// Condenses the images
+gulp.task('vendor', function() {
+    // TODO: image compression
+    gulp.src('./client/vendor/**/*')
+        .pipe(plumber())
+        .pipe(gulp.dest(path.join('client', 'dist', 'vendor')));
+});
+
+// Condenses the images
+gulp.task('vendor-delayed', function() {
+    // TODO: image compression
+    setTimeout(function() {
+        gulp.src('./client/vendor/**/*')
+            .pipe(plumber())
+            .pipe(gulp.dest(path.join('client', 'dist', 'vendor')))
+            .on('error', helpers.smother);
+    }, 500);
+});
+
 // Clears all compiled client code
 gulp.task('clean', function() {
     clean.sync(path.join(__dirname, 'client', 'dist'));
 });
 
 // Watches changes to the client code
-gulp.task('watch', ['clean', 'less', 'pages', 'images', 'watchify'], function() {
+gulp.task('watch', ['clean', 'less', 'pages', 'images', 'vendor', 'watchify'], function() {
     gulp.watch('client/pages/*.html', ['pages']);
     gulp.watch('client/less/**/*.less', ['less']);
     gulp.watch('client/img/**/*', ['images-delayed']);
+    gulp.watch('client/vendor/**/*', ['vendor-delayed']);
 });
 
 // Runs dev server and watches client code
