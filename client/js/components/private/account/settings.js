@@ -7,13 +7,35 @@ var Actions         = require('../../../actions'),
     AppStateStore   = require('../../../stores/appstate'),
     Validator       = require('validator');
 
-var AuthMixin       = require('../../../mixins/auth');
+var AuthMixin           = require('../../../mixins/auth'),
+    LocalListenerMixin  = require('../../../mixins/locallistener');
 
 // React-router variables
 var Link            = Router.Link;
 
 var Settings = React.createClass({
-    mixins: [AuthMixin],
+    mixins: [
+        AuthMixin,
+        LocalListenerMixin
+    ],
+    listeners: {
+        onCurrentChanged: function(event) {
+            this.setState({
+                currentPassword: event.target.value
+            });
+        },
+        onNewChanged: function(event) {
+            this.setState({
+                newPassword: event.target.value
+            });
+        },
+        onConfirmNewChanged: function(event) {
+            this.setState({
+                confirmNewPassword: event.target.value
+            });
+        }
+    },
+
     getInitialState: function() {
         return {
             toastMessage: undefined,
