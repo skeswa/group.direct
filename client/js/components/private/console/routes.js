@@ -217,7 +217,7 @@ var Routes = React.createClass({
                     </div>
                 </div>
                 <div className="map">
-                    <img src='../static/img/maps_temp.png' />
+                    <img src='../static/img/maps_temp.PNG' />
                 </div>
             </div>
         );
