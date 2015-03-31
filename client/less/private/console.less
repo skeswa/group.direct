@@ -45,6 +45,10 @@
                 overflow: hidden;
                 .field {
                     clear: both;
+                    &.center{
+                        text-align: center;
+                        padding-top: 20px;
+                    }
                     &.narrow {
                         width: 60%;
                         margin-top: 10px;
@@ -200,6 +204,19 @@
                 }
             }
         }
+        .save-button {
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            border: 1px solid #AAE900;
+            color: #AAE900;
+            background: none repeat scroll 0% 0% #FFF;
+            font-size: 24px;
+            font-weight: 200;
+            &:hover {
+                    color: rgba(74, 74, 74, 0.81);
+                }
+        }
         .textbox {
             .mixin-form-textbox;
             height: 30px;
@@ -264,6 +281,13 @@
 
                 }
             }
+        }
+    }
+    .map {
+        float: right;
+        width: 38%;
+        img {
+            width: 100%;
         }
     }
 }

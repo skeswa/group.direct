@@ -1,6 +1,14 @@
 /** @jsx React.DOM */
 var React           = require('react'),
     Router          = require('react-router');
+/**google maps integration
+example http://tomchentw.github.io/react-google-maps/#gs
+--skipped: {ToastContainer, ToastMessage} = require("react-toastr") - do not have 'react-toastr' yet
+--{GoogleMapsMixin, Map, Marker} = require("react-google-maps") gives <Error in plugin 'gulp-uglify'> So did the follwoing **/
+
+var GoogleMapsMixin = require('react-google-maps'),
+    Map             = require('react-google-maps'),
+    Marker          = require('react-google-maps');
 
 var Actions             = require('../../../actions'),
     AppStateStore       = require('../../../stores/appstate'),
@@ -9,38 +17,98 @@ var Actions             = require('../../../actions'),
 var AuthMixin       = require('../../../mixins/auth'),
     ExecutorMixin   = require('../../../mixins/executor');
 
+
 // React-router variables
 var Link            = Router.Link;
 
 var Routes = React.createClass({
     mixins: [
         AuthMixin,
-        ExecutorMixin
+        ExecutorMixin,
+        GoogleMapsMixin
     ],
     getInitialState: function() {
         return{
             routes: [],
             stops: [],
-            active: 0
+            active: 0,
+            //start: google maps integration
+            markers: [{
+                position: {
+                  lat: 25.0112183,
+                  lng: 121.52067570000001,
+                },
+                key: "Taiwan",
+            }],
+            //end: google maps integration
         }
     },
+/* The following codeblock gives <Error in plugin 'gulp-uglify'>, commented out.
+   //This is called when you click on the map.
+   //Go and try click now.
+
+ _handle_map_click (event) {
+    var {markers} = this.state;
+    markers = React.addons.update(markers, {
+      $push: [
+        {
+          position: event.latLng,
+          key: Date.now(),// Add a key property for: http://fb.me/react-warning-keys
+        },
+      ],
+    });
+    this.setState({ markers });
+
+    if (3 === markers.length) {
+      this.refs.toast.success(
+        "Right click on the marker to remove it",
+        "Also check the code!"
+      );
+    }
+    this.refs.map.panTo(event.latLng);
+  },
+
+  _handle_marker_rightclick (index, event) {
+
+     //All you modify is data, and the view is driven by data.
+     //This is so called data-driven-development. (And yes, it's now in
+     //web front end and even with google maps API.)
+
+    var {markers} = this.state;
+    markers.splice(index, 1);
+    this.setState({ markers });
+  },
+
+  _render (props, state) {
+    return <div style={{height: "100%"}} {...props}>
+      <ToastContainer ref="toast" toastMessageFactory={React.createFactory(ToastMessage.jQuery)}/>
+      <Map ref="map" style={{height: "100%"}} zoom={3} center={new google.maps.LatLng(-25.363882, 131.044922)} onClick={this._handle_map_click} />
+      {state.markers.map(toMarker, this)}
+    </div>;
+
+    function toMarker (marker, index) {
+      return <Marker
+        position={marker.position}
+        key={marker.key}
+        onRightclick={this._handle_marker_rightclick.bind(this, index)} />;
+    }
+  },*/
     componentDidMount: function() {
         var component   = this;
 
         Actions.changePageTitle('SchoolBus Connect');
 
         SchoolBusService.getRoutes(
-            AppStateStore.getSessionData().id,
             AppStateStore.getSessionData().sessionToken,
             function (res) {
                 if (res.body.ResultSet) {
-                    console.log('Response for getRoutes', JSON.stringify(res.body));
+                    //console.log('Response for getRoutes', JSON.stringify(res.body));
                     component.setState({
                         routes: res.body.ResultSet,
-                        routeName: res.body.ResultSet[0].routeName,
-                        fromAddress: res.body.ResultSet[0].fromAddress,
-                        toAddress: res.body.ResultSet[0].toAddress,
-                        stops: res.body.ResultSet[0].stops,
+                        routeName: res.body.ResultSet[0].Name,
+                        fromAddress: res.body.ResultSet[0].RoutePointResponseList[0].LocationResponse.Street1,
+                        toAddress: res.body.ResultSet[0].RoutePointResponseList[res.body.ResultSet[0].RoutePointResponseList.length - 1].LocationResponse.Street1,
+                        stops: res.body.ResultSet[0].RoutePointResponseList,
                         active: 0
                     });
                 } else {
@@ -50,12 +118,22 @@ var Routes = React.createClass({
     },
     onRouteClick: function(currentRoute, i, event) {
         this.setState({
-            routeName: currentRoute.routeName,
-            fromAddress: currentRoute.fromAddress,
-            toAddress: currentRoute.toAddress,
-            stops: currentRoute.stops,
+            routeName: currentRoute.Name,
             active: i
         });
+        if (currentRoute.RoutePointResponseList[0] === undefined) {
+            this.setState({
+                fromAddress: 'Data not found',
+                toAddress: 'Data not found',
+                stops: 'No stops found',
+            });
+        } else {
+            this.setState({
+                fromAddress: currentRoute.RoutePointResponseList[0].LocationResponse.Street1,
+                toAddress: currentRoute.RoutePointResponseList[currentRoute.RoutePointResponseList.length - 1].LocationResponse.Street1,
+                stops: currentRoute.RoutePointResponseList
+            });
+        }
     },
     onAddClick: function(event) {
         console.log("ON ADD CLICK");
@@ -78,7 +156,7 @@ var Routes = React.createClass({
                         <i className="fa fa-map-marker"></i>
                     </div>
                     <div className="top-text-wrapper">
-                        <div className="line1">{currentRoute.routeName}</div>
+                        <div className="line1">{currentRoute.Name}</div>
                     </div>
                     <div className="remove-button">
                         <i className="fa fa-close"></i>
@@ -90,16 +168,18 @@ var Routes = React.createClass({
         var stopElements = [];
         for (var i=0; i<this.state.stops.length; i++) {
             var currentStop = this.state.stops[i];
-            stopElements.push(
+            if (currentStop.IsEndingLocation === 0 && currentStop.IsStartingLocation === 0) {
+                stopElements.push(
                 <div>
-                    <input type="text" className="textbox" value={this.state.stops[i].name}/>
+                    <input type="text" className="textbox" value={this.state.stops[i].LocationResponse.Address}/>
                     <div className="remove-button">
                         <i className="fa fa-close"></i>
                     </div>
                 </div>
-            );
+                );
+            }
         }
-
+        console.log('stops', JSON.stringify(this.state.stops));
         return (
             <div className="tab-content">
                 <div className="left narrow">
@@ -131,14 +211,27 @@ var Routes = React.createClass({
                                 </div>
                             </div>
                         </div>
-                        <div className="field">
-                            <button id="save-button" type="button" className="button">Save</button>
+                        <div className="field center">
+                            <button id="save-button" type="button" className="save-button"><i className="fa fa-check"></i></button>
                         </div>
                     </div>
+                </div>
+                <div className="map">
+                    <img src='../static/img/maps_temp.png' />
                 </div>
             </div>
         );
     }
 });
+
+/* Not sure how to integrate the follwoing code block
+module.exports = React.createClass({
+  mixins: [require("../ReactFutureMixin")],
+
+  _render (props, state) {
+    return <GettingStarted googleMapsApi={google.maps} {...props} />;
+  }
+});
+*/
 
 module.exports = Routes;
