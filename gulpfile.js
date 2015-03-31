@@ -271,4 +271,4 @@ gulp.task('deploy', function(done) {
 });
 
 // Run all compilation tasks
-gulp.task('default', ['clean', 'less', 'pages', 'images', 'browserify']);
+gulp.task('default', ['clean', 'less', 'pages', 'images', 'vendor', 'browserify']);

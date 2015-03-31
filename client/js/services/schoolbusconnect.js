@@ -2,15 +2,13 @@ var request = require('superagent');
 
 var SchoolBusService = {
     getRoutes: function(
-            userId,
             sessionToken,
             callback) {
             // Build the request
             request
-                .post('/GroupDirectServices/SchoolBusService.svc/getRoutes')
+                .post('/ApheliaBusConnectService/BusConnectService.svc/getallactiveroutes')
                 .send({
-                    userId: userId,
-                    sessionToken: sessionToken
+                    st: sessionToken
                 })
                 // Submit the request
                 .end(callback);
