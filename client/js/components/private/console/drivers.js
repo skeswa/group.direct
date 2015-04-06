@@ -4,7 +4,6 @@ var React           = require('react'),
 
 var Actions             = require('../../../actions'),
     AppStateStore       = require('../../../stores/appstate'),
-    ContactService      = require('../../../services/connections'),
     SchoolBusService    = require('../../../services/schoolbusconnect');
 
 var AuthMixin       = require('../../../mixins/auth'),
@@ -21,7 +20,9 @@ var Drivers = React.createClass({
     getInitialState: function() {
         return{
             contacts: [],
-            active: 0
+            active: 0,
+            proPic: '../static/img/profile-pic.png',
+            proPicThumb: '../static/img/profile-pic-thumb.png'
         }
     },
     componentDidMount: function() {
@@ -30,8 +31,7 @@ var Drivers = React.createClass({
         Actions.changePageTitle('SchoolBus Connect');
 
         //Get connections
-        ContactService.getUserContactsByUserId(
-            AppStateStore.getSessionData().id,
+        SchoolBusService.getDrivers(
             AppStateStore.getSessionData().sessionToken,
             function (res) {
                 if (res.ok) {
@@ -43,10 +43,15 @@ var Drivers = React.createClass({
                             email: res.body.ResultSet[0].Email,
                             active: 0
                         });
-                        console.log('Response for getUserContactsByUserId', JSON.stringify(res.body));
+                        if (res.body.ResultSet[0].ProfilePicture) {
+                            component.setState({proPic: res.body.ResultSet[0].ProfilePicture});
+                        }
+                        if (res.body.ResultSet[0].ProfilePictureThumbnail) {
+                            component.setState({proPicThumb: res.body.ResultSet[0].ProfilePictureThumbnail});
+                        }
                     }
                 } else {
-                    console.log('Error at getUserContactsByUserId', res.text);
+                    console.log('Error at GetListOfUsersByRole', res.text);
                 }
             });
     },
@@ -57,14 +62,12 @@ var Drivers = React.createClass({
             email: currentContact.Email,
             active: i
         });
-    },
-    onAddClick: function(event) {
-        this.setState({
-            firstName: '',
-            lastName: '',
-            email: '',
-            active: 0
-        });
+        if (currentContact.ProfilePicture) {
+            this.setState({proPic: currentContact.ProfilePicture});
+        }
+        if (this.ProfilePictureThumbnail) {
+            component.setState({proPicThumb: currentContact.ProfilePictureThumbnail});
+        }
     },
     render: function() {
         //Get list of drivers
@@ -74,7 +77,7 @@ var Drivers = React.createClass({
             contactElements.push(
                 <div className={'row' + (this.state.active === i ? ' active':'')} onClick={this.createExecutable(this.onRouteClick, currentContact, i)}>
                     <div className="profile-pic">
-                        <i className="fa fa-user"></i>
+                        <img src={this.state.proPicThumb} />
                     </div>
                     <div className="top-text-wrapper">
                         <div className="line1">{currentContact.FirstName} {currentContact.LastName}</div>
@@ -90,12 +93,12 @@ var Drivers = React.createClass({
             <div className="tab-content">
                 <div className="left narrow">
                     <input type="text" className="textbox" placeholder="Search drivers"/>
-                    <div className="add-button" onClick={this.onAddClick}>
-                        <i className="fa fa-plus"></i>
-                    </div>
                     <div className="routes">{contactElements}</div>
                 </div>
                 <div className="left">
+                    <div className="profile-pic">
+                        <img src={this.state.proPic} />
+                    </div>
                     <div className="subtitle">
                     <input type="text" id="email" ref="email" className="textbox" placeholder="Enter name" value={this.state.email}/></div>
                     <div className="form">

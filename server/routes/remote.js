@@ -4,8 +4,7 @@ var fs          = require('fs'),
     request     = require('superagent');
 
 //Used for dummy service
-var getDriversData = require('../data/getDrivers.json'),
-    getVehiclesData = require('../data/getVehicles.json'),
+var getVehiclesData = require('../data/getVehicles.json'),
     getStudentsData = require('../data/getStudents.json');
 
 var log     = require('../log');
@@ -29,9 +28,6 @@ exports.route = function(app) {
         });
     };
     //Used for dummy service
-    app.post('/GroupDirectServices/SchoolBusService.svc/getDrivers', function(req, res){
-        res.status(200).json(getDriversData);
-    });
     app.post('/GroupDirectServices/SchoolBusService.svc/getVehicles', function(req, res){
         res.status(200).json(getVehiclesData);
     });
@@ -40,6 +36,6 @@ exports.route = function(app) {
     });
     app.get('/GroupDirectServices/*', serviceProxy);
     app.post('/GroupDirectServices/*', serviceProxy);
-        app.get('/ApheliaBusConnectService/*', serviceProxy);
+    app.get('/ApheliaBusConnectService/*', serviceProxy);
     app.post('/ApheliaBusConnectService/*', serviceProxy);
 };

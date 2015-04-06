@@ -14,15 +14,14 @@ var SchoolBusService = {
                 .end(callback);
     },
     getDrivers: function(
-        userId,
         sessionToken,
         callback) {
         // Build the request
         request
-            .post('/GroupDirectServices/SchoolBusService.svc/getDrivers')
+            .post('/GroupDirectServices/ApheliaIUserService.svc/GetListOfUsersByRole')
             .send({
-                userId: userId,
-                sessionToken: sessionToken
+                roleId: 7,
+                st: sessionToken
             })
             // Submit the request
             .end(callback);

@@ -1,14 +1,19 @@
-/** @jsx React.DOM */
+/** @jsx React.DOM **/
 var React           = require('react'),
     Router          = require('react-router');
+
+
 /**google maps integration
 example http://tomchentw.github.io/react-google-maps/#gs
 --skipped: {ToastContainer, ToastMessage} = require("react-toastr") - do not have 'react-toastr' yet
---{GoogleMapsMixin, Map, Marker} = require("react-google-maps") gives <Error in plugin 'gulp-uglify'> So did the follwoing **/
+**/
 
-var GoogleMapsMixin = require('react-google-maps'),
-    Map             = require('react-google-maps'),
-    Marker          = require('react-google-maps');
+var gmaps = require('react-google-maps');
+var GoogleMapsMixin = gmaps.GoogleMapsMixin,
+    GoogleMap       = gmaps.Map,
+    GoogleMarker    = gmaps.Marker,
+    Map             = require('./map.js');
+
 
 var Actions             = require('../../../actions'),
     AppStateStore       = require('../../../stores/appstate'),
@@ -17,6 +22,15 @@ var Actions             = require('../../../actions'),
 var AuthMixin       = require('../../../mixins/auth'),
     ExecutorMixin   = require('../../../mixins/executor');
 
+var suburbs         = ['Cheltenham', 'Mill Park', 'Mordialloc', 'Nunawading'];
+
+var inputAttributes = {
+  id: 'locations-autosuggest',
+  name: 'locations-autosuggest',
+  className: 'my-sweet-locations-autosuggest',
+  placeholder: 'Enter locations...',
+  value: 'Mordialloc'   // Initial value
+};
 
 // React-router variables
 var Link            = Router.Link;
@@ -30,8 +44,10 @@ var Routes = React.createClass({
     getInitialState: function() {
         return{
             routes: [],
-            stops: [],
+            stopData: [],
+            stopComponent: [],
             active: 0,
+            googleMapsApi: google.maps,
             //start: google maps integration
             markers: [{
                 position: {
@@ -43,12 +59,21 @@ var Routes = React.createClass({
             //end: google maps integration
         }
     },
-/* The following codeblock gives <Error in plugin 'gulp-uglify'>, commented out.
+    getSuburbs: function (input, callback) {
+      var regex = new RegExp('^' + input, 'i');
+
+      setTimeout(function() {
+        callback(null, suburbs.filter(function(suburb) {
+          return regex.test(suburb);
+        }));
+      }, 300);
+    },
+
    //This is called when you click on the map.
    //Go and try click now.
 
- _handle_map_click (event) {
-    var {markers} = this.state;
+ _handle_map_click: function(event) {
+    var markers = this.state.markers;
     markers = React.addons.update(markers, {
       $push: [
         {
@@ -57,7 +82,7 @@ var Routes = React.createClass({
         },
       ],
     });
-    this.setState({ markers });
+    this.setState({ markers: markers });
 
     if (3 === markers.length) {
       this.refs.toast.success(
@@ -68,31 +93,17 @@ var Routes = React.createClass({
     this.refs.map.panTo(event.latLng);
   },
 
-  _handle_marker_rightclick (index, event) {
+  _handle_marker_rightclick: function(index, event) {
 
      //All you modify is data, and the view is driven by data.
      //This is so called data-driven-development. (And yes, it's now in
      //web front end and even with google maps API.)
 
-    var {markers} = this.state;
+    var markers = this.state.markers;
     markers.splice(index, 1);
-    this.setState({ markers });
+    this.setState({ markers: markers });
   },
 
-  _render (props, state) {
-    return <div style={{height: "100%"}} {...props}>
-      <ToastContainer ref="toast" toastMessageFactory={React.createFactory(ToastMessage.jQuery)}/>
-      <Map ref="map" style={{height: "100%"}} zoom={3} center={new google.maps.LatLng(-25.363882, 131.044922)} onClick={this._handle_map_click} />
-      {state.markers.map(toMarker, this)}
-    </div>;
-
-    function toMarker (marker, index) {
-      return <Marker
-        position={marker.position}
-        key={marker.key}
-        onRightclick={this._handle_marker_rightclick.bind(this, index)} />;
-    }
-  },*/
     componentDidMount: function() {
         var component   = this;
 
@@ -108,7 +119,7 @@ var Routes = React.createClass({
                         routeName: res.body.ResultSet[0].Name,
                         fromAddress: res.body.ResultSet[0].RoutePointResponseList[0].LocationResponse.Street1,
                         toAddress: res.body.ResultSet[0].RoutePointResponseList[res.body.ResultSet[0].RoutePointResponseList.length - 1].LocationResponse.Street1,
-                        stops: res.body.ResultSet[0].RoutePointResponseList,
+                        stopData: res.body.ResultSet[0].RoutePointResponseList,
                         active: 0
                     });
                 } else {
@@ -125,13 +136,13 @@ var Routes = React.createClass({
             this.setState({
                 fromAddress: 'Data not found',
                 toAddress: 'Data not found',
-                stops: 'No stops found',
+                stopData: 'No stops found',
             });
         } else {
             this.setState({
                 fromAddress: currentRoute.RoutePointResponseList[0].LocationResponse.Street1,
                 toAddress: currentRoute.RoutePointResponseList[currentRoute.RoutePointResponseList.length - 1].LocationResponse.Street1,
-                stops: currentRoute.RoutePointResponseList
+                stopData: currentRoute.RoutePointResponseList
             });
         }
     },
@@ -141,9 +152,28 @@ var Routes = React.createClass({
             routeName: '',
             fromAddress: '',
             toAddress: '',
-            stops: '',
+            stopData: '',
             active: 0
         });
+    },
+    onNewStop: function(event) {
+        //capture new address
+        this.setState ({
+            newStop: event.target.value
+        });
+        //validate and get other data points (lat long) from google
+    },
+    addNewStop: function(event) {
+        //push stop in stopElement
+        //var stopElements = [];
+        this.state.stopComponent.push(
+            <div>
+                <input type="text" className="textbox" value={this.state.newStop}/>
+                <div className="remove-button">
+                    <i className="fa fa-close"></i>
+                </div>
+            </div>
+            );
     },
     render: function() {
         //Get list of routes
@@ -165,13 +195,13 @@ var Routes = React.createClass({
             );
         }
         //Get list of stops for each route
-        var stopElements = [];
-        for (var i=0; i<this.state.stops.length; i++) {
-            var currentStop = this.state.stops[i];
+        //var stopElements = [];
+        for (var i=0; i<this.state.stopData.length; i++) {
+            var currentStop = this.state.stopData[i];
             if (currentStop.IsEndingLocation === 0 && currentStop.IsStartingLocation === 0) {
-                stopElements.push(
+                this.state.stopComponent.push(
                 <div>
-                    <input type="text" className="textbox" value={this.state.stops[i].LocationResponse.Address}/>
+                    <input type="text" className="textbox" value={this.state.stopData[i].LocationResponse.Address}/>
                     <div className="remove-button">
                         <i className="fa fa-close"></i>
                     </div>
@@ -179,7 +209,8 @@ var Routes = React.createClass({
                 );
             }
         }
-        console.log('stops', JSON.stringify(this.state.stops));
+
+        console.log('stops', JSON.stringify(this.state.stopData));
         return (
             <div className="tab-content">
                 <div className="left narrow">
@@ -203,10 +234,10 @@ var Routes = React.createClass({
                         </div>
                         <div>Click on map or enter addresses of drop-off/pickup points below.</div>
                         <div className="field narrow">
-                            {stopElements}
+                            {this.state.stopComponent}
                             <div>
-                                <input type="text" className="textbox" placeholder="Add new stop"/>
-                                <div className="remove-button">
+                                <input type="text" className="textbox" placeholder="Add new stop" onChange={this.onNewStop}/>
+                                <div className="remove-button" onClick={this.addNewStop}>
                                     <i className="fa fa-plus"></i>
                                 </div>
                             </div>
@@ -218,20 +249,11 @@ var Routes = React.createClass({
                 </div>
                 <div className="map">
                     <img src='../static/img/maps_temp.png' />
+                    <Map funds={[]} latitude={20} longitude={20}/>
                 </div>
             </div>
         );
     }
 });
-
-/* Not sure how to integrate the follwoing code block
-module.exports = React.createClass({
-  mixins: [require("../ReactFutureMixin")],
-
-  _render (props, state) {
-    return <GettingStarted googleMapsApi={google.maps} {...props} />;
-  }
-});
-*/
 
 module.exports = Routes;
