@@ -10,6 +10,12 @@
         .mixin-content;
         text-align: left;
         height: 87%;
+        .subtitle {
+            .mixin-section-subtitle;
+            margin: 0px 0px 10px 0px;
+            text-align: left;
+            clear: both;
+        }
         .tabs {
             float: right;
             margin-top: 5px;
@@ -109,8 +115,29 @@
                 padding-top: 1px;
             }
             img {
-                height: 45px;
                 opacity: 0.8;
+            }
+        }
+        .profile-pic-big {
+            border: 1px solid #AAE900;
+            border-radius: 8px;
+            display: inline-block;
+            float: left;
+            margin-bottom: 50px;
+            img {
+                height: 100px;
+                padding: 2px 8px;
+                opacity: 0.6;
+            }
+        }
+        .profile-info {
+            display: inline-block;
+            float: left;
+            margin-left: 10px;
+            .title {
+                font-size: 20px;
+                letter-spacing: 1px;
+                font-weight: 600;
             }
         }
         .left, .right {

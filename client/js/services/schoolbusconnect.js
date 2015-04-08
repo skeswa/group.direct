@@ -27,15 +27,14 @@ var SchoolBusService = {
             .end(callback);
     },
     getVehicles: function(
-        userId,
         sessionToken,
         callback) {
         // Build the request
         request
-            .post('/GroupDirectServices/SchoolBusService.svc/getVehicles')
+            .post('/ApheliaBusConnectService/BusConnectService.svc/getallvehicle')
             .send({
-                userId: userId,
-                sessionToken: sessionToken
+                companyId: 1,
+                st: sessionToken
             })
             // Submit the request
             .end(callback);

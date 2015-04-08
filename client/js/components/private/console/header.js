@@ -26,7 +26,7 @@ var Header = React.createClass({
             <div className="header-private">
                 <div className="logo">
                     <div className="logo-image">
-                        <Link to="apps"><img src='../static/img/gvc_logo.png' /></Link>
+                        <Link to="apps"><img src='../static/img/ic_aphelia.png' /></Link>
                         <img src='../static/img/arrow.png' />
                     </div>
                     <div className="logo-text">

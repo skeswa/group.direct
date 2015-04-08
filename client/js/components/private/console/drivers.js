@@ -41,6 +41,7 @@ var Drivers = React.createClass({
                             firstName: res.body.ResultSet[0].FirstName,
                             lastName: res.body.ResultSet[0].LastName,
                             email: res.body.ResultSet[0].Email,
+                            phone: res.body.ResultSet[0].ContactNumber,
                             active: 0
                         });
                         if (res.body.ResultSet[0].ProfilePicture) {
@@ -60,6 +61,7 @@ var Drivers = React.createClass({
             firstName: currentContact.FirstName,
             lastName: currentContact.LastName,
             email: currentContact.Email,
+            phone: currentContact.ContactNumber,
             active: i
         });
         if (currentContact.ProfilePicture) {
@@ -96,24 +98,20 @@ var Drivers = React.createClass({
                     <div className="routes">{contactElements}</div>
                 </div>
                 <div className="left">
-                    <div className="profile-pic">
+                <div className="subtitle">Profile</div>
+                    <div className="profile-pic-big">
                         <img src={this.state.proPic} />
                     </div>
-                    <div className="subtitle">
-                    <input type="text" id="email" ref="email" className="textbox" placeholder="Enter name" value={this.state.email}/></div>
-                    <div className="form">
-                        <div className="field">
-                            <div>First name</div>
-                            <input type="text" id="firstName" ref="firstName" className="textbox" value={this.state.firstName}/>
-                        </div>
-                        <div className="field">
-                            <div>Last name</div>
-                            <input type="text" id="lastName" ref="lastName" className="textbox" value={this.state.lastName}/>
-                        </div>
-                        <div className="field">
-                            <button id="save-button" type="button" className="button">Save</button>
-                        </div>
+
+                    <div className="profile-info">
+                        <div className="title">{this.state.firstName} {this.state.lastName}</div>
+                        {this.state.email} <br />
+                        {this.state.phone}
                     </div>
+                    <div className="subtitle">Activity</div>
+                    <div className="row">4-8-2015, Wed, Job: Student Pickup - Route #1 at 7:30am</div>
+                    <div className="row">4-7-2015, Tue, Job: Student Pickup - Route #1 at 7:30am</div>
+                    <div className="row">4-6-2015, Mon, Job: Student Pickup - Route #1 at 7:30am</div>
                 </div>
             </div>
         );

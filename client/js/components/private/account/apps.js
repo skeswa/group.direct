@@ -32,7 +32,7 @@ var Apps = React.createClass({
                         <div className="subtitle">Base Apps:</div>
                         <div className="app-block">
                             <div className="profile-pic" >
-                                <Link to="notice"><img src='../static/img/Btn_Video.png' /></Link>
+                                <Link to="notice"><img src='../static/img/gvc.png' /></Link>
                             </div>
                             <div className="top-text-wrapper">
                                 <div className="line1"><Link to="notice">Video Connect</Link></div>
@@ -45,7 +45,7 @@ var Apps = React.createClass({
                         </div>
                         <div className="app-block">
                             <div className="profile-pic">
-                                <Link to="notice"><img src='../static/img/Btn_Dispatch.png' /></Link>
+                                <Link to="notice"><img src='../static/img/gc.png' /></Link>
                             </div>
                             <div className="top-text-wrapper">
                                 <div className="line1"><Link to="notice">Group Connect</Link></div>
@@ -58,7 +58,7 @@ var Apps = React.createClass({
                         </div>
                         <div className="app-block">
                             <div className="profile-pic" >
-                                <Link to="notice"><i className="fa fa-th-list"></i></Link>
+                                <Link to="notice"><img src='../static/img/calendar.png' /></Link>
                             </div>
                             <div className="top-text-wrapper">
                                 <div className="line1"><Link to="notice">Job Scheduler</Link></div>
@@ -71,7 +71,7 @@ var Apps = React.createClass({
                         </div>
                         <div className="app-block">
                             <div className="profile-pic">
-                                <Link to="notice"><i className="fa fa-exclamation-triangle"></i></Link>
+                                <Link to="notice"><img src='../static/img/r4r.png' /></Link>
                             </div>
                             <div className="top-text-wrapper">
                                 <div className="line1"><Link to="notice">Report For Results</Link></div>
@@ -87,7 +87,7 @@ var Apps = React.createClass({
                         <div className="subtitle">Vertical Apps:</div>
                         <div className="app-block">
                             <div className="profile-pic" >
-                                <Link to="notice"><i className="fa fa-users"></i></Link>
+                                <Link to="notice"><img src='../static/img/field-connect.png' /></Link>
                             </div>
                             <div className="top-text-wrapper">
                                 <div className="line1"><Link to="notice">Field Connect</Link></div>
@@ -100,7 +100,7 @@ var Apps = React.createClass({
                         </div>
                         <div className="app-block">
                             <div className="profile-pic" >
-                                <Link to="routes"><img src='../static/img/Bus_Icon.png' /></Link>
+                                <Link to="routes"><img src='../static/img/sbc.png' /></Link>
                             </div>
                             <div className="top-text-wrapper">
                                 <div className="line1"><Link to="routes"><b>School Bus Connect</b></Link></div>
@@ -113,7 +113,7 @@ var Apps = React.createClass({
                         </div>
                         <div className="app-block">
                             <div className="profile-pic">
-                                <Link to="notice"><img src='../static/img/Aphelia_logo.png' /></Link>
+                                <Link to="notice"><img src='../static/img/Aphelia_logo.png'/></Link>
                             </div>
                             <div className="top-text-wrapper">
                                 <div className="line1"><Link to="notice">Campus Connect</Link></div>

@@ -221,7 +221,7 @@ var Routes = React.createClass({
                     <div className="routes">{routeElements}</div>
                 </div>
                 <div className="left">
-                    <div className="subtitle">
+                    <div>
                     <input type="text" id="routeName" ref="routeName" className="textbox" placeholder="Enter route name" value={this.state.routeName}/></div>
                     <div className="form">
                         <div className="field">
