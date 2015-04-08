@@ -7,13 +7,7 @@ var React           = require('react'),
 example http://tomchentw.github.io/react-google-maps/#gs
 --skipped: {ToastContainer, ToastMessage} = require("react-toastr") - do not have 'react-toastr' yet
 **/
-
-var gmaps = require('react-google-maps');
-var GoogleMapsMixin = gmaps.GoogleMapsMixin,
-    GoogleMap       = gmaps.Map,
-    GoogleMarker    = gmaps.Marker,
-    Map             = require('./map.js');
-
+var Map             = require('./map.js');
 
 var Actions             = require('../../../actions'),
     AppStateStore       = require('../../../stores/appstate'),
@@ -38,8 +32,7 @@ var Link            = Router.Link;
 var Routes = React.createClass({
     mixins: [
         AuthMixin,
-        ExecutorMixin,
-        GoogleMapsMixin
+        ExecutorMixin
     ],
     getInitialState: function() {
         return{
@@ -59,51 +52,6 @@ var Routes = React.createClass({
             //end: google maps integration
         }
     },
-    getSuburbs: function (input, callback) {
-      var regex = new RegExp('^' + input, 'i');
-
-      setTimeout(function() {
-        callback(null, suburbs.filter(function(suburb) {
-          return regex.test(suburb);
-        }));
-      }, 300);
-    },
-
-   //This is called when you click on the map.
-   //Go and try click now.
-
- _handle_map_click: function(event) {
-    var markers = this.state.markers;
-    markers = React.addons.update(markers, {
-      $push: [
-        {
-          position: event.latLng,
-          key: Date.now(),// Add a key property for: http://fb.me/react-warning-keys
-        },
-      ],
-    });
-    this.setState({ markers: markers });
-
-    if (3 === markers.length) {
-      this.refs.toast.success(
-        "Right click on the marker to remove it",
-        "Also check the code!"
-      );
-    }
-    this.refs.map.panTo(event.latLng);
-  },
-
-  _handle_marker_rightclick: function(index, event) {
-
-     //All you modify is data, and the view is driven by data.
-     //This is so called data-driven-development. (And yes, it's now in
-     //web front end and even with google maps API.)
-
-    var markers = this.state.markers;
-    markers.splice(index, 1);
-    this.setState({ markers: markers });
-  },
-
     componentDidMount: function() {
         var component   = this;
 
@@ -248,8 +196,12 @@ var Routes = React.createClass({
                     </div>
                 </div>
                 <div className="map">
-                    <img src='../static/img/maps_temp.png' />
-                    <Map funds={[]} latitude={20} longitude={20}/>
+                    <Map markers={[
+                        {latitude: 39.941, longitude: -75.18300, title: 'Test 1'},
+                        {latitude: 39.931, longitude: -75.19900, title: 'Test 2'},
+                        {latitude: 39.951, longitude: -75.21001, title: 'Test 3'},
+                        {latitude: 39.921, longitude: -75.11300, title: 'Test 4'}
+                    ]}/>
                 </div>
             </div>
         );
