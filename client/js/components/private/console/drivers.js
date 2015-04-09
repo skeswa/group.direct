@@ -4,7 +4,6 @@ var React           = require('react'),
 
 var Actions             = require('../../../actions'),
     AppStateStore       = require('../../../stores/appstate'),
-    ContactService      = require('../../../services/connections'),
     SchoolBusService    = require('../../../services/schoolbusconnect');
 
 var AuthMixin       = require('../../../mixins/auth'),
@@ -21,7 +20,9 @@ var Drivers = React.createClass({
     getInitialState: function() {
         return{
             contacts: [],
-            active: 0
+            active: 0,
+            proPic: '../static/img/profile-pic.png',
+            proPicThumb: '../static/img/profile-pic-thumb.png'
         }
     },
     componentDidMount: function() {
@@ -30,8 +31,7 @@ var Drivers = React.createClass({
         Actions.changePageTitle('SchoolBus Connect');
 
         //Get connections
-        ContactService.getUserContactsByUserId(
-            AppStateStore.getSessionData().id,
+        SchoolBusService.getDrivers(
             AppStateStore.getSessionData().sessionToken,
             function (res) {
                 if (res.ok) {
@@ -41,12 +41,18 @@ var Drivers = React.createClass({
                             firstName: res.body.ResultSet[0].FirstName,
                             lastName: res.body.ResultSet[0].LastName,
                             email: res.body.ResultSet[0].Email,
+                            phone: res.body.ResultSet[0].ContactNumber,
                             active: 0
                         });
-                        console.log('Response for getUserContactsByUserId', JSON.stringify(res.body));
+                        if (res.body.ResultSet[0].ProfilePicture) {
+                            component.setState({proPic: res.body.ResultSet[0].ProfilePicture});
+                        }
+                        if (res.body.ResultSet[0].ProfilePictureThumbnail) {
+                            component.setState({proPicThumb: res.body.ResultSet[0].ProfilePictureThumbnail});
+                        }
                     }
                 } else {
-                    console.log('Error at getUserContactsByUserId', res.text);
+                    console.log('Error at GetListOfUsersByRole', res.text);
                 }
             });
     },
@@ -55,16 +61,15 @@ var Drivers = React.createClass({
             firstName: currentContact.FirstName,
             lastName: currentContact.LastName,
             email: currentContact.Email,
+            phone: currentContact.ContactNumber,
             active: i
         });
-    },
-    onAddClick: function(event) {
-        this.setState({
-            firstName: '',
-            lastName: '',
-            email: '',
-            active: 0
-        });
+        if (currentContact.ProfilePicture) {
+            this.setState({proPic: currentContact.ProfilePicture});
+        }
+        if (this.ProfilePictureThumbnail) {
+            component.setState({proPicThumb: currentContact.ProfilePictureThumbnail});
+        }
     },
     render: function() {
         //Get list of drivers
@@ -74,7 +79,7 @@ var Drivers = React.createClass({
             contactElements.push(
                 <div className={'row' + (this.state.active === i ? ' active':'')} onClick={this.createExecutable(this.onRouteClick, currentContact, i)}>
                     <div className="profile-pic">
-                        <i className="fa fa-user"></i>
+                        <img src={this.state.proPicThumb} />
                     </div>
                     <div className="top-text-wrapper">
                         <div className="line1">{currentContact.FirstName} {currentContact.LastName}</div>
@@ -90,27 +95,23 @@ var Drivers = React.createClass({
             <div className="tab-content">
                 <div className="left narrow">
                     <input type="text" className="textbox" placeholder="Search drivers"/>
-                    <div className="add-button" onClick={this.onAddClick}>
-                        <i className="fa fa-plus"></i>
-                    </div>
                     <div className="routes">{contactElements}</div>
                 </div>
                 <div className="left">
-                    <div className="subtitle">
-                    <input type="text" id="email" ref="email" className="textbox" placeholder="Enter name" value={this.state.email}/></div>
-                    <div className="form">
-                        <div className="field">
-                            <div>First name</div>
-                            <input type="text" id="firstName" ref="firstName" className="textbox" value={this.state.firstName}/>
-                        </div>
-                        <div className="field">
-                            <div>Last name</div>
-                            <input type="text" id="lastName" ref="lastName" className="textbox" value={this.state.lastName}/>
-                        </div>
-                        <div className="field">
-                            <button id="save-button" type="button" className="button">Save</button>
-                        </div>
+                <div className="subtitle">Profile</div>
+                    <div className="profile-pic-big">
+                        <img src={this.state.proPic} />
                     </div>
+
+                    <div className="profile-info">
+                        <div className="title">{this.state.firstName} {this.state.lastName}</div>
+                        {this.state.email} <br />
+                        {this.state.phone}
+                    </div>
+                    <div className="subtitle">Activity</div>
+                    <div className="row wider">4-8-2015, Wed, Job: Student Pickup - Route #1 at 7:30am</div>
+                    <div className="row wider">4-7-2015, Tue, Job: Student Pickup - Route #1 at 7:30am</div>
+                    <div className="row wider">4-6-2015, Mon, Job: Student Pickup - Route #1 at 7:30am</div>
                 </div>
             </div>
         );

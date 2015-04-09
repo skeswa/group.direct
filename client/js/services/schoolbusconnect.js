@@ -14,29 +14,53 @@ var SchoolBusService = {
                 .end(callback);
     },
     getDrivers: function(
-        userId,
         sessionToken,
         callback) {
         // Build the request
         request
-            .post('/GroupDirectServices/SchoolBusService.svc/getDrivers')
+            .post('/GroupDirectServices/ApheliaIUserService.svc/GetListOfUsersByRole')
             .send({
-                userId: userId,
-                sessionToken: sessionToken
+                roleId: 7,
+                st: sessionToken
             })
             // Submit the request
             .end(callback);
     },
+
+    //Vehicles
     getVehicles: function(
-        userId,
         sessionToken,
         callback) {
         // Build the request
         request
-            .post('/GroupDirectServices/SchoolBusService.svc/getVehicles')
+            .post('/ApheliaBusConnectService/BusConnectService.svc/getallvehicle')
             .send({
-                userId: userId,
-                sessionToken: sessionToken
+                companyId: 1,
+                st: sessionToken
+            })
+            // Submit the request
+            .end(callback);
+    },
+    addVehicle: function(
+        name,
+        model,
+        registration,
+        description,
+        sessionToken,
+        callback) {
+        // Build the request
+        request
+            .post('/ApheliaBusConnectService/BusConnectService.svc/createvehicle')
+            .send({
+                vehicle:
+                    {
+                        Name: name,
+                        ModelNo: model,
+                        RegistrationNo: registration,
+                        Description: description,
+                        CompanyId: 1
+                    },
+                st: sessionToken
             })
             // Submit the request
             .end(callback);
