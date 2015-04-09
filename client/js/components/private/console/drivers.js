@@ -109,9 +109,9 @@ var Drivers = React.createClass({
                         {this.state.phone}
                     </div>
                     <div className="subtitle">Activity</div>
-                    <div className="row">4-8-2015, Wed, Job: Student Pickup - Route #1 at 7:30am</div>
-                    <div className="row">4-7-2015, Tue, Job: Student Pickup - Route #1 at 7:30am</div>
-                    <div className="row">4-6-2015, Mon, Job: Student Pickup - Route #1 at 7:30am</div>
+                    <div className="row wider">4-8-2015, Wed, Job: Student Pickup - Route #1 at 7:30am</div>
+                    <div className="row wider">4-7-2015, Tue, Job: Student Pickup - Route #1 at 7:30am</div>
+                    <div className="row wider">4-6-2015, Mon, Job: Student Pickup - Route #1 at 7:30am</div>
                 </div>
             </div>
         );

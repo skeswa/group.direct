@@ -75,6 +75,9 @@
                         float: left;
                         text-align: left;
                         width: 13%;
+                        &.wide {
+                            width: 35%;
+                        }
                     }
 
                     p {
@@ -91,6 +94,13 @@
                         &:focus {
                             border-color: @pale-green;
                             color: #333;
+                        }
+                        &.narrow {
+                            width: 45%;
+                        }
+                        &.textarea {
+                            width: 60%;
+                            height: inherit;
                         }
                     }
                 }
@@ -144,6 +154,9 @@
             padding: 8px;
             .row {
                 width: 95%;
+                &.wider {
+                    width: 105%;
+                }
             }
         }
         .button {
@@ -313,8 +326,23 @@
     .map {
         float: right;
         width: 38%;
+        margin-right: 10px;
         img {
             width: 100%;
+        }
+    }
+    .vehicle-pic {
+        float: right;
+        width: 35%;
+        margin-right: 30px;
+        img {
+            width: 100%;
+        }
+    }
+    .schedule, .status {
+        display: none;
+        &.active {
+            display: block;
         }
     }
 }

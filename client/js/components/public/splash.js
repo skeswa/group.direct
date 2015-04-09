@@ -46,7 +46,7 @@ var Splash = React.createClass({
                 <div className="header">
                     <Link to="splash" className="logo">
                         <div className="profile-pic">
-                            <img src='../static/img/gvc_logo.png' />
+                            <img src='../static/img/ic_aphelia.png' />
                         </div>
                         <div className="logo-text">
                             GroupConnect <sup>BETA</sup>
