@@ -34,6 +34,7 @@ var Map = React.createClass({
         google.maps.event.addDomListener(window, 'load', function() {
             self.map = new google.maps.Map(mapElement, mapOptions);
             self.markerMap = {};
+            marker = [];
             // Init markers
             self.props.markers.forEach(function(marker) {
                 self.markerMap[marker.latitude + ',' + marker.longitude] = (new google.maps.Marker({
@@ -66,7 +67,7 @@ var Map = React.createClass({
     },
     render: function() {
         return (
-            <div className="map-dropin" ref="map" style={{width: '450px', height: '400px'}}/>
+            <div className="map-dropin" ref="map" style={{width: '420px', height: '400px'}}/>
         );
     }
 });

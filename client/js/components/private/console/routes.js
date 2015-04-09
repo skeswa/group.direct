@@ -2,12 +2,9 @@
 var React           = require('react'),
     Router          = require('react-router');
 
-
-/**google maps integration
-example http://tomchentw.github.io/react-google-maps/#gs
---skipped: {ToastContainer, ToastMessage} = require("react-toastr") - do not have 'react-toastr' yet
-**/
 var Map             = require('./map.js');
+
+var Autosuggest     = require('./autosuggest.js');
 
 var Actions             = require('../../../actions'),
     AppStateStore       = require('../../../stores/appstate'),
@@ -75,6 +72,15 @@ var Routes = React.createClass({
                 }
             });
     },
+    getSuburbs: function(input, callback) {
+        var regex = new RegExp('^' + input, 'i');
+
+          setTimeout(function() {
+            callback(null, suburbs.filter(function(suburb){
+                regex.test(suburb);
+            }));
+          }, 300);
+        },
     onRouteClick: function(currentRoute, i, event) {
         this.setState({
             routeName: currentRoute.Name,
@@ -192,10 +198,12 @@ var Routes = React.createClass({
                         </div>
                         <div className="field center">
                             <button id="save-button" type="button" className="save-button"><i className="fa fa-check"></i></button>
+                            <Autosuggest />
                         </div>
                     </div>
                 </div>
                 <div className="map">
+
                     <Map markers={[
                         {latitude: 39.941, longitude: -75.18300, title: 'Test 1'},
                         {latitude: 39.931, longitude: -75.19900, title: 'Test 2'},
