@@ -47,10 +47,6 @@
     "pg": "^4.0.0",
     "pg-hstore": "^2.3.2",
     "react": "^0.12.0",
-<<<<<<< HEAD
-=======
-    "react-autosuggest": "^1.1.1",
->>>>>>> sbc-routes
     "react-google-maps": "^0.2.5",
     "react-router": "^0.11.6",
     "sequelize": "^2.0.0-rc2",

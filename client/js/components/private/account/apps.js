@@ -113,11 +113,7 @@ var Apps = React.createClass({
                         </div>
                         <div className="app-block">
                             <div className="profile-pic">
-<<<<<<< HEAD
-                                <Link to="notice"><img src='../static/img/Aphelia_logo.png'/></Link>
-=======
                                 <Link to="notice"><img src='../static/img/campus.png'/></Link>
->>>>>>> sbc-routes
                             </div>
                             <div className="top-text-wrapper">
                                 <div className="line1"><Link to="notice">Campus Connect</Link></div>

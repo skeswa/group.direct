@@ -377,10 +377,6 @@ var Routes = React.createClass({
                     </div>
                 </div>
                 <div className="map">
-<<<<<<< HEAD
-                    <img src='../static/img/maps_temp.PNG' />
-=======
-
                     <Map markers={[
                         {latitude: 39.182677, longitude: -77.2748273, title: 'Test 1'},
                         {latitude: 39.213243, longitude: -77.31001, title: 'Test 2'},
@@ -388,24 +384,10 @@ var Routes = React.createClass({
                         {latitude: 39.31, longitude: -77.39300, title: 'Test 4'},
                         //{this.state.markerElements}
                     ]}/>
->>>>>>> sbc-routes
                 </div>
             </div>
         );
     }
 });
 
-<<<<<<< HEAD
-/* Not sure how to integrate the follwoing code block
-module.exports = React.createClass({
-  mixins: [require("../ReactFutureMixin")],
-
-  _render (props, state) {
-    return <GettingStarted googleMapsApi={google.maps} {...props} />;
-  }
-});
-*/
-
-=======
->>>>>>> sbc-routes
 module.exports = Routes;

@@ -59,11 +59,7 @@ var Header = React.createClass({
             <div className="header-private">
                 <Link to="splash" className="logo">
                     <div className="profile-pic">
-<<<<<<< HEAD
-                        <img src='../static/img/ic_aphelia.png' />
-=======
                         <img src={logoUrl} />
->>>>>>> sbc-routes
                     </div>
                     <div className="logo-text">
                         {/*companyName*/}
