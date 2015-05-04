@@ -52,7 +52,7 @@ var Routes = React.createClass({
         Actions.changePageTitle('SchoolBus Connect');
 
         SchoolBusService.getRoutes(
-            sessionToken,
+            AppStateStore.getSessionData().sessionToken,
             companyId,
             function (res) {
                 if (res.body.ResultSet) {
