@@ -49,7 +49,7 @@ var Splash = React.createClass({
                             <img src='../static/img/ic_aphelia.png' />
                         </div>
                         <div className="logo-text">
-                            GroupConnect <sup>BETA</sup>
+                            GroupDirect <sup>BETA</sup>
                         </div>
                     </Link>
                     <div className="links">
