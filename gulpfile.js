@@ -51,7 +51,7 @@ var helpers = {
             .pipe(plumber())
             .pipe(source(path.join(__dirname, 'main.js')))
             .pipe(buffer())
-            .pipe(uglify())
+            //.pipe(uglify())
             .pipe(gulp.dest(path.join(__dirname, 'client', 'dist', 'js')))
     },
     delay: function(callback) {

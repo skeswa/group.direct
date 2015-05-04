@@ -2,6 +2,8 @@
 var React           = require('react'),
     Router          = require('react-router');
 
+var AppStateStore   = require('../../stores/appstate');
+
 // React-router variables
 var Link            = Router.Link;
 
@@ -15,7 +17,7 @@ var Header = React.createClass({
                             <img src='../static/img/ic_aphelia.png' />
                         </div>
                         <div className="logo-text">
-                            GroupConnect <sup>BETA</sup>
+                            GroupDirect <sup>BETA</sup>
                         </div>
                 </Link>
                 <div className="nav">

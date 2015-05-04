@@ -52,6 +52,18 @@ var ProfileService = {
             })
             .end(callback);
     },
+    getCompanyById: function(
+        companyId,
+        sessionToken,
+        callback) {
+        request
+            .post('/GroupDirectServices/CompanySignupService.svc/getcompanybyid')
+            .send({
+                companyId: companyId,
+                st: sessionToken
+            })
+            .end(callback)
+    },
 //Settings screen services - move to separate file if it gets longer
     updatePassword: function(
         userId,

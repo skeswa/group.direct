@@ -2,16 +2,115 @@ var request = require('superagent');
 
 var SchoolBusService = {
     getRoutes: function(
-            sessionToken,
-            callback) {
-            // Build the request
+        sessionToken,
+        companyId,
+        callback) {
+        // Build the request
+        request
+            .post('/ApheliaBusConnectService/BusConnectService.svc/getallactiveroutes')
+            .send({
+                st: sessionToken,
+                companyId: companyId
+            })
+            // Submit the request
+            .end(callback);
+    },
+    addRoute: function(
+        routeName,
+        companyId,
+        routePoints,
+        sessionToken,
+        callback) {
             request
-                .post('/ApheliaBusConnectService/BusConnectService.svc/getallactiveroutes')
+                .post('/ApheliaBusConnectService/BusConnectService.svc/addroute')
                 .send({
+                    route:
+                        {
+                            Name: routeName,
+                            Description: '',
+                            CompanyId: companyId
+                        },
+                    routePointList: routePoints,
                     st: sessionToken
                 })
-                // Submit the request
+                .end(callback)
+    },
+    updateRoute: function(
+        routeId,
+        routeName,
+        companyId,
+        routePoints,
+        sessionToken,
+        callback) {
+            request
+                .post('/ApheliaBusConnectService/BusConnectService.svc/editroute')
+                .send({
+                    route:
+                        {
+                            Id: routeId,
+                            Name: routeName,
+                            Description: '',
+                            CompanyId: companyId
+                        },
+                    routePointList: routePoints,
+                    st: sessionToken
+                })
+                .end(callback)
+    },
+    deleteRoute: function(
+        routeId,
+        sessionToken,
+        callback) {
+            request
+                .post('/ApheliaBusConnectService/BusConnectService.svc/deleteroute')
+                .send({
+                    routeId: routeId,
+                    st: sessionToken
+                })
                 .end(callback);
+    },
+    addStop: function(
+        street1,
+        city,
+        zip,
+        state,
+        country,
+        lat,
+        lng,
+        companyId,
+        createdOn,
+        sessionToken,
+        callback) {
+        // Build the request
+        request
+            .post('/ApheliaBusConnectService/BusConnectService.svc/addlocation')
+            .send({
+                location: {
+                        Address: street1,
+                        Street1: street1,
+                        Zip: zip,
+                        City: city,
+                        State: state,
+                        Country: country,
+                        Longitude: lng,
+                        Latitude: lat,
+                        LocationSourceTypeId: 3,
+                        CompanyId: companyId,
+                        CreatedOn: createdOn
+                    },
+                st: sessionToken
+            })
+            // Submit the request
+            .end(callback);
+    },
+
+    getCoordinates: function(
+        address,
+        callback) {
+        // Build the request
+        request
+            .get('/maps/api/geocode/json?address='+address)
+            .end(callback);
     },
     getDrivers: function(
         sessionToken,
