@@ -3,29 +3,24 @@ var React           = require('react'),
     Router          = require('react-router');
 
 var Util            = require('../../../util'),
-    Actions         = require('../../../actions'),
-    AppStateStore   = require('../../../stores/appstate');
+    Actions         = require('../../../actions');
 
 var Header          = require('../header'),
     //Inlude the tabs
-    Profile         = require('./profile'),
-    Connections     = require('./connections'),
-    Settings        = require('./settings'),
-    Apps            = require('./apps'),
-    Billing         = require('./billing');
+    Company         = require('./company');
 
 // React-router variables
 var Link            = Router.Link;
 var RouteHandler    = Router.RouteHandler;
 
-var Account = React.createClass({
+var Admin = React.createClass({
     mixins: [
         Router.State
     ],
     statics: {
         willTransitionTo: function(transition) {
-            if (transition.path === '/account' || transition.path === '/account/') {
-                transition.redirect('/account/apps');
+            if (transition.path === '/admin' || transition.path === '/admin/') {
+                transition.redirect('/admin/company');
             }
         }
     },
@@ -34,7 +29,6 @@ var Account = React.createClass({
         };
     },
     componentDidMount: function() {
-        var component = this;
     },
     componentWillUnmount: function() {
     },
@@ -48,13 +42,7 @@ var Account = React.createClass({
                 <div id="account" className="page">
                     <div id="content">
                         <div className="tabs">
-                            {/*<img src='../static/img/ic_aphelia.png' height='45px' />
-                            <div><b>GroupDirect</b> <sup>BETA</sup></div>*/}
-                            <Link to="profile">Profile</Link>
-                            <Link to="connections">Connections</Link>
-                            <Link to="settings">Settings</Link>
-                            <Link to="apps">Apps</Link>
-                            <Link to="billing">Billing</Link>
+                            <Link to="company">Manage Company</Link>
                         </div>
                         <RouteHandler component="div" key={routeName}/>
                     </div>
@@ -64,4 +52,4 @@ var Account = React.createClass({
     }
 });
 
-module.exports = Account;
+module.exports = Admin;

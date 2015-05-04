@@ -20,8 +20,9 @@ var Vehicles = React.createClass({
     getInitialState: function() {
         return{
             vehicles: [],
+            vehicleElements: [],
             active: 0,
-            status:''
+            message:''
         }
     },
     componentDidMount: function() {
@@ -40,7 +41,7 @@ var Vehicles = React.createClass({
                         description: res.body.ResultSet[0].Description,
                         model: res.body.ResultSet[0].ModelNo,
                         registration: res.body.ResultSet[0].RegistrationNo,
-                        active: 0
+                        active: 0,
                     });
                 } else {
                     console.log('Error at getVehicles', res.text);
@@ -54,7 +55,9 @@ var Vehicles = React.createClass({
             model: current.ModelNo,
             registration: current.RegistrationNo,
             active: i,
-            status:''
+            status:'',
+            vehicleElements: [],
+            message:''
         });
     },
     onAddClick: function(event) {
@@ -64,27 +67,33 @@ var Vehicles = React.createClass({
             description: '',
             model: '',
             registration: '',
-            active: 100
+            active: 100,
+            vehicleElements: [],
+            message:''
         });
     },
     onNameChange: function(event) {
         this.setState({
-            name: event.target.value
+            name: event.target.value,
+            vehicleElements: []
         });
     },
     onModelChange: function(event) {
         this.setState({
-            model: event.target.value
+            model: event.target.value,
+            vehicleElements: []
         });
     },
     onRegChange: function(event) {
         this.setState({
-            registration: event.target.value
+            registration: event.target.value,
+            vehicleElements: []
         });
     },
     onDescChange: function(event) {
         this.setState({
-            description: event.target.value
+            description: event.target.value,
+            vehicleElements: []
         });
     },
     addVehicle: function(event) {
@@ -97,29 +106,43 @@ var Vehicles = React.createClass({
             AppStateStore.getSessionData().sessionToken,
             function (res) {
                 if (res.body.Result) {
-                    console.log('Response for addVehicle', JSON.stringify(res.body));
                     component.setState({
                         name: res.body.Result.Name,
                         description: res.body.Result.Description,
                         model: res.body.Result.ModelNo,
                         registration: res.body.Result.RegistrationNo,
-                        active: 101,
-                        status: 'Vehicle added successfully.'
+                        active: 100,
+                        vehicleElements: [],
+                        message: 'Vehicle added successfully.'
                     });
+                    console.log('message', this.state.message);
+                var position = this.state.vehicles.length -1;
+                this.state.vehicleElements.push(
+                    <div className={'row' + (this.state.active === i ? ' active':'')} onClick={this.createExecutable(this.onVehicleClick, this.state.vehicles[position], position)}>
+                        <div className="profile-pic">
+                            <i className="fa fa-map-marker"></i>
+                        </div>
+                        <div className="top-text-wrapper">
+                            <div className="line1">{current.Name}</div>
+                        </div>
+                        <div className="remove-button">
+                            <i className="fa fa-close"></i>
+                        </div>
+                    </div>
+                );
                 } else {
                     console.log('Error at addVehicle', res.text);
                     component.setState({
-                        status: 'Error on adding vehicle.'
+                        message: 'Error on adding vehicle.'
                     });
                 }
             });
     },
     render: function() {
         //Get list of vehicles
-        var vehicleElements = [];
         for (var i=0; i<this.state.vehicles.length; i++) {
             var current = this.state.vehicles[i];
-            vehicleElements.push(
+            this.state.vehicleElements.push(
                 <div className={'row' + (this.state.active === i ? ' active':'')} onClick={this.createExecutable(this.onVehicleClick, current, i)}>
                     <div className="profile-pic">
                         <i className="fa fa-map-marker"></i>
@@ -141,7 +164,7 @@ var Vehicles = React.createClass({
                     <div className="add-button" onClick={this.onAddClick}>
                         <i className="fa fa-plus"></i>
                     </div>
-                    <div className="routes">{vehicleElements}</div>
+                    <div className="routes">{this.state.vehicleElements}</div>
                 </div>
                 <div className="left">
                     <div className="subtitle">Profile</div>
@@ -174,7 +197,7 @@ var Vehicles = React.createClass({
                         <div className="row wider">4-6-2015, Mon, Job: Student Pickup - Route #1 at 7:30am</div>
                     </div>
                     <div className="status">
-                        {this.state.status}
+                        {this.state.message}
                     </div>
                 </div>
                 <div className="vehicle-pic">

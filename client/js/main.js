@@ -38,9 +38,12 @@ var Public      = require('./components/public'),
 
     Console         = require('./components/private/console'),
     Routes          = require('./components/private/console/routes'),
-    Drivers          = require('./components/private/console/drivers'),
-    Vehicles          = require('./components/private/console/vehicles'),
-    Students          = require('./components/private/console/students');
+    Drivers         = require('./components/private/console/drivers'),
+    Vehicles        = require('./components/private/console/vehicles'),
+    Students        = require('./components/private/console/students'),
+
+    Admin           = require('./components/private/admin'),
+    Company         = require('./components/private/admin/company');
 // Authentication-required page components
 // TODO make the internal pages a thing
 
@@ -77,6 +80,11 @@ var sitemap = (
             <Route name="drivers" handler={Drivers}/>
             <Route name="vehicles" handler={Vehicles}/>
             <Route name="students" handler={Students}/>
+            <Redirect from="*" to="routes" />
+        </Route>
+        <Route name="admin" handler={Admin}>
+            <Route name="company" handler={Company}/>
+            <Redirect from="*" to="company" />
         </Route>
         <NotFoundRoute name="404" handler={NotFound}/>
     </Route>

@@ -113,7 +113,7 @@ var Apps = React.createClass({
                         </div>
                         <div className="app-block">
                             <div className="profile-pic">
-                                <Link to="notice"><img src='../static/img/Aphelia_logo.png'/></Link>
+                                <Link to="notice"><img src='../static/img/campus.png'/></Link>
                             </div>
                             <div className="top-text-wrapper">
                                 <div className="line1"><Link to="notice">Campus Connect</Link></div>
@@ -126,7 +126,7 @@ var Apps = React.createClass({
                         </div>
                         <div className="app-block">
                             <div className="profile-pic">
-                                <Link to="notice"><img src='../static/img/biocomalart_logo.png' /></Link>
+                                <Link to="notice"><img src='../static/img/biocom.png' /></Link>
                             </div>
                             <div className="top-text-wrapper">
                                 <div className="line1"><Link to="notice">Bio Connect</Link></div>
@@ -139,10 +139,23 @@ var Apps = React.createClass({
                         </div>
                         <div className="app-block">
                             <div className="profile-pic">
-                                 <Link to="notice"><i className="fa fa-user-md"></i></Link>
+                                 <Link to="notice"><img src='../static/img/holster.png' /></Link>
                             </div>
                             <div className="top-text-wrapper">
                                 <div className="line1"><Link to="notice">Holster Connect</Link></div>
+                                <div className="line2">
+                                    <span>Free</span>
+                                    <span className="separator"></span>
+                                    <span className="link">Upgrade License</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div className="app-block">
+                            <div className="profile-pic">
+                                 <Link to="notice"><img src='../static/img/factory.png' /></Link>
+                            </div>
+                            <div className="top-text-wrapper">
+                                <div className="line1"><Link to="notice">Factory Connect</Link></div>
                                 <div className="line2">
                                     <span>Free</span>
                                     <span className="separator"></span>

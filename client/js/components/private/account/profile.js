@@ -52,7 +52,7 @@ var Profile = React.createClass({
                             city: res.body.Result.City,
                             province: res.body.Result.State,
                             zip: res.body.Result.Zipcode,
-                            country: res.body.Result.Country,
+                            //country: res.body.Result.Country,
                         });
                     } else {
                         if (res.body.InfoMessages[0].Code == 1) {
@@ -112,11 +112,11 @@ var Profile = React.createClass({
             zip: event.target.value
         });
     },
-    onCountryChanged: function(event){
-        this.setState({
-            country: event.target.value
-        });
-    },
+    // onCountryChanged: function(event){
+    //     this.setState({
+    //         country: event.target.value
+    //     });
+    // },
     onSubmitClick: function(event){
     var userId          = this.state.userId,
         firstName       = this.state.firstName,
@@ -129,7 +129,7 @@ var Profile = React.createClass({
         city            = this.state.city,
         province        = this.state.province,
         zip             = this.state.zip,
-        country         = this.state.country,
+        country         = 'United States of America',
         sessionToken    = this.state.sessionToken;
 
     var component = this;
@@ -162,7 +162,7 @@ var Profile = React.createClass({
                             city: res.body.Result.City,
                             province: res.body.Result.State,
                             zip: res.body.Result.Zipcode,
-                            country: res.body.Result.Country,
+                            //country: res.body.Result.Country,
                             toastMessage: 'Profile updated successfully'
                         });
                     } else {
@@ -220,10 +220,10 @@ var Profile = React.createClass({
                              <div className="label">Zip</div>
                              <input type="text" className="textbox" value={this.state.zip} onChange={this.onZipChanged}/>
                         </div>
-                        <div className="field">
+                        {/*<div className="field">
                             <div className="label">Country</div>
                             <input type="text" className="textbox" value={this.state.country} onChange={this.onCountryChanged}/>
-                        </div>
+                        </div>*/}
                         <div className="field btn" >
                             <div className="label"></div>
                             <button type="submit" id="save-profile-button" className="button" onClick={this.onSubmitClick}>Save</button>

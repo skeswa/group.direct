@@ -4,7 +4,6 @@ var SignupService = {
     userSignupRequest: function(
         firstName,
         lastName,
-        userName,
         password,
         gender,
         email,
@@ -18,7 +17,7 @@ var SignupService = {
                 userSignupRequest: {
                     FirstName: firstName,
                     LastName: lastName,
-                    UserName: userName,
+                    UserName: email,
                     Password: password,
                     Gender: gender,
                     EmailAddress: email,
@@ -39,6 +38,43 @@ var SignupService = {
             .send({
                     email: email,
                     code: activationCode
+            })
+            // Submit the request
+            .end(callback);
+    },
+    companySignupRequest: function(
+        firstName,
+        lastName,
+        password,
+        email,
+        newCompanyName,
+        newCompanyEmail,
+        newCompanyAddrLine1,
+        newCompanyAddrLine2,
+        newCompanyCity,
+        newCompanyState,
+        newCompanyCountry,
+        newCompanyZip,
+        callback) {
+        // Build the request
+        request
+            .post('/GroupDirectServices/CompanySignupService.svc/docompanysignuprequest')
+            .send({
+                signUpModel: {
+                    FirstName: firstName,
+                    LastName: lastName,
+                    UserName: email,
+                    Password: password,
+                    EmailAddress: email,
+                    CompanyName: newCompanyName,
+                    CompanyEmail: newCompanyEmail,
+                    CompanyAddress1: newCompanyAddrLine1,
+                    CompanyAddress2: newCompanyAddrLine2,
+                    CompanyCity: newCompanyCity,
+                    CompanyState: newCompanyState,
+                    CompanyCountry: 221,
+                    CompanyZip: newCompanyZip
+                }
             })
             // Submit the request
             .end(callback);

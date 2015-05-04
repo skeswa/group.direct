@@ -3,6 +3,7 @@ var React       = require('react'),
     Router          = require('react-router');
 
 var AuthService = require('../../services/auth'),
+    ProfileService = require('../../services/profile'),
     Actions     = require('../../actions'),
     Navigation  = require('react-router').Navigation,
 
@@ -82,6 +83,26 @@ var Login = React.createClass({
                         });
                         return;
                     } else if (res.status === 200) {
+                        // var logoUrl     = 'logoUrl',
+                        //     companyName   = '';
+
+                        // ProfileService.getCompanyById(
+                        //     res.body.Result.CompanyId,
+                        //     res.body.Result.SessionToken,
+                        //     function (res) {
+                        //         if(res.body.Result) {
+                        //             console.log("Sucess at getCompanyById", logoUrl);
+                        //             // Actions.declareLoggedIn({
+                        //             //     companyName: res.body.Result.Name,
+                        //             //     logoUrl: logoUrl
+                        //             // });
+                        //             companyName = res.body.Result.Name;
+                        //         } else {
+                        //             console.log("Error at getCompanyById", res.text);
+                        //         }
+                        // });
+
+
                         // We have to declare that we're logged in now :)
                         Actions.declareLoggedIn({
                             id: res.body.Result.Id,
@@ -93,11 +114,19 @@ var Login = React.createClass({
                             picture: res.body.Result.ProfilePicture,
                             sessionToken: res.body.Result.SessionToken,
                             userName: res.body.Result.UserName,
-                            companyId: res.body.Result.CompanyId
+                            companyId: res.body.Result.CompanyId,
+                            userTypeId: res.body.Result.UserTypeId
                         });
+
                         // Move to the account screen
-                        component.transitionTo('apps');
+                        console.log('userId', res.body.Result.Id);
+                        console.log("userTypeId", res.body.Result.UserTypeId);
                         console.log('sessionToken', res.body.Result.SessionToken);
+                        if (res.body.Result.UserTypeId == 1) {
+                            component.transitionTo('company');
+                        } else {
+                            component.transitionTo('apps');
+                        }
                     } else {
                         // Stop waiting
                         component.setState({
@@ -110,8 +139,6 @@ var Login = React.createClass({
                 }
             });
         }
-
-    console.log( 'username', this.state.userName);
     },
     render: function() {
         return (
@@ -127,7 +154,7 @@ var Login = React.createClass({
                             </h1>
                             <div className="divider"/>
                             <div className="form">
-                                <div className="label">User Name</div>
+                                <div className="label">Email</div>
                                 <input type="text" className="textbox" ref="username" id="username-textbox" value={this.state.userName} onChange={this.onUserNameUpdated} disabled={this.state.waiting}/>
                                 <div className="label">Password</div>
                                 <input type="password" className="textbox" ref="password" id="password-textbox" value={this.state.password} onChange={this.onPasswordUpdated} onKeyDown={this.onPasswordKeyPress} disabled={this.state.waiting}/>

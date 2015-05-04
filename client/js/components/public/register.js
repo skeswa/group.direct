@@ -31,8 +31,10 @@ var steps = [
                     <input type="text" className="textbox" value={component.state.email} onChange={component.onEmailChanged}/>
                 </div>
                 <div className="field right">
+                    {/*
                      <div className="label">Username</div>
                      <input type="text" className="textbox" value={component.state.userName} onChange={component.onUsernameChanged}/>
+                    */}
                 </div>
                 <div className="field left">
                     <div className="label">Password</div>
@@ -62,36 +64,37 @@ var steps = [
                 </div>
                 <div id="create-company-form" className="form" style={{ display: (component.state.isCreatingNewCompany ? 'block' : 'none') }}>
                     <div className="field left">
-                        <div className="label">Name</div>
-                        <input type="text" className="textbox" value={component.state['newCompanyName']} onChange={component.onLastNameChanged}/>
+                        <div className="label">Company Name</div>
+                        <input type="text" className="textbox" value={component.state['newCompanyName']} onChange={component.onCompanyNameChanged}/>
                     </div>
                     <div className="field right">
                         <div className="label">Email</div>
-                        <input type="text" className="textbox" value={component.state['newCompanyEmail']} onChange={component.onLastNameChanged}/>
+                        <input type="text" className="textbox" value={component.state['newCompanyEmail']} onChange={component.onCompanyEmailChanged}/>
                     </div>
-                    <div className="field full">
+                    <div className="field left">
                         <div className="label">Address Line 1</div>
-                        <input type="text" className="textbox" value={component.state['newCompanyAddrLine1']} onChange={component.onLastNameChanged}/>
+                        <input type="text" className="textbox" value={component.state['newCompanyAddrLine1']} onChange={component.onCompanyAddrLine1Changed}/>
                     </div>
-                    <div className="field full">
+                    <div className="field right">
                         <div className="label">Address Line 2</div>
-                        <input type="text" className="textbox" value={component.state['newCompanyAddrLine2']} onChange={component.onLastNameChanged}/>
+                        <input type="text" className="textbox" value={component.state['newCompanyAddrLine2']} onChange={component.onCompanyAddrLine2Changed}/>
                     </div>
                     <div className="field left">
                         <div className="label">City</div>
-                        <input type="text" className="textbox" value={component.state['newCompanyCity']} onChange={component.onLastNameChanged}/>
+                        <input type="text" className="textbox" value={component.state['newCompanyCity']} onChange={component.onCompanyCityChanged}/>
                     </div>
                     <div className="field right">
                         <div className="label">State</div>
-                        <input type="text" className="textbox" value={component.state['newCompanyState']} onChange={component.onLastNameChanged}/>
+                        <input type="text" className="textbox" value={component.state['newCompanyState']} onChange={component.onCompanyStateChanged}/>
                     </div>
-                    <div className="field left">
+                    {/*<div className="field left">
                         <div className="label">Country</div>
-                        <input type="text" className="textbox" value={component.state['newCompanyCountry']} onChange={component.onLastNameChanged}/>
+                        <input type="text" className="textbox" value={component.state['newCompanyCountry']} onChange={component.onCompanyCountryChanged}/>
                     </div>
-                    <div className="field right">
+                    */}
+                    <div className="field left">
                         <div className="label">Zip</div>
-                        <input type="text" className="textbox" value={component.state['newCompanyZip']} onChange={component.onLastNameChanged}/>
+                        <input type="text" className="textbox" value={component.state['newCompanyZip']} onChange={component.onCompanyZipChanged}/>
                     </div>
                 </div>
             </div>
@@ -116,7 +119,6 @@ var Register = React.createClass({
     getInitialState: function() {
         return {
             toastMessage: undefined,
-            userName: '',
             password: '',
             waiting: false,
             step: 0,
@@ -133,7 +135,7 @@ var Register = React.createClass({
     showJoinCompanyForm: function() {
         this.setState({
             isCreatingNewCompany: false,
-            isJoiningExistingCompany: true
+            isJoiningExistingCompany: true,
         });
     },
     showCreateCompanyForm: function() {
@@ -142,40 +144,41 @@ var Register = React.createClass({
             isJoiningExistingCompany: false
         });
     },
+    //user related functions::
     onFirstNameChanged: function(event){
         this.setState({
-            firstName: event.target.value
+            firstName: event.target.value,
+            toastMessage: undefined
         });
     },
     onLastNameChanged: function(event){
         this.setState({
-            lastName: event.target.value
+            lastName: event.target.value,
+            toastMessage: undefined
         });
     },
     onEmailChanged: function(event){
         this.setState({
-            email: event.target.value
+            email: event.target.value,
+            toastMessage: undefined
         });
     },
     onPasswordChanged: function(event){
         this.setState({
-            password: event.target.value
+            password: event.target.value,
+            toastMessage: undefined
         });
     },
     onConfirmPasswordChanged: function(event){
         this.setState({
-            confirmPassword: event.target.value
+            confirmPassword: event.target.value,
+            toastMessage: undefined
         });
     },
-    onUsernameChanged: function(event){
-        this.setState({
-            userName: event.target.value
-        });
-    },
+
     onNext: function() {
         var firstName       = this.state.firstName,
             lastName        = this.state.lastName,
-            userName        = this.state.userName,
             email           = this.state.email,
             password        = this.state.password,
             confirmPassword = this.state.confirmPassword,
@@ -201,12 +204,6 @@ var Register = React.createClass({
                 problems.push({
                     field: 'Email',
                     message: 'Must be a correctly formatted email address'
-                });
-            }
-            if (!validator.matches(userName, /[a-zA-Z0-9\.]{6,20}/)) {
-                problems.push({
-                    field: 'Username',
-                    message: 'Must be between 6 and 18 alphanumeric characters long'
                 });
             }
             //(?=.*[A-Z])(?=.*[@#$%]) //uppercase letter, special symbol
@@ -242,63 +239,75 @@ var Register = React.createClass({
         //     waiting: true,
         //     toastMessage: 'This is a waiting Toast message.'
         // });
-        // Send the signup request
-        var component = this;
-        SignupService.userSignupRequest(
-            firstName,
-            lastName,
-            userName,
-            password,
-            'Male',
-            email,
-            '10-10-2010',
-            '902-872-1113',
-            function(res) {
-                if (res.ok) {
-                    // This means everything went just fine
-                    console.log('We got a response', JSON.stringify(res.body));
-                    if (res.body.Result) {
-                        //Go to next step
-                        var step = component.state.step;
-                        if (step < steps.length - 1) {
-                            component.setState({
-                                step: (step + 1)
-                            });
-                        }
-                    } else {
-                        component.setState({
-                            toastMessage: res.body.InfoMessages[0].Text
-                        });
-                    }
-                    // activationCode = res.body.Result.ActivationCode;
-                    //     SignupService.activateUserSignupRequest(
-                    //     email,
-                    //     activationCode,
-                    //     function(res) {
-                    //         if (res.ok) {
-                    //             // This means everything went just fine
-                    //             console.log('Activation', JSON.stringify(res.body));
-                    //         } else {
-                    //             // component.setState({
-                    //             //     waiting: false,
-                    //             //     password: '',
-                    //             //     toastMessage:
-                    //             //         'There was a problem connecting to the server. ' +
-                    //             //         'Check your connection status and try again.'
-                    //             // });
-                    //             console.log('We got an error', res.text);
-                    //         }
-                    //     });
-                } else {
-                    component.setState({
-                        toastMessage:
-                            'There was a problem connecting to the server. ' +
-                            'Check your connection status and try again.'
-                    });
-                    return;
-                    console.log('We got an error', res.text);
-                }
+
+        //Go to next step
+        var step = this.state.step;
+        if (step < steps.length - 1) {
+            this.setState({
+                step: (step + 1)
             });
+        }
+    },
+
+    //company related functions::
+    onCompanyNameChanged: function(event){
+        this.setState({
+            newCompanyName: event.target.value,
+            toastMessage: undefined
+        });
+    },
+    onCompanyEmailChanged: function(event){
+        this.setState({
+            newCompanyEmail: event.target.value,
+            toastMessage: undefined
+        });
+    },
+    onCompanyAddrLine1Changed: function(event){
+        this.setState({
+            newCompanyAddrLine1: event.target.value,
+            toastMessage: undefined
+        });
+    },
+    onCompanyAddrLine2Changed: function(event){
+        this.setState({
+            newCompanyAddrLine2: event.target.value,
+            toastMessage: undefined
+        });
+    },
+    onCompanyCityChanged: function(event){
+        this.setState({
+            newCompanyCity: event.target.value,
+            toastMessage: undefined
+        });
+    },
+    onCompanyStateChanged: function(event){
+        this.setState({
+            newCompanyState: event.target.value,
+            toastMessage: undefined
+        });
+    },
+    onCompanyCountryChanged: function(event){
+        this.setState({
+            newCompanyCountry: event.target.value,
+            toastMessage: undefined
+        });
+    },
+    onCompanyZipChanged: function(event){
+        this.setState({
+            newCompanyZip: event.target.value,
+            toastMessage: undefined
+        });
+    },
+
+    onFinish: function() {
+        if (this.state.isCreatingNewCompany) {
+            console.log("create Company");
+            this.createCompany();
+        }
+        else {
+            console.log("create User");
+            this.createUser();
+        }
     },
     onBack: function() {
         var step = this.state.step;
@@ -314,15 +323,121 @@ var Register = React.createClass({
             step: 2
         });
     },
-    onFinish: function(){
-        this.setState({
-            step: 2
-        });
-        console.log("On finish Result: " + activationCode);
-        console.log("Email: " + email);
-    },
-    onSubmit: function() {
+    //Webservice Calls
+    createCompany: function() {
+        var newCompanyName      = this.state.newCompanyName,
+            newCompanyEmail     = this.state.newCompanyEmail,
+            newCompanyAddrLine1 = this.state.newCompanyAddrLine1,
+            newCompanyAddrLine2 = this.state.newCompanyAddrLine2,
+            newCompanyCity      = this.state.newCompanyCity,
+            newCompanyState     = this.state.newCompanyState,
+            newCompanyZip       = this.state.newCompanyZip,
+            newCompanyCountry   = this.state.newCompanyCountry,
+            activationCode  = 0;
 
+        if (this.state.waiting) return;
+        else {
+            // Validate input
+            var problems = [];
+            if (!validator.matches(newCompanyName, /[a-zA-Z_\-]{2,}/)) {
+                problems.push({
+                    field: 'Company Name',
+                    message: 'Must be at least two letters long'
+                });
+            }
+            if (!validator.isEmail(newCompanyEmail)) {
+                problems.push({
+                    field: 'Company Email',
+                    message: 'Must be a correctly formatted email address'
+                });
+            }
+            if (problems.length > 0) {
+                //Display full message in toast
+                //var messages = '';
+                //for (var i=0; i < problems.length; i++)
+                //messages+= problems[i].field + ': '+ problems[i].message + '\n';
+
+                //Display messages one by one
+                var message = problems[0].field + ': '+ problems[0].message;
+                this.setState({
+                    toastMessage: message
+                    });
+                return;
+            }
+        }
+        // Send company signup request
+        var component = this;
+        SignupService.companySignupRequest(
+            this.state.firstName,
+            this.state.lastName,
+            this.state.password,
+            this.state.email,
+            newCompanyName,
+            newCompanyEmail,
+            newCompanyAddrLine1,
+            newCompanyAddrLine2,
+            newCompanyCity,
+            newCompanyState,
+            newCompanyCountry,
+            newCompanyZip,
+            function(res) {
+                if (res.ok) {
+                    // This means everything went just fine
+                    console.log('We got a response', JSON.stringify(res.body));
+                    if (res.body.Result) {
+                        //Go to last step
+                        component.setState({
+                            step: 2
+                        });
+                    } else {
+                        component.setState({
+                            toastMessage: res.body.InfoMessages[0].Text
+                        });
+                    }
+                } else {
+                    component.setState({
+                        toastMessage:
+                            'There was a problem connecting to the server. ' +
+                            'Check your connection status and try again.'
+                    });
+                    return;
+                    console.log('We got an error', res.text);
+                }
+            });
+    },
+
+    createUser: function() {
+    // Send the signup request
+    var component = this;
+    SignupService.userSignupRequest(
+        this.state.firstName,
+        this.state.lastName,
+        this.state.password,
+        'Male',
+        this.state.email,
+        '10-10-2010',
+        '902-872-1113',
+        function(res) {
+            if (res.ok) {
+                // This means everything went just fine
+                console.log('userSignupRequest', JSON.stringify(res.body));
+                if (res.body.Result) {
+
+                } else {
+                    component.setState({
+                        toastMessage: res.body.InfoMessages[0].Text
+                    });
+                }
+            } else {
+                component.setState({
+                    toastMessage:
+                        'There was a problem connecting to the server. ' +
+                        'Check your connection status and try again.'
+                });
+                return;
+                console.log('We got an error', res.text);
+            }
+        });
     },
     render: function() {
         return (
@@ -347,14 +462,14 @@ var Register = React.createClass({
                                 <div className="step one">
                                     {(steps[this.state.step])(this)}
                                 </div>
-                                <div className={'flash' + (this.state.toastMessage && this.state.step === 0 ? ' visible' : '')}>
+                                <div className={'flash' + (this.state.toastMessage ? ' visible' : '')}>
                                     {this.state.toastMessage}
                                 </div>
                                 <div className="footer">
                                     <div className="divider"/>
                                     <button id="back-button" onClick={this.onBack} disabled={this.state.waiting} style={{ display: (this.state.step === 2 ? 'none' : 'inline-block') }}>Back</button>
                                     <button id="next-button" onClick={this.onNext} disabled={this.state.waiting} style={{ display: (this.state.step === 0 ? 'inline-block' : 'none') }}>Next</button>
-                                    <button id="finish-button" onClick={this.onNext} disabled={this.state.waiting} style={{ display: (this.state.step === 1 ? 'inline-block' : 'none') }}>Finish</button>
+                                    <button id="finish-button" onClick={this.onFinish} disabled={this.state.waiting} style={{ display: (this.state.step === 1 ? 'inline-block' : 'none') }}>Finish</button>
                                 </div>
                             </div>
                         </div>
