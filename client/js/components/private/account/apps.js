@@ -39,7 +39,7 @@ var Apps = React.createClass({
                                 <div className="line2">
                                     <span>Free</span>
                                     <span className="separator"></span>
-                                    <span className="link">Upgrade License</span>
+                                    <Link to="contact" className="link">Contact us</Link>
                                 </div>
                             </div>
                         </div>
@@ -52,7 +52,7 @@ var Apps = React.createClass({
                                 <div className="line2">
                                     <span>Free</span>
                                     <span className="separator"></span>
-                                    <span className="link">Upgrade License</span>
+                                    <Link to="contact" className="link">Contact us</Link>
                                 </div>
                             </div>
                         </div>
@@ -65,7 +65,7 @@ var Apps = React.createClass({
                                 <div className="line2">
                                     <span>Free</span>
                                     <span className="separator"></span>
-                                    <span className="link" >Upgrade License</span>
+                                    <Link to="contact" className="link">Contact us</Link>
                                 </div>
                             </div>
                         </div>
@@ -78,7 +78,7 @@ var Apps = React.createClass({
                                 <div className="line2">
                                     <span>Free</span>
                                     <span className="separator"></span>
-                                    <span className="link">Upgrade License</span>
+                                    <Link to="contact" className="link">Contact us</Link>
                                 </div>
                             </div>
                         </div>
@@ -94,12 +94,12 @@ var Apps = React.createClass({
                                 <div className="line2">
                                     <span>Free</span>
                                     <span className="separator"></span>
-                                    <span className="link" >Upgrade License</span>
+                                    <Link to="billing" className="link">Upgrade License</Link>
                                 </div>
                             </div>
                         </div>
                         <div className="app-block">
-                            <div className="profile-pic" >
+                            <div className="profile-pic">
                                 <Link to="routes"><img src='../static/img/sbc.png' /></Link>
                             </div>
                             <div className="top-text-wrapper">
@@ -107,7 +107,7 @@ var Apps = React.createClass({
                                 <div className="line2">
                                     <span>Free</span>
                                     <span className="separator"></span>
-                                    <span className="link">Upgrade License</span>
+                                    <Link to="contact" className="link">Contact us</Link>
                                 </div>
                             </div>
                         </div>
@@ -120,7 +120,7 @@ var Apps = React.createClass({
                                 <div className="line2">
                                     <span>Free</span>
                                     <span className="separator"></span>
-                                    <span className="link">Upgrade License</span>
+                                    <Link to="contact" className="link">Contact us</Link>
                                 </div>
                             </div>
                         </div>
@@ -133,7 +133,7 @@ var Apps = React.createClass({
                                 <div className="line2">
                                     <span>Free</span>
                                     <span className="separator"></span>
-                                    <span className="link">Upgrade License</span>
+                                    <Link to="contact" className="link">Contact us</Link>
                                 </div>
                             </div>
                         </div>
@@ -142,11 +142,11 @@ var Apps = React.createClass({
                                  <Link to="notice"><img src='../static/img/holster.png' /></Link>
                             </div>
                             <div className="top-text-wrapper">
-                                <div className="line1"><Link to="notice">Holster Connect</Link></div>
+                                <div className="line1"><Link to="notice">Protect & Connect</Link></div>
                                 <div className="line2">
                                     <span>Free</span>
                                     <span className="separator"></span>
-                                    <span className="link">Upgrade License</span>
+                                    <Link to="billing" className="link">Upgrade License</Link>
                                 </div>
                             </div>
                         </div>
@@ -159,7 +159,7 @@ var Apps = React.createClass({
                                 <div className="line2">
                                     <span>Free</span>
                                     <span className="separator"></span>
-                                    <span className="link">Upgrade License</span>
+                                    <Link to="contact" className="link">Contact us</Link>
                                 </div>
                             </div>
                         </div>

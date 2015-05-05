@@ -1,10 +1,14 @@
 /** @jsx React.DOM */
 var React           = require('react'),
+    Router          = require('react-router'),
     Navigation      = require('react-router').Navigation;
 
 var Actions         = require('../../../actions');
 
 var AuthMixin       = require('../../../mixins/auth');
+
+// React-router variables
+var Link            = Router.Link;
 
 var Billing = React.createClass({
     mixins: [AuthMixin],
@@ -25,17 +29,17 @@ var Billing = React.createClass({
         });
         this.transitionTo('notice');
     },
-    onApheliaClick: function() {
+    onGvcClick: function() {
         this.setState({
             step: 0
         });
     },
-    onGvcClick: function() {
+    onGcClick: function() {
         this.setState({
             step: 1
         });
     },
-    onBiocomClick: function() {
+    onCalendarClick: function() {
         this.setState({
             step: 2
         });
@@ -56,6 +60,37 @@ var Billing = React.createClass({
         });
     },
     render: function() {
+        var apps = [
+            {name: 'Video Connect', logo:'gvc'},
+            {name: 'Group Connect', logo:'gc'},
+            {name: 'Job Scheduler', logo:'calendar'},
+            {name: 'Report For Results', logo:'r4r'},
+            {name: 'Field Connect', logo:'field-connect'},
+            {name: 'School Bus Connect', logo:'sbc'},
+            {name: 'Campus Connect', logo:'campus'},
+            {name: 'Bio Connect', logo:'biocom'},
+            {name: 'Protect & Connect', logo:'holster'},
+            {name: 'Factory Connect', logo:'factory'}
+        ];
+        var appElements = []
+        for(var i=0; i<apps.length; i++){
+            var url = '../static/img/'+(apps[i].logo)+'.png';
+            appElements.push(
+                <div className="row">
+                    <div className="profile-pic">
+                        <img src={url} />
+                    </div>
+                    <div className="top-text-wrapper">
+                        <div className="line1">{apps[i].name}</div>
+                        <div className="line2">
+                            <span>Basic</span>
+                            <span className="separator"></span>
+                            <a href={(i==4 || i==8) ? '#'+(apps[i].logo) : '/contact'} className="link">{(i==4 || i==8) ? 'Upgrade License' : 'Contact us'}</a>
+                        </div>
+                    </div>
+                </div>
+            );
+        }
         return (
             <div className="tab-content">
                 <div className="left narrow">
@@ -70,51 +105,52 @@ var Billing = React.createClass({
                             </div>
                         </div>
                     </div>
-                    <div className={'row'+(this.state.step === 0 ? ' active' : '')}>
-                        <div className="profile-pic" onClick={this.onApheliaClick} >
-                            <a href="#aphelia"><img src='../static/img/Aphelia_logo.png' /></a>
+                    {appElements}
+                    {/*<div className={'row'+(this.state.step === 1 ? ' active' : '')}>
+                        <div className="profile-pic" onClick={this.onGcClick} >
+                            <a href="#gc"><img src='../static/img/gc.png' /></a>
                         </div>
                         <div className="top-text-wrapper">
-                            <div className="line1" onClick={this.onApheliaClick}><a href="#aphelia">Aphelia</a></div>
+                            <div className="line1" onClick={this.onGcClick}>Group Connect</div>
                             <div className="line2">
                                 <span>Basic</span>
                                 <span className="separator"></span>
-                                <span className="link" onClick={this.onUpgradeClick}>Upgrade License</span>
-                            </div>
-                        </div>
-                    </div>
-                    <div className={'row'+(this.state.step === 1 ? ' active' : '')}>
-                        <div className="profile-pic" onClick={this.onGvcClick} >
-                            <a href="#gvc"><img src='../static/img/gvc_logo.png' /></a>
-                        </div>
-                        <div className="top-text-wrapper">
-                            <div className="line1" onClick={this.onGvcClick}><a href="#gvc">GroupVideoConnect</a></div>
-                            <div className="line2">
-                                <span>Basic</span>
-                                <span className="separator"></span>
-                                <span className="link" onClick={this.onUpgradeClick}>Upgrade License</span>
+                                <Link to="contact" className="link">Contact us</Link>
                             </div>
                         </div>
                     </div>
                     <div className={'row'+(this.state.step === 2 ? ' active' : '')}>
-                        <div className="profile-pic" onClick={this.onBiocomClick}>
-                            <a href="#biocom"><img src='../static/img/biocomalart_logo.png' /></a>
+                        <div className="profile-pic" onClick={this.onCalendarClick}>
+                            <a href="#calendar"><img src='../static/img/calendar.png' /></a>
                         </div>
                         <div className="top-text-wrapper">
-                            <div className="line1" onClick={this.onBiocomClick}><a href="#biocom">BioConnect</a></div>
+                            <div className="line1" onClick={this.onCalendarClick}>Job Scheduler</div>
                             <div className="line2">
                                 <span>Basic</span>
                                 <span className="separator"></span>
-                                <span className="link" onClick={this.onUpgradeClick}>Upgrade License</span>
+                                <Link to="contact" className="link">Contact us</Link>
                             </div>
                         </div>
                     </div>
                     <div className={'row'+(this.state.step === 3 ? ' active' : '')}>
                         <div className="profile-pic" onClick={this.onR4rClick}>
-                            <a href="#r4r"><img src='../static/img/report_for_result.png' /></a>
+                            <a href="#r4r"><img src='../static/img/r4r.png' /></a>
                         </div>
                         <div className="top-text-wrapper">
-                            <div className="line1" onClick={this.onR4rClick}><a href="#r4r">ReportForResults</a></div>
+                            <div className="line1" onClick={this.onR4rClick}>Report For Results</div>
+                            <div className="line2">
+                                <span>Basic</span>
+                                <span className="separator"></span>
+                                <Link to="contact" className="link">Contact us</Link>
+                            </div>
+                        </div>
+                    </div>
+                    <div className={'row'+(this.state.step === 4 ? ' active' : '')}>
+                        <div className="profile-pic" onClick={this.onFcClick}>
+                            <a href="#fc"><img src='../static/img/field-connect.png' /></a>
+                        </div>
+                        <div className="top-text-wrapper">
+                            <div className="line1" onClick={this.onFcClick}><a href="#fc">Field Connect</a></div>
                             <div className="line2">
                                 <span>Basic</span>
                                 <span className="separator"></span>
@@ -123,11 +159,11 @@ var Billing = React.createClass({
                         </div>
                     </div>
                     <div className={'row'+(this.state.step === 4 ? ' active' : '')}>
-                        <div className="profile-pic" onClick={this.onCicClick}>
-                            <a href="#cic"><img src='../static/img/cic_logo.png' /></a>
+                        <div className="profile-pic" onClick={this.onFcClick}>
+                            <a href="#fc"><img src='../static/img/sbc.png' /></a>
                         </div>
                         <div className="top-text-wrapper">
-                            <div className="line1" onClick={this.onCicClick}><a href="#cic">CiscoInstantConnect</a></div>
+                            <div className="line1" onClick={this.onSbcClick}>School Bus Connect</div>
                             <div className="line2">
                                 <span>Basic</span>
                                 <span className="separator"></span>
@@ -135,22 +171,71 @@ var Billing = React.createClass({
                             </div>
                         </div>
                     </div>
+                    <div className={'row'+(this.state.step === 4 ? ' active' : '')}>
+                        <div className="profile-pic" onClick={this.onFcClick}>
+                            <a href="#fc"><img src='../static/img/field-connect.png' /></a>
+                        </div>
+                        <div className="top-text-wrapper">
+                            <div className="line1" onClick={this.onFcClick}><a href="#fc">Field Connect</a></div>
+                            <div className="line2">
+                                <span>Basic</span>
+                                <span className="separator"></span>
+                                <span className="link" onClick={this.onUpgradeClick}>Upgrade License</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div className={'row'+(this.state.step === 4 ? ' active' : '')}>
+                        <div className="profile-pic" onClick={this.onFcClick}>
+                            <a href="#fc"><img src='../static/img/field-connect.png' /></a>
+                        </div>
+                        <div className="top-text-wrapper">
+                            <div className="line1" onClick={this.onFcClick}><a href="#fc">Field Connect</a></div>
+                            <div className="line2">
+                                <span>Basic</span>
+                                <span className="separator"></span>
+                                <span className="link" onClick={this.onUpgradeClick}>Upgrade License</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div className={'row'+(this.state.step === 4 ? ' active' : '')}>
+                        <div className="profile-pic" onClick={this.onFcClick}>
+                            <a href="#fc"><img src='../static/img/field-connect.png' /></a>
+                        </div>
+                        <div className="top-text-wrapper">
+                            <div className="line1" onClick={this.onFcClick}><a href="#fc">Field Connect</a></div>
+                            <div className="line2">
+                                <span>Basic</span>
+                                <span className="separator"></span>
+                                <Link to="contact" className="link">Contact us</Link>
+                            </div>
+                        </div>
+                    </div>*/}
                 </div>
                 <div className="right wide">
                     <div className="billing">
-                        <div className="app-header"><a name="aphelia"><i className="fa fa-chevron-down"></i> Aphelia</a></div>
+                        <div className="app-header"><a name="field-connect"><i className="fa fa-chevron-down"></i> Field Connect</a></div>
                         <div className="row">
                             <div className="column1"></div>
                             <span className="column2 caps">License</span>
                         </div>
                         <div className="row">
                             <div className="column1 red"><input value="1" type="text" className="textbox" /></div>
-                            <span className="column2">Basic License - $0/month per user</span>
+                            <div className="column2">
+                                <div className="name">Basic License - $0/month per user</div>
+                                <div className="description">
+                                    Description: This is the description of the services included in the basic license package.
+                                </div>
+                            </div>
                             <span className="column3">$0.00</span>
                         </div>
                         <div className="row">
                             <div className="column1"><input value="0" type="text" className="textbox" /></div>
-                            <span className="column2">Basic License - $5/month per user</span>
+                            <div className="column2">
+                                <div className="name">Basic License - $5/month per user</div>
+                                <div className="description">
+                                    Description: This is the description of the services included in the basic license package.
+                                </div>
+                            </div>
                             <span className="column3">$0.00</span>
                         </div>
                         <div className="row">
@@ -159,24 +244,39 @@ var Billing = React.createClass({
                         </div>
                         <div className="row">
                             <div className="column1"><input value="0" type="text" className="textbox" /></div>
-                            <span className="column2">PTT Chat on TalkGroups with Radio Interoperability - $10/month per user</span>
+                            <div className="column2">
+                                <div className="name">PTT Chat on TalkGroups with Radio Interoperability - $10/month per user</div>
+                                <div className="description">
+                                    Description: This is the description of the services included in the basic license package.
+                                </div>
+                            </div>
                             <span className="column3">$0.00</span>
                         </div>
                         <div className="row empty"></div>
 
-                        <div className="app-header"><a name="gvc"><i className="fa fa-chevron-down"></i> Group Video Connect</a></div>
+                        <div className="app-header"><a name="holster"><i className="fa fa-chevron-down"></i> Protect & Connect</a></div>
                         <div className="row">
                             <div className="column1"></div>
                             <span className="column2 caps">License</span>
                         </div>
                         <div className="row">
                             <div className="column1 red"><input value="1" type="text" className="textbox" /></div>
-                            <span className="column2">Basic License - $0/month per user</span>
+                            <div className="column2">
+                                <div className="name">Basic License - $0/month per user</div>
+                                <div className="description">
+                                    Description: This is the description of the services included in the basic license package.
+                                </div>
+                            </div>
                             <span className="column3">$0.00</span>
                         </div>
                         <div className="row">
                             <div className="column1"><input value="0" type="text" className="textbox" /></div>
-                            <span className="column2">Basic License - $5/month per user</span>
+                            <div className="column2">
+                                <div className="name">Basic License - $5/month per user</div>
+                                <div className="description">
+                                    Description: This is the description of the services included in the basic license package.
+                                </div>
+                            </div>
                             <span className="column3">$0.00</span>
                         </div>
                         <div className="row">
@@ -185,11 +285,17 @@ var Billing = React.createClass({
                         </div>
                         <div className="row">
                             <div className="column1"><input value="0" type="text" className="textbox" /></div>
-                            <span className="column2">PTT Chat on TalkGroups with Radio Interoperability - $10/month per user</span>
+                            <div className="column2">
+                                <div className="name">PTT Chat on TalkGroups with Radio Interoperability - $10/month per user</div>
+                                <div className="description">
+                                    Description: This is the description of the services included in the basic license package.
+                                </div>
+                            </div>
                             <span className="column3">$0.00</span>
                         </div>
 
-                        <div className="app-header"><a name="biocom"><i className="fa fa-chevron-down"></i> Bio Connect</a></div>
+
+                        {/*<div className="app-header"><a name="biocom"><i className="fa fa-chevron-down"></i> Bio Connect</a></div>
                         <div className="row">
                             <div className="column1"></div>
                             <span className="column2 caps">License</span>
@@ -267,7 +373,7 @@ var Billing = React.createClass({
                             <div className="column1"></div>
                             <span className="column2 caps">Total</span>
                             <span className="column3 big">$0.00</span>
-                        </div>
+                        </div>*/}
 
                     </div>
                 </div>
