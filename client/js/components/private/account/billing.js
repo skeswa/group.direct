@@ -83,8 +83,10 @@ var Billing = React.createClass({
                     <div className="top-text-wrapper">
                         <div className="line1">{apps[i].name}</div>
                         <div className="line2">
-                            <span>Basic</span>
-                            <span className="separator"></span>
+                            <span className={(i==4 || i==8 || i==5) ? 'show': 'hide'}>
+                                <span>Basic</span>
+                                <span className="separator"></span>
+                            </span>
                             <a href={(i==4 || i==8) ? '#'+(apps[i].logo) : '/contact'} className="link">{(i==4 || i==8) ? 'Upgrade License' : 'Contact us'}</a>
                         </div>
                     </div>

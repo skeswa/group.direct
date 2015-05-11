@@ -43,7 +43,8 @@ var Routes = React.createClass({
             active: 0,
             newStop: undefined,
             //fromAddress: undefined,
-            counter: 1000
+            counter: 1000,
+            routeName: undefined
         }
     },
     componentDidMount: function() {
@@ -60,18 +61,24 @@ var Routes = React.createClass({
                     var stopPoints = [];
                     for (var i=0; i<res.body.ResultSet[0].RoutePointResponseList.length; i++) {
                         var currentStop = res.body.ResultSet[0].RoutePointResponseList[i];
-                        stopPoints.push({
-                            "Address": currentStop.LocationResponse.Address,
-                            "Longitude": currentStop.LocationResponse.Longitude,
-                            "Latitude": currentStop.LocationResponse.Latitude,
-                            "IsEndingLocation": currentStop.IsEndingLocation,
-                            "IsStartingLocation": currentStop.IsStartingLocation,
-                            "IsStopOver": 1,
-                            "Order": i + 1
-                        });
+                        if(currentStop.LocationResponse) {
+                            stopPoints.push({
+                                "Address": currentStop.LocationResponse.Address,
+                                "Longitude": currentStop.LocationResponse.Longitude,
+                                "Latitude": currentStop.LocationResponse.Latitude,
+                                "IsEndingLocation": currentStop.IsEndingLocation,
+                                "IsStartingLocation": currentStop.IsStartingLocation,
+                                "IsStopOver": 1,
+                                "Order": i + 1
+                            });
+                        } else {
+                            stopPoints.push({
+                                "Data not found"
+                            });
+                        }
                         component.state.stopComponent.push(
                         <div>
-                            <input type="text" className="textbox" value={stopPoints[i].Address}/>
+                            <input type="text" className="textbox" placeholder="Enter stop address" value={stopPoints[i].Address} onChange={component.onSavedStop}/>
                             <div className="remove-button">
                                 <i className="fa fa-close" onClick={component.createExecutable(component.deleteStop, i)}></i>
                             </div>
@@ -113,9 +120,10 @@ var Routes = React.createClass({
     //     },
     onRouteClick: function(currentRoute, i, event) {
         this.setState({
+            routeId: currentRoute.Id,
             routeName: currentRoute.Name,
             active: i,
-            //stopComponent: [],
+            stopData: [],
             newStop: undefined,
             counter: 1000
         });
@@ -125,7 +133,7 @@ var Routes = React.createClass({
                 //toAddress: 'Data not found',
                 stopData: 'No stops found',
             });
-        } else {
+        } else  {
             var stopPoints = [];
             this.state.stopComponent.length = 0;
             for (var i=0; i<currentRoute.RoutePointResponseList.length; i++) {
@@ -188,17 +196,44 @@ var Routes = React.createClass({
             stopComponent: [],
             counter: 0
         });
+
     },
     onNewStop: function(event) {
         //capture new address
         this.setState ({
             newStop: event.target.value
         });
+        console.log("newStop", this.state.newStop);
     },
-    onUpdateStop: function(event) {
+    onSavedStop: function(event) {
+        //capture new address
         this.setState ({
-            newStop: event.target.value
+            savedStop: event.target.value
         });
+        console.log("savedStop", this.state.savedStop);
+    },
+    onSavedStopClick: function(event) {
+        this.props.value = '';
+    },
+    onUpdateStop: function(position, event) {
+        var component = this;
+        console.log("position", position);
+        for (var i=0; i<this.state.stopData.length; i++) {
+            if (i = position) {
+                this.state.stopData.push({
+                    "Address": component.state.savedStop,
+                    "Longitude": 0,
+                    "Latitude": 0,
+                    "IsEndingLocation": 0,
+                    "IsStartingLocation": 0,
+                    "IsStopOver": 1,
+                    "Order": i + 1
+                });
+            break;
+            }
+        }
+
+        console.log("onUpdateStop", JSON.stringify(this.state.stopData));
     },
     getCoordinates: function(address) {
         var component = this,
@@ -231,9 +266,10 @@ var Routes = React.createClass({
                         var i = component.state.counter;
                         component.state.stopComponent.push(
                             <div>
-                                <input type="text" className="textbox" value={(component.state.active === 100) ? component.state.stopData[i].Address : component.state.stopData[component.state.stopData.length - 1].Address} onChange={component.addNewStop}/>
+                                <input type="text" className="textbox" value={(component.state.active === 100) ? component.state.stopData[i].Address : component.state.stopData[component.state.stopData.length - 1].Address}
+                                onChange={component.onSavedStop}/>
                                 <div className="remove-button">
-                                    <i className="fa fa-close"></i>
+                                    <i className="fa fa-close" onClick={component.createExecutable(component.deleteStop, i)}></i>
                                 </div>
                             </div>
                         );
@@ -271,8 +307,6 @@ var Routes = React.createClass({
         this.setState({
             routeName: event.target.value
         });
-
-        console.log("routeName", this.state.routeName);
     },
     // onFromAddressChange: function(event) {
     //     this.setState({
@@ -288,10 +322,26 @@ var Routes = React.createClass({
     //         isEndingLocation: 1
     //     });
     // },
+    calculateStartEndPoints: function() {
+        for(var i=0;i<this.state.stopData.length; i++) {
+            if(i == 0) {
+                this.state.stopData[i].IsStartingLocation = 1;
+                this.state.stopData[i].IsEndingLocation = 0;
+            } else if(i == this.state.stopData.length - 1) {
+                this.state.stopData[i].IsStartingLocation = 0;
+                this.state.stopData[i].IsEndingLocation = 1;
+            } else {
+                this.state.stopData[i].IsStartingLocation = 0;
+                this.state.stopData[i].IsEndingLocation = 0;
+            }
+        }
+        console.log('calculateStartEndPoints', JSON.stringify(this.state.stopData));
+    },
     onSaveRoute: function(event) {
         var component = this;
+        this.calculateStartEndPoints();
         SchoolBusService.addRoute(
-            this.state.routeName,
+            this.refs.routeName.getDOMNode().value.trim(),
             companyId,
             this.state.stopData,
             sessionToken,
@@ -305,6 +355,7 @@ var Routes = React.createClass({
     },
     onUpdateRoute: function(event) {
         var component = this;
+        this.calculateStartEndPoints();
         SchoolBusService.updateRoute(
             this.state.routeId,
             this.state.routeName,
@@ -321,6 +372,7 @@ var Routes = React.createClass({
     },
     render: function() {
         //Get list of routes
+        //console.log("routes", JSON.stringify(this.state.routes));
         var routeElements = [];
         for (var i=0; i<this.state.routes.length; i++) {
             var currentRoute = this.state.routes[i];
@@ -348,9 +400,10 @@ var Routes = React.createClass({
                     </div>
                     <div className="routes">{routeElements}</div>
                 </div>
-                <div className="left">
+                    <div className="left">
                     <div>
-                    <input type="text" id="routeName" ref="routeName" className="textbox" placeholder="Enter route name" value={this.state.routeName} onBlur={this.onRouteNameChange} /></div>
+                        <input type="text" id="routeName" ref="routeName" className="textbox" placeholder="Enter route name" value={this.state.routeName} onChange={this.onRouteNameChange}/>
+                    </div>
                     <div className="form">
                         {/*<div className="field">
                             <div className="label">From</div>
@@ -364,7 +417,7 @@ var Routes = React.createClass({
                         <div className="field narrow">
                             {this.state.stopComponent}
                             <div>
-                                <input type="text" className="textbox" placeholder="Enter stop name" onChange={(this.state.active === 100) ? this.onNewStop : this.onUpdateStop} value={this.state.newStop}/>
+                                <input type="text" className="textbox" placeholder="Enter stop address" onChange={this.onNewStop} value={this.state.newStop}/>
                                 <div className="remove-button" onClick={this.addNewStop}>
                                     <i className="fa fa-plus"></i>
                                 </div>
