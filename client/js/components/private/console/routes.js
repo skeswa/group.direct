@@ -61,21 +61,15 @@ var Routes = React.createClass({
                     var stopPoints = [];
                     for (var i=0; i<res.body.ResultSet[0].RoutePointResponseList.length; i++) {
                         var currentStop = res.body.ResultSet[0].RoutePointResponseList[i];
-                        if(currentStop.LocationResponse) {
-                            stopPoints.push({
-                                "Address": currentStop.LocationResponse.Address,
-                                "Longitude": currentStop.LocationResponse.Longitude,
-                                "Latitude": currentStop.LocationResponse.Latitude,
-                                "IsEndingLocation": currentStop.IsEndingLocation,
-                                "IsStartingLocation": currentStop.IsStartingLocation,
-                                "IsStopOver": 1,
-                                "Order": i + 1
-                            });
-                        } else {
-                            stopPoints.push({
-                                "Data not found"
-                            });
-                        }
+                        stopPoints.push({
+                            "Address": currentStop.LocationResponse.Address,
+                            "Longitude": currentStop.LocationResponse.Longitude,
+                            "Latitude": currentStop.LocationResponse.Latitude,
+                            "IsEndingLocation": currentStop.IsEndingLocation,
+                            "IsStartingLocation": currentStop.IsStartingLocation,
+                            "IsStopOver": 1,
+                            "Order": i + 1
+                        });
                         component.state.stopComponent.push(
                         <div>
                             <input type="text" className="textbox" placeholder="Enter stop address" value={stopPoints[i].Address} onChange={component.onSavedStop}/>
