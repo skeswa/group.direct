@@ -12,6 +12,136 @@ var AuthMixin       = require('../../../mixins/auth'),
 // React-router variables
 var Link            = Router.Link;
 
+var students = [
+    {}
+];
+
+var steps = [
+    //0:view students
+    function (component) {
+        return (
+            <div>
+                <div className="row title">
+                    <div className="grid narrow"></div>
+                    <div className="grid">Name</div>
+                    <div className="grid">Address</div>
+                    <div className="grid">Class</div>
+                    <div className="grid">Bus #</div>
+                    <div className="grid">Time</div>
+                    <div className="grid">Parents</div>
+                </div>
+                <div className="row">
+                    <div className="grid narrow">
+                        <div className="profile-pic">
+                            <i className="fa fa-user"></i>
+                        </div>
+                    </div>
+                    <div className="grid">Elon Musk</div>
+                    <div className="grid wide">Pretoria, Gauteng, SA</div>
+                    <div className="grid">5th Grade</div>
+                    <div className="grid">2990</div>
+                    <div className="grid">7:00am</div>
+                    <div className="grid wide">Maye H., Errol Musk</div>
+                </div>
+                <div className="row">
+                    <div className="grid narrow">
+                        <div className="profile-pic">
+                            <i className="fa fa-user"></i>
+                        </div>
+                    </div>
+                    <div className="grid">Elon Musk</div>
+                    <div className="grid wide">Pretoria, Gauteng, SA</div>
+                    <div className="grid">5th Grade</div>
+                    <div className="grid">2990</div>
+                    <div className="grid">7:00am</div>
+                    <div className="grid wide">Maye H., Errol Musk</div>
+                </div>
+                <div className="row">
+                    <div className="grid narrow">
+                        <div className="profile-pic">
+                            <i className="fa fa-user"></i>
+                        </div>
+                    </div>
+                    <div className="grid">Elon Musk</div>
+                    <div className="grid wide">Pretoria, Gauteng, SA</div>
+                    <div className="grid">5th Grade</div>
+                    <div className="grid">2990</div>
+                    <div className="grid">7:00am</div>
+                    <div className="grid wide">Maye H., Errol Musk</div>
+                </div>
+            </div>
+        );
+    },
+    //1:add students
+    function (component) {
+        return (
+            <div>
+                <div className="left narrower">
+                    <div className="profile-pic big">
+                        <i className="fa fa-user"></i>
+                    </div>
+                    <div className="label small">Bus Stop</div>
+                    <input type="text" className="textbox smaller"  onChange={this.onFirstNameChanged}/>
+
+                    <div className="label small">School Bus ID</div>
+                    <input type="text" className="textbox smaller"  onChange={this.onFirstNameChanged}/>
+
+                    <div className="label small">Pick up</div>
+                    <input type="text" className="textbox smaller"  onChange={this.onFirstNameChanged}/>
+
+                    <div className="label small">Drop Off</div>
+                    <input type="text" className="textbox smaller"  onChange={this.onFirstNameChanged}/>
+                </div>
+                <div className="form">
+                    <div className="field">
+                        <div className="label">First name</div>
+                        <input type="text" className="textbox"  onChange={this.onFirstNameChanged}/>
+                    </div>
+                    <div className="field">
+                        <div className="label">Student ID</div>
+                        <input type="text" className="textbox" onChange={this.onEmailChanged}/>
+                    </div>
+                    <div className="field">
+                        <div className="label">Grade</div>
+                        <input type="text" className="textbox"  onChange={this.onLastNameChanged}/>
+                    </div>
+                    <div className="field">
+                        <div className="label">Gender</div>
+                        <input type="radio"  name="gender" value="male" /> Male
+                        <input type="radio"  name="gender" value="female" /> Female
+                    </div>
+                    <div className="field">
+                        <div className="label">Home Phone</div>
+                        <input type="text" className="textbox" onChange={this.onPhoneChanged}/>
+                    </div>
+                    <div className="field">
+                        <div className="label title">Address</div>
+                        <input type="text" className="textbox narrow" placeholder="Street" onChange={this.onAddress1Changed}/>
+                        <input type="text" className="textbox narrow" placeholder="Apt/Unit" onChange={this.onAddress2Changed}/>
+                        <input type="text" className="textbox narrow" placeholder="City" onChange={this.onCityChanged}/>
+                        <input type="text" className="textbox narrow" placeholder="State" onChange={this.onProvinceChanged}/>
+                        <input type="text" className="textbox narrow" placeholder="Zip" onChange={this.onProvinceChanged}/>
+                    </div>
+                    <div className="field">
+                        <div className="label title">Guardian</div>
+                        <input type="text" className="textbox narrow" onChange={this.onAddress1Changed}/>
+                        <input type="text" className="textbox small" onChange={this.onAddress2Changed}/>
+                        <input type="text" className="textbox small" onChange={this.onCityChanged}/>
+                        <input type="text" className="textbox small" onChange={this.onProvinceChanged}/>
+                    </div>
+                    <div className="field btn" >
+                        <div className="label"></div>
+                        <button type="submit" id="save-profile-button" className="button" onClick={this.onSubmitClick}>Save</button>
+                        {/*<div className={'flash' + (component.state.toastMessage ? ' visible' : '')}>
+                            {component.state.toastMessage}
+                        </div>*/}
+                    </div>
+                </div>
+            </div>
+        );
+    },
+];
+
 var Students = React.createClass({
     mixins: [
         AuthMixin,
@@ -19,122 +149,34 @@ var Students = React.createClass({
     ],
     getInitialState: function() {
         return{
-            routes: [],
-            stops: [],
-            active: 0
+            step: 0
         }
     },
     componentDidMount: function() {
         var component   = this;
-
         Actions.changePageTitle('SchoolBus Connect');
-
-        SchoolBusService.getRoutes(
-            AppStateStore.getSessionData().id,
-            AppStateStore.getSessionData().sessionToken,
-            function (res) {
-                if (res.body.ResultSet) {
-                    console.log('Response for getRoutes', JSON.stringify(res.body));
-                    component.setState({
-                        routes: res.body.ResultSet,
-                        routeName: res.body.ResultSet[0].routeName,
-                        fromAddress: res.body.ResultSet[0].fromAddress,
-                        toAddress: res.body.ResultSet[0].toAddress,
-                        stops: res.body.ResultSet[0].stops,
-                        active: 0
-                    });
-                } else {
-                    console.log('Error at getRoutes', res.text);
-                }
-            });
     },
     onRouteClick: function(currentRoute, i, event) {
         this.setState({
-            routeName: currentRoute.routeName,
-            fromAddress: currentRoute.fromAddress,
-            toAddress: currentRoute.toAddress,
-            stops: currentRoute.stops,
-            active: i
         });
     },
     onAddClick: function(event) {
         console.log("ON ADD CLICK");
         this.setState({
-            routeName: '',
-            fromAddress: '',
-            toAddress: '',
-            stops: '',
-            active: 0
+            step: 1
         });
     },
     render: function() {
-        //Get list of routes
-        var routeElements = [];
-        for (var i=0; i<this.state.routes.length; i++) {
-            var currentRoute = this.state.routes[i];
-            routeElements.push(
-                <div className={'row' + (this.state.active === i ? ' active':'')} onClick={this.createExecutable(this.onRouteClick, currentRoute, i)}>
-                    <div className="profile-pic">
-                        <i className="fa fa-map-marker"></i>
-                    </div>
-                    <div className="top-text-wrapper">
-                        <div className="line1">{currentRoute.routeName}</div>
-                    </div>
-                    <div className="remove-button">
-                        <i className="fa fa-close"></i>
-                    </div>
-                </div>
-            );
-        }
-        //Get list of stops for each route
-        var stopElements = [];
-        for (var i=0; i<this.state.stops.length; i++) {
-            var currentStop = this.state.stops[i];
-            stopElements.push(
-                <div>
-                    <input type="text" className="textbox" value={this.state.stops[i].name}/>
-                    <div className="remove-button">
-                        <i className="fa fa-close"></i>
-                    </div>
-                </div>
-            );
-        }
-
         return (
             <div className="tab-content">
                 <div className="left narrow">
-                    <input type="text" className="textbox" placeholder="Search routes"/>
+                    <input type="text" className="textbox" placeholder="Search students"/>
                     <div className="add-button" onClick={this.onAddClick}>
                         <i className="fa fa-plus"></i>
                     </div>
-                    <div className="routes">{routeElements}</div>
                 </div>
-                <div className="left">
-                    <div className="subtitle">
-                    <input type="text" id="routeName" ref="routeName" className="textbox" placeholder="Enter route name" value={this.state.routeName}/></div>
-                    <div className="form">
-                        <div className="field">
-                            <div className="label">From</div>
-                            <input type="text" id="fromAddress" ref="fromAddress" className="textbox" value={this.state.fromAddress}/>
-                        </div>
-                        <div className="field">
-                            <div className="label">To</div>
-                            <input type="text" id="toAddress" ref="toAddress" className="textbox" value={this.state.toAddress}/>
-                        </div>
-                        <div>Click on map or enter addresses of drop-off/pickup points below.</div>
-                        <div className="field narrow">
-                            {stopElements}
-                            <div>
-                                <input type="text" className="textbox" placeholder="Add new stop"/>
-                                <div className="remove-button">
-                                    <i className="fa fa-plus"></i>
-                                </div>
-                            </div>
-                        </div>
-                        <div className="field">
-                            <button id="save-button" type="button" className="button">Save</button>
-                        </div>
-                    </div>
+                <div className="right wide">
+                    {(steps[this.state.step])(this)}
                 </div>
             </div>
         );
