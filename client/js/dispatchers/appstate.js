@@ -14,7 +14,8 @@ var AppStateDispatcher = assign(new Dispatcher(), {
     },
     handleLoggedOut: function() {
         this.dispatch({
-            type: this.events.LOGGED_OUT
+            type: this.events.LOGGED_OUT,
+            sessionData: undefined
         });
     }
 });

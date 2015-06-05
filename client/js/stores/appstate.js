@@ -39,6 +39,7 @@ var AppStateStore = assign({}, EventEmitter.prototype, {
             }
         } else {
             return appState.sessionData;
+            console.log(JSON.stringify(appState.sessionData));
         }
     },
     fetchSessionDataFromLocalStorage: function() {

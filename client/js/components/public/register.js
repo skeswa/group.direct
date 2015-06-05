@@ -59,7 +59,7 @@ var steps = [
                     <div className="field full">
                         <div className="label">Invitation Code</div>
                         <p>You should have received a company invitation code from your company admin. Please type it below.</p>
-                        <input type="text" className="textbox" value={component.state['companyInvitationCode']} onChange={component.onLastNameChanged}/>
+                        <input type="text" className="textbox colored" value={component.state['companyInvitationCode']} onChange={component.onCodeChanged}/>
                     </div>
                 </div>
                 <div id="create-company-form" className="form" style={{ display: (component.state.isCreatingNewCompany ? 'block' : 'none') }}>
@@ -135,7 +135,7 @@ var Register = React.createClass({
     showJoinCompanyForm: function() {
         this.setState({
             isCreatingNewCompany: false,
-            isJoiningExistingCompany: true,
+            isJoiningExistingCompany: true
         });
     },
     showCreateCompanyForm: function() {
@@ -250,6 +250,12 @@ var Register = React.createClass({
     },
 
     //company related functions::
+    onCodeChanged: function(event){
+        this.setState({
+            invitationCode: event.target.value,
+            toastMessage: undefined
+        });
+    },
     onCompanyNameChanged: function(event){
         this.setState({
             newCompanyName: event.target.value,
@@ -304,9 +310,9 @@ var Register = React.createClass({
             console.log("create Company");
             this.createCompany();
         }
-        else {
-            console.log("create User");
-            this.createUser();
+        if (this.state.isJoiningExistingCompany) {
+            console.log("create user for existing Company");
+            this.joinCompany();
         }
     },
     onBack: function() {
@@ -318,10 +324,9 @@ var Register = React.createClass({
         }
     },
     onSkip: function() {
-        //Go to thankyou page
-        this.setState({
-            step: 2
-        });
+        //Create user and if successful Go to thankyou page
+        console.log("create User");
+        this.createUser();
     },
     //Webservice Calls
     createCompany: function() {
@@ -405,7 +410,38 @@ var Register = React.createClass({
                 }
             });
     },
-
+    joinCompany: function() {
+        var component = this;
+        SignupService.signupForExistingCompany(
+            this.state.firstName,
+            this.state.lastName,
+            this.state.email,
+            this.state.password,
+            this.state.invitationCode,
+            function(res) {
+                if (res.ok) {
+                    // This means everything went just fine
+                    if (res.body.Result) {
+                        //Go to last step
+                        component.setState({
+                            step: 2
+                        });
+                    } else {
+                        component.setState({
+                            toastMessage: res.body.InfoMessages[0].Text
+                        });
+                    }
+                } else {
+                    component.setState({
+                        toastMessage:
+                            'There was a problem connecting to the server. ' +
+                            'Check your connection status and try again.'
+                    });
+                    return;
+                    console.log('We got an error', res.text);
+                }
+            });
+    },
     createUser: function() {
     // Send the signup request
     var component = this;
@@ -422,7 +458,9 @@ var Register = React.createClass({
                 // This means everything went just fine
                 console.log('userSignupRequest', JSON.stringify(res.body));
                 if (res.body.Result) {
-
+                    component.setState({
+                        step: 2
+                    });
                 } else {
                     component.setState({
                         toastMessage: res.body.InfoMessages[0].Text
@@ -451,8 +489,6 @@ var Register = React.createClass({
                                 <span className={this.state.waiting ? 'hidden' : ''} style={{ display: (this.state.step === 0 ? 'inline-block' : 'none') }}>Quick Sign-Up</span>
                                 <div style={{ display: (this.state.step === 1 ? 'inline-block' : 'none') }}>
                                     <span className={this.state.waiting ? 'hidden' : ''} >Sign-up with a Company</span>
-                                    <br />
-                                    <span><button id="skip-button" style={{ display: (this.state.step === 1 ? 'inline-block' : 'none') }} onClick={this.onSkip} disabled={this.state.waiting}>Skip Company Step</button></span>
                                 </div>
                                 <span className={this.state.waiting ? 'hidden' : ''} style={{ display: (this.state.step === 2 ? 'inline-block' : 'none') }}>Success!</span>
                                 <i className={'fa fa-refresh fa-spin' + (this.state.waiting ? '' : ' hidden')}></i>
@@ -468,6 +504,7 @@ var Register = React.createClass({
                                 <div className="footer">
                                     <div className="divider"/>
                                     <button id="back-button" onClick={this.onBack} disabled={this.state.waiting} style={{ display: (this.state.step === 2 ? 'none' : 'inline-block') }}>Back</button>
+                                    <button id="skip-button" style={{ display: (this.state.step === 1 ? 'inline-block' : 'none') }} onClick={this.onSkip} disabled={this.state.waiting}>Skip</button>
                                     <button id="next-button" onClick={this.onNext} disabled={this.state.waiting} style={{ display: (this.state.step === 0 ? 'inline-block' : 'none') }}>Next</button>
                                     <button id="finish-button" onClick={this.onFinish} disabled={this.state.waiting} style={{ display: (this.state.step === 1 ? 'inline-block' : 'none') }}>Finish</button>
                                 </div>

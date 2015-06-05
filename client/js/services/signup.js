@@ -78,6 +78,29 @@ var SignupService = {
             })
             // Submit the request
             .end(callback);
+    },
+    signupForExistingCompany: function(
+        firstName,
+        lastName,
+        email,
+        password,
+        invitationCode,
+        callback){
+        // Build the request
+        request
+            .post('/GroupDirectServices/CompanySignupService.svc/dousersignupforexistingcompany')
+            .send({
+                signUpModel: {
+                    FirstName: firstName,
+                    LastName: lastName,
+                    UserName: email,
+                    Password: password,
+                    EmailAddress: email
+                },
+                invitationCode: invitationCode
+            })
+            // Submit the request
+            .end(callback);
     }
 };
 

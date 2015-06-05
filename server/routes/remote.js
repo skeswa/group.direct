@@ -43,16 +43,16 @@ exports.route = function(app) {
         });
     };
     //Used for dummy service
-    app.post('/GroupDirectServices/SchoolBusService.svc/getVehicles', function(req, res){
+    app.post('/GroupDirectTestServices/SchoolBusService.svc/getVehicles', function(req, res){
         res.status(200).json(getVehiclesData);
     });
-    app.post('/GroupDirectServices/SchoolBusService.svc/getStudents', function(req, res){
+    app.post('/GroupDirectTestServices/SchoolBusService.svc/getStudents', function(req, res){
         res.status(200).json(getStudentsData);
     });
 
-    app.get('/GroupDirectServices/*', serviceProxy);
-    app.post('/GroupDirectServices/*', serviceProxy);
-    app.get('/ApheliaBusConnectService/*', serviceProxy);
-    app.post('/ApheliaBusConnectService/*', serviceProxy);
+    app.get('/GroupDirectTestServices/*', serviceProxy);
+    app.post('/GroupDirectTestServices/*', serviceProxy);
+    app.get('/ApheliaBusConnectTestService/*', serviceProxy);
+    app.post('/ApheliaBusConnectTestService/*', serviceProxy);
     app.get('/maps/api/*', googleMapsProxy);
 };

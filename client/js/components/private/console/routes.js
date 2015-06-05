@@ -3,6 +3,7 @@ var React           = require('react'),
     Router          = require('react-router');
 
 var Map             = require('./map.js');
+var ExampleGoogleMap = require('./directionmap.js');
 
 //var Autosuggest     = require('./autosuggest.js');
 
@@ -42,7 +43,7 @@ var Routes = React.createClass({
             markerElements: [],
             active: 0,
             newStop: undefined,
-            //fromAddress: undefined,
+            toast: undefined,
             counter: 1000,
             routeName: undefined
         }
@@ -54,22 +55,29 @@ var Routes = React.createClass({
 
         SchoolBusService.getRoutes(
             AppStateStore.getSessionData().sessionToken,
-            companyId,
+            AppStateStore.getSessionData().companyId,
             function (res) {
                 if (res.body.ResultSet) {
+                    console.log('ResultSet Routes: ' + res.body.ResultSet);
                     //console.log('Response for getRoutes', JSON.stringify(res.body));
                     var stopPoints = [];
                     for (var i=0; i<res.body.ResultSet[0].RoutePointResponseList.length; i++) {
                         var currentStop = res.body.ResultSet[0].RoutePointResponseList[i];
-                        stopPoints.push({
-                            "Address": currentStop.LocationResponse.Address,
-                            "Longitude": currentStop.LocationResponse.Longitude,
-                            "Latitude": currentStop.LocationResponse.Latitude,
-                            "IsEndingLocation": currentStop.IsEndingLocation,
-                            "IsStartingLocation": currentStop.IsStartingLocation,
-                            "IsStopOver": 1,
-                            "Order": i + 1
-                        });
+                        if(currentStop.LocationResponse) {
+                            stopPoints.push({
+                                "Address": currentStop.LocationResponse.Address,
+                                "Longitude": currentStop.LocationResponse.Longitude,
+                                "Latitude": currentStop.LocationResponse.Latitude,
+                                "IsEndingLocation": currentStop.IsEndingLocation,
+                                "IsStartingLocation": currentStop.IsStartingLocation,
+                                "IsStopOver": 1,
+                                "Order": i + 1
+                            });
+                        } else {
+                            stopPoints.push({
+                                "Address":"Address not found"
+                            });
+                        }
                         component.state.stopComponent.push(
                         <div>
                             <input type="text" className="textbox" placeholder="Enter stop address" value={stopPoints[i].Address} onChange={component.onSavedStop}/>
@@ -112,13 +120,14 @@ var Routes = React.createClass({
     //         }));
     //       }, 300);
     //     },
-    onRouteClick: function(currentRoute, i, event) {
+    renderPointsOnRight: function(currentRoute, i){
         this.setState({
             routeId: currentRoute.Id,
             routeName: currentRoute.Name,
             active: i,
             stopData: [],
             newStop: undefined,
+            toast: undefined,
             counter: 1000
         });
         if (currentRoute.RoutePointResponseList[0] === undefined) {
@@ -132,15 +141,21 @@ var Routes = React.createClass({
             this.state.stopComponent.length = 0;
             for (var i=0; i<currentRoute.RoutePointResponseList.length; i++) {
                 var currentStop = currentRoute.RoutePointResponseList[i];
-                stopPoints.push({
-                    "Address": currentStop.LocationResponse.Address,
-                    "Longitude": currentStop.LocationResponse.Longitude,
-                    "Latitude": currentStop.LocationResponse.Latitude,
-                    "IsEndingLocation": currentStop.IsEndingLocation,
-                    "IsStartingLocation": currentStop.IsStartingLocation,
-                    "IsStopOver": 1,
-                    "Order": i + 1
-                });
+                if(currentStop.LocationResponse) {
+                    stopPoints.push({
+                        "Address": currentStop.LocationResponse.Address,
+                        "Longitude": currentStop.LocationResponse.Longitude,
+                        "Latitude": currentStop.LocationResponse.Latitude,
+                        "IsEndingLocation": currentStop.IsEndingLocation,
+                        "IsStartingLocation": currentStop.IsStartingLocation,
+                        "IsStopOver": 1,
+                        "Order": i + 1
+                    });
+                } else {
+                    stopPoints.push({
+                        "Address":"Address not found"
+                    });
+                }
                 this.state.stopComponent.push(
                     <div>
                         <input type="text" className="textbox" value={stopPoints[i].Address}/>
@@ -157,6 +172,9 @@ var Routes = React.createClass({
                 stopData: stopPoints
             });
         }
+    },
+    onRouteClick: function(currentRoute, i, event) {
+        this.renderPointsOnRight(currentRoute, i);
     },
     onDeleteRouteClick: function(currentRoute, event) {
         var component = this;
@@ -183,6 +201,7 @@ var Routes = React.createClass({
         this.setState({
             routeName: undefined,
             newStop: undefined,
+            toast: undefined,
             //fromAddress: undefined,
             //toAddress: undefined,
             stopData: [],
@@ -240,11 +259,11 @@ var Routes = React.createClass({
                     if (res.body.results) {
                         //console.log('Response for getCoordinates', JSON.stringify(res.body));
                         component.setState({
-                            street1: res.body.results[0].address_components[0].long_name + ' ' + res.body.results[0].address_components[1].long_name,
-                            city: res.body.results[0].address_components[2].long_name,
-                            province: res.body.results[0].address_components[4].short_name,
-                            country: res.body.results[0].address_components[5].long_name,
-                            zip: res.body.results[0].address_components[6].long_name,
+                            street1: res.body.results[0].address_components[0].long_name + ' ' + res.body.results[0].address_components[1].long_name + ', ' +res.body.results[0].address_components[2].long_name + ', ' +res.body.results[0].address_components[4].short_name,
+                            //city: res.body.results[0].address_components[2].long_name,
+                            //province: res.body.results[0].address_components[4].short_name,
+                            //country: res.body.results[0].address_components[5].long_name,
+                            //zip: res.body.results[0].address_components[6].long_name,
                             lat: res.body.results[0].geometry.location.lat,
                             lng: res.body.results[0].geometry.location.lng
                         });
@@ -280,10 +299,14 @@ var Routes = React.createClass({
             }, 1);
     },
     addNewStop: function(event) {
+        var component = this;
+
+        this.setState({
+            counter: component.state.stopData.length,
+            toast: undefined
+        });
         //get lat lng and valid address from google API
         this.getCoordinates('newStop');
-        var component = this,
-                timer = null;
 
         console.log("counter", component.state.stopData.length);
         console.log("stopData before push", JSON.stringify(component.state.stopData));
@@ -296,10 +319,35 @@ var Routes = React.createClass({
         this.state.stopComponent.splice(i,1);
         this.forceUpdate();
         console.log("stopData", JSON.stringify(this.state.stopData));
+
+        //Reload list to enable multiple deletion
+        var stopPoints = [];
+        this.state.stopComponent.length = 0;
+        for (var i=0; i<this.state.stopData.length; i++) {
+            var currentStop = this.state.stopData[i];
+                stopPoints.push({
+                    "Address": currentStop.Address,
+                    "Longitude": currentStop.Longitude,
+                    "Latitude": currentStop.Latitude,
+                    "IsEndingLocation": currentStop.IsEndingLocation,
+                    "IsStartingLocation": currentStop.IsStartingLocation,
+                    "IsStopOver": 1,
+                    "Order": i + 1
+                });
+            this.state.stopComponent.push(
+                <div>
+                    <input type="text" className="textbox" value={stopPoints[i].Address}/>
+                    <div className="remove-button">
+                        <i className="fa fa-close" onClick={this.createExecutable(this.deleteStop, i)}></i>
+                    </div>
+                </div>
+            );
+        }
     },
     onRouteNameChange: function(event) {
         this.setState({
-            routeName: event.target.value
+            routeName: event.target.value,
+            toast: undefined
         });
     },
     // onFromAddressChange: function(event) {
@@ -332,7 +380,9 @@ var Routes = React.createClass({
         console.log('calculateStartEndPoints', JSON.stringify(this.state.stopData));
     },
     onSaveRoute: function(event) {
+        //console.log(this.state.stopData);
         var component = this;
+        //this.state.routes.push();
         this.calculateStartEndPoints();
         SchoolBusService.addRoute(
             this.refs.routeName.getDOMNode().value.trim(),
@@ -341,9 +391,18 @@ var Routes = React.createClass({
             sessionToken,
             function(res) {
                 if (res.body.Result) {
+                    component.state.routes.push(res.body.Result);
                     console.log('Response from addRoute', JSON.stringify(res.body));
+                    component.setState({
+                        toast: "Route added successfully. Refresh page to see the new route."
+                    });
+
+                    component.renderPointsOnRight(res.body.Result, component.state.routes.length-1);
                 } else {
                     console.log('Error at addRoute', res.text);
+                    component.setState({
+                        toast: res.body.ErrorMessages[0].Text
+                    });
                 }
         });
     },
@@ -359,9 +418,20 @@ var Routes = React.createClass({
             function(res) {
                 if (res.body.Result) {
                     console.log('Response from editRoute', JSON.stringify(res.body));
+                    component.setState({
+                        toast: "Route updated successfully. Refresh page to see the changes."
+                    });
                 } else {
                     console.log('Error at editRoute', res.text);
+                    component.setState({
+                        toast: res.body.ErrorMessages[0].Text
+                    });
                 }
+        });
+    },
+    removeToast: function(event) {
+        this.setState({
+            toast: undefined
         });
     },
     render: function() {
@@ -407,7 +477,7 @@ var Routes = React.createClass({
                             <div className="label">To</div>
                             <input type="text" id="toAddress" ref="toAddress" className="textbox" value={this.state.toAddress} onChange={this.onToAddressChange} onBlur={this.createExecutable(this.getCoordinates, 'toAddress')}/>
                         </div>*/}
-                        <div>Enter addresses of drop-off/pickup points below.</div>
+                        <div>Enter addresses or co-ordinates of drop-off/pickup points below. Click on Save when you are done.</div>
                         <div className="field narrow">
                             {this.state.stopComponent}
                             <div>
@@ -418,19 +488,22 @@ var Routes = React.createClass({
                             </div>
                         </div>
                         <div className="field center">
-                            <button id="save-button" type="button" className="save-button" onClick={(this.state.active === 100) ? this.onSaveRoute : this.onUpdateRoute}><i className="fa fa-check"></i></button>
+                            <button id="save-button" title="Save" type="button" className="save-button" onClick={(this.state.active === 100) ? this.onSaveRoute : this.onUpdateRoute}><i className="fa fa-check"></i></button>
                             {/*<Autosuggest />*/}
+                        </div>
+                        <div className="field center">
+                            <div className={'toast'+ (this.state.toast ? ' active': ' ')}>
+                                <div className="text">{this.state.toast}</div>
+                                <div className="remove-button">
+                                    <i className="fa fa-close" onClick={this.removeToast}></i>
+                                </div>
+                            </div>
+
                         </div>
                     </div>
                 </div>
                 <div className="map">
-                    <Map markers={[
-                        {latitude: 39.182677, longitude: -77.2748273, title: 'Test 1'},
-                        {latitude: 39.213243, longitude: -77.31001, title: 'Test 2'},
-                        {latitude: 39.273243, longitude: -77.35001, title: 'Test 3'},
-                        {latitude: 39.31, longitude: -77.39300, title: 'Test 4'},
-                        //{this.state.markerElements}
-                    ]}/>
+                    <ExampleGoogleMap route={this.state.routes[this.state.active]} />
                 </div>
             </div>
         );

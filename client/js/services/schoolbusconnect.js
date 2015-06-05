@@ -35,6 +35,20 @@ var SchoolBusService = {
                 })
                 .end(callback)
     },
+    saveIntermediatePointsOnRoute: function(
+        routeId,
+        intermediatePoints,
+        sessionToken,
+        callback) {
+            request
+                .post('/ApheliaBusConnectService/BusConnectService.svc/saveintermediatepoints')
+                .send({
+                    routeId: routeId,
+                    intermediatePoints: intermediatePoints,
+                    st: sessionToken
+                })
+                .end(callback)
+    },
     updateRoute: function(
         routeId,
         routeName,

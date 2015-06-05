@@ -180,7 +180,7 @@ gulp.task('dev', ['watch'], function() {
         ignore: ['client/*'],
         env: {
             // Server environment
-            PORT: 3000,
+            PORT: 3001,
             DB: constants.DEV_DB_CONN_STRING,
             VERBOSE: true,
             SESSION_SECRET: 'thisisnotasecretatall'
@@ -196,7 +196,7 @@ gulp.task('stage', ['clean', 'less', 'pages', 'images', 'browserify'], function(
         ignore: ['client/*'],
         env: {
             // Server environment
-            PORT: 80,
+            PORT: 8081,
             DB: constants.STAGING_DB_CONN_STRING,
             VERBOSE: true,
             SESSION_SECRET: 'thisisnotasecretatall'

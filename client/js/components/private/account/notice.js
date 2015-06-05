@@ -24,7 +24,7 @@ var Notice = React.createClass({
                     <div className="huge">
                         <i className="fa fa-frown-o"></i>
                     </div>
-                    This feature is not available in <b>Group.Connect</b><sup>BETA</sup>
+                    This feature is not available in <b>Group.Direct</b><sup>BETA</sup>
                     <div><a href="#" onClick={this.goBack}>Go back</a></div>
                 </div>
             </div>

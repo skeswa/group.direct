@@ -3,6 +3,7 @@ var React           = require('react'),
     Router          = require('react-router');
 
 var Util            = require('../../util'),
+    Header          = require('./header'),
     Actions         = require('../../actions');
 
 // React-router variables
@@ -36,33 +37,14 @@ var Splash = React.createClass({
     },
     componentDidMount: function() {
         Actions.changePageTitle();
-        skrollr.init();
+        //skrollr.init();
     },
     componentWillUnmount: function() {
     },
     render: function() {
         return (
             <div id="splash" className="page">
-                <div className="header">
-                    <Link to="splash" className="logo">
-                        <div className="profile-pic">
-                            <img src='../static/img/ic_aphelia.png' />
-                        </div>
-                        <div className="logo-text">
-                            GroupDirect <sup>BETA</sup>
-                        </div>
-                    </Link>
-                    <div className="links">
-                        <div className="link" data-reference="gptt">Verticals</div>
-                        <div className="link" data-reference="apps"><a href="#apps">Apps</a></div>
-                    </div>
-                    <div className="nav">
-                        <Link to="about">About Us</Link>
-                        <div className="separator"></div>
-                        <Link to="signin">Sign In</Link>
-                        <Link className="button" to="signup">Sign Up</Link>
-                    </div>
-                </div>
+                <Header />
                 <section id="intro-slide" className="intro">
                     <div className="spotlight"/>
                     <div className="message">
@@ -74,6 +56,14 @@ var Splash = React.createClass({
                                 data-anchor-target="#intro-slide .title">
                                 <div className="title">Apps for Instant Communications, Monitoring, Coordination &amp; Collaboration.</div>
                                 <div className="subtitle">User-centric Internet of Things with Push-to-Talk, Sensors, Radios and Video</div>
+                                <div className="hedding2" data-center-top="opacity: 0;" data-center="opacity: 1;" data-anchor-target="#features-section">
+                                    <a name="apps">Try for Free now – Limited Trials</a>
+                                </div>
+                                <div className="subtitle normal" data-center-top="opacity: 0;" data-center="opacity: 1;" data-anchor-target="#features-section">
+                                    Get limited demo access by signing up <Link to='signup'>here</Link>
+                                    <br />
+                                    We provide hosted access for Cisco Instant Connect and other Ecosystem Apps. For full access, please <Link to="contact">contact us</Link>.
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -83,6 +73,46 @@ var Splash = React.createClass({
                         data-top-bottom="bottom: 200px; opacity: 0; transform: scale(1.1);">
                         <div className="text">Scroll Down</div>
                         <i className="fa fa-chevron-down"/>
+                    </div>
+                </section>
+                <section id="features-section" className="features videos">
+                    <div
+                        className="title"
+                        data-center-top="opacity: 0;"
+                        data-center="opacity: 1;"
+                        data-anchor-target="#features-section">
+                        <a name="verticals">Featured Videos</a>
+                    </div>
+                    <div
+                        className="subtitle"
+                        data-center-top="opacity: 0;"
+                        data-center="opacity: 1;"
+                        data-anchor-target="#features-section">
+                        Getting to know the apps
+                    </div>
+                    <div
+                        className="feature"
+                        data-center-top="opacity: 0; top: 100px;"
+                        data-center="opacity: 1; top: 0px;"
+                        data-anchor-target="#features-section">
+                        <div className="card">
+                            <div>
+                                <iframe width="470" height="295" src="https://www.youtube.com/embed/p5CN3BaEPA8" frameborder="0" allowfullscreen></iframe>
+                            </div>
+                            <div className="title" data-reference="gptt">Cisco Instant Connect on Sonim durable phones – Group Direct Apps in OT Communications</div>
+                        </div>
+                    </div>
+                    <div
+                        className="feature"
+                        data-center-top="opacity: 0; top: 100px;"
+                        data-center="opacity: 1; top: 0px;"
+                        data-anchor-target="#features-section">
+                        <div className="card">
+                            <div>
+                                <iframe width="470" height="295" src="https://www.youtube.com/embed/u_TPl-Joxg0" frameborder="0" allowfullscreen></iframe>
+                            </div>
+                            <div className="title" data-reference="gptt">GroupDirect Apps complement Cisco Instant Connect-powered App ecosystem for Utilities space</div>
+                        </div>
                     </div>
                 </section>
                 <section id="features-section" className="features">
@@ -240,9 +270,9 @@ var Splash = React.createClass({
                     {
                         this.templates.app.make(
                             undefined,
-                            'Aphelia',
+                            'Aphelia Job Scheduler',
                             [
-                                'Comprehensive dispatching & job managment system',
+                                'Comprehensive job managment system',
                                 'Workforce automation for highly distributed mobile workforce'
                             ],
                             '#',
@@ -294,6 +324,23 @@ var Splash = React.createClass({
                         )
                     }
                 </section>
+                {/*<section id="features-section" className="features">
+                    <div
+                        className="title"
+                        data-center-top="opacity: 0;"
+                        data-center="opacity: 1;"
+                        data-anchor-target="#features-section">
+                        <a name="apps">Try for Free now – Limited Trials</a>
+                    </div>
+                    <div
+                        className="subtitle"
+                        data-center-top="opacity: 0;"
+                        data-center="opacity: 1;"
+                        data-anchor-target="#features-section">
+                        Get limited demo access by signing up <Link to='signup'>here</Link>
+                    </div>
+                    We provide hosted access for Cisco Instant Connect and other Ecosystem Apps. For full access, please <Link to="contact">contact us</Link>.
+                </section>*/}
             </div>
         );
     }

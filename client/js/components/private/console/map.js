@@ -20,6 +20,7 @@ var Map = React.createClass({
         };
     },
     componentDidMount: function() {
+        console.log('markers', this.props.markers)
         var mapElement = this.refs.map.getDOMNode();
         var mapOptions = {
             center: {
@@ -30,7 +31,7 @@ var Map = React.createClass({
             zoom:   this.props.zoom
         };
         console.log("lat ", this.props.latitude, "lng ", this.props.longitude);
-        console.log("mapElement", JSON.stringify(mapElement));
+        //console.log("mapElement", JSON.stringify(mapElement));
         // Perform google maps map init
         var self = this;
         google.maps.event.addDomListener(window, 'load', function() {
@@ -49,6 +50,7 @@ var Map = React.createClass({
         });
     },
     componentDidUpdate: function(prevProps, prevState) {
+        console.log('Markers Update', this.props.markers);
         var addedMarkers    = added(this.props.markers, prevProps.markers),
             removedMarkers  = removed(this.props.markers, prevProps.markers),
             self            = this;

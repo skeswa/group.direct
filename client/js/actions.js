@@ -8,6 +8,7 @@ module.exports = {
     },
     // Auth Actions
     declareLoggedIn: function(sessionData) {
+        console.log("declareLoggedIn", JSON.stringify(sessionData));
         AppStateDispatcher.handleLoggedIn(sessionData);
     },
     declareLoggedOut: function() {

@@ -13,6 +13,12 @@ var AuthMixin       = require('../../../mixins/auth'),
 // React-router variables
 var Link            = Router.Link;
 
+var userId          = AppStateStore.getSessionData().id,
+    sessionToken    = AppStateStore.getSessionData().sessionToken,
+    companyName     = AppStateStore.getSessionData().companyName,
+    companyId       = AppStateStore.getSessionData().companyId,
+    userTypeId      = AppStateStore.getSessionData().userTypeId;
+
 var steps = [
     //0:default state
     function (component) {
@@ -38,6 +44,27 @@ var steps = [
                 </div>
             );
         }
+        //Populate Company Users
+        var userElements = [];
+        for (var i=0; i<component.state.companyUsers.length; i++) {
+            var array = component.state.companyUsers[i];
+            userElements.push(
+                <div className="row">
+                    <div className="left wide">
+                        <div className="profile-pic">
+                            <i className="fa fa-user"></i>
+                        </div>
+                        <div className="top-text-wrapper">
+                            <div className="line1">{array.FirstName + " " + array.LastName}</div>
+                            <div className="line2">{array.Email}</div>
+                        </div>
+                    </div>
+                    <div className="right narrow">
+                        <button className={component.state.userTypeId == 2 ? "button" : "invisible"} id="remove-button" onClick={component.createExecutable(component.onRemoveCompanyUserClick, array.Id)}>Remove</button>
+                    </div>
+                </div>
+            );
+        }
         //Populate connections
         var contactElements = [];
         for (var i=0; i<component.state.contacts.length; i++) {
@@ -50,11 +77,12 @@ var steps = [
                         </div>
                         <div className="top-text-wrapper">
                             <div className="line1">{currentContact.FirstName + " " + currentContact.LastName}</div>
+                            <div className="line2">{currentContact.Company.Name}</div>
                             <div className="line2">{currentContact.Email}</div>
                         </div>
                     </div>
                     <div className="right narrow">
-                        <button className="button" id="remove-button" onClick={component.createExecutable(component.onRemoveClick, currentContact.Id)}>Remove</button>
+                        <button className="button" id="remove-button" onClick={component.createExecutable(component.onRemoveConnectionClick, currentContact.Id)}>Remove</button>
                     </div>
                 </div>
             );
@@ -64,7 +92,9 @@ var steps = [
             <div className="row borderless">
                 <div className={'caps'  + (component.state.requests.length ? '' : ' invisible')}>Connection Requests</div>
                 {requestElements}
-                <div className={'caps' + (component.state.contacts.length ? '' : ' invisible')}>Connections</div>
+                <div className={'caps'  + (component.state.companyUsers.length ? '' : ' invisible')}>My Company Colleagues</div>
+                {userElements}
+                <div className={'caps' + (component.state.contacts.length ? '' : ' invisible')}>My Connections</div>
                 {contactElements}
             </div>
         );
@@ -98,9 +128,18 @@ var steps = [
     },
     //3:contact not found
     function (component) {
+        console.log('companyName', component.state.companyName);
         return (
-            <div className="row">
-                {component.state.toastMessage} <div className="link" onClick={component.onNewInvite}>Send connection request to {component.state.contactEmail}?</div>
+            <div>
+                <div className="row">
+                    <b>{component.state.toastMessage} Do you want to:</b>
+                </div>
+                <div className="row">
+                    <div className="link" onClick={component.onNewInvite}>Send connection request?</div>
+                </div>
+                <div className={(component.state.companyId == 1 || component.state.userTypeId != 2) ? "invisible" : "row" }>
+                    <div className="link" onClick={component.onCompanyInvite}>Send invitation to join your ({component.state.companyName}) company?</div>
+                </div>
             </div>
         );
     },
@@ -126,8 +165,12 @@ var Connections = React.createClass({
             inviteButtonStyle: '',
             sessionToken: AppStateStore.getSessionData().sessionToken,
             userId: AppStateStore.getSessionData().id,
+            userTypeId: AppStateStore.getSessionData().userTypeId,
+            companyId: AppStateStore.getSessionData().companyId,
+            companyName: AppStateStore.getSessionData().companyName,
             contacts: [],
             requests: [],
+            companyUsers: [],
             searchString: '',
             toastMessage: undefined,
             contactEmail: ''
@@ -142,7 +185,7 @@ var Connections = React.createClass({
         ContactService.approveDenyContactRequest(
             requestId,
             status,
-            sessionToken,
+            this.state.sessionToken,
             function(res) {
                 if (res.ok) {
                     if (res.body.Result) {
@@ -171,7 +214,7 @@ var Connections = React.createClass({
         ContactService.approveDenyContactRequest(
             requestId,
             status,
-            sessionToken,
+            this.state.sessionToken,
             function(res) {
                 if (res.ok) {
                     if (res.body.Result) {
@@ -191,14 +234,38 @@ var Connections = React.createClass({
                 }
             });
     },
-    onRemoveClick: function(contactId, event) {
-        var sessionToken    = this.state.sessionToken,
-            userId          = this.state.userId,
-            component = this;
-        ContactService.deleteContactByUserId(
-            userId,
+    onRemoveCompanyUserClick: function(contactId, event) {
+        var component = this;
+        ContactService.removeCompanyUser(
             contactId,
-            sessionToken,
+            this.state.userId,
+            this.state.sessionToken,
+            function(res) {
+                if (res.ok) {
+                    if (res.body.Result) {
+                        console.log('Response for removeCompanyUser', JSON.stringify(res.body));
+                        for(var i=0; i<component.state.companyUsers.length; i++) {
+                            if(component.state.companyUsers[i].Id === contactId) {
+                                console.log(component.state.companyUsers[i].FirstName);
+                                component.state.companyUsers.splice(i, 1);
+                                component.forceUpdate();
+                                break;
+                            }
+                        }
+                    } else {
+                        console.log('Error at removeCompanyUser', res.text);
+                    }
+                } else {
+                    console.log('Error at removeCompanyUser', res.text);
+                }
+            });
+    },
+    onRemoveConnectionClick: function(contactId, event) {
+        var component = this;
+        ContactService.deleteContactByUserId(
+            this.state.userId,
+            contactId,
+            this.state.sessionToken,
             function(res) {
                 if (res.ok) {
                     if (res.body.Result) {
@@ -242,11 +309,11 @@ var Connections = React.createClass({
                 ContactService.getUserByEmail(
                 email,
                 component.state.userId,
-                sessionToken,
+                component.state.sessionToken,
                 function(res) {
                     if (res.ok) {
                         if (res.body.Result) {
-                            console.log("Contact found", res.body.Result.ConnectionStatus);
+                            console.log("Contact found", JSON.stringify(res.body.Result));
                             //Contact found
                              component.setState({
                                 step: 1,
@@ -312,7 +379,6 @@ var Connections = React.createClass({
     },
     onNewInvite: function(event) {
         var requesterId     = this.state.userId,
-            sessionToken    = this.state.sessionToken,
             requesteeEmail  = this.state.contactEmail;
 
         var component       = this;
@@ -331,45 +397,80 @@ var Connections = React.createClass({
                 }
             });
     },
+    onCompanyInvite: function(event) {
+        var component       = this;
+        ContactService.inviteWithPasscode(
+            this.state.userId,
+            this.state.companyId,
+            this.state.contactEmail,
+            this.state.sessionToken,
+            function(res) {
+                if (res.ok) {
+                    component.setState({
+                        step: 4
+                    });
+                    console.log('Response for inviteWithPasscode', JSON.stringify(res.body));
+                } else {
+                    console.log('Error at inviteWithPasscode', res.text);
+                }
+            });
+    },
     componentDidMount: function() {
-        var sessionToken    = this.state.sessionToken,
-            userId          = this.state.userId,
-            component       = this;
-
+        var component       = this;
+        console.log('sessionToken at componenetDidMount', sessionToken);
         Actions.changePageTitle('Connections');
         //Get Add requests
         ContactService.getAddRequestsByUserId(
-            userId,
-            sessionToken,
+            this.state.userId,
+            this.state.sessionToken,
             function(res) {
                 if (res.ok) {
                     if (res.body.ResultSet) {
                         component.setState({
                             requests: res.body.ResultSet
                         });
-                        console.log('Response for getAddRequestsByUserId', JSON.stringify(res.body));
+                        console.log('Response for getAddRequestsByUserId');
                     }
                 } else {
                     console.log('Error at getAddRequestsByUserId', res.text);
                 }
             });
 
+        //Get company user
+        if (this.state.companyId != 1) {
+            ContactService.getCompanyUsers(
+                this.state.companyId,
+                this.state.userId,
+                this.state.sessionToken,
+                function(res) {
+                    if (res.body.ResultSet) {
+                        component.setState({
+                                companyUsers: res.body.ResultSet
+                            });
+                        console.log('Response for getCompanyUsers');
+                    } else {
+                        console.log('Error at getUserContactsByUserId', res.text);
+                    }
+            });
+        }
+
         //Get connections
         ContactService.getUserContactsByUserId(
-            userId,
-            sessionToken,
+            this.state.userId,
+            this.state.sessionToken,
             function(res) {
                 if (res.ok) {
                     if (res.body.ResultSet) {
                         component.setState({
                             contacts: res.body.ResultSet
                         });
-                        console.log('Response for getUserContactsByUserId', JSON.stringify(res.body));
+                        //console.log('Response for getUserContactsByUserId', JSON.stringify(res.body));
                     }
                 } else {
                     console.log('Error at getUserContactsByUserId', res.text);
                 }
             });
+
     },
     componentWillUnmount: function() {
     },

@@ -64,6 +64,19 @@ var ProfileService = {
             })
             .end(callback)
     },
+//Apps screen services - move to separate file if it gets longer
+    getApps: function(
+        companyId,
+        sessionToken,
+        callback) {
+        request
+            .post('/GroupDirectServices/CompanyServices.svc/getcompanyassociatedapplication')
+            .send({
+                companyId: companyId,
+                st: sessionToken
+            })
+            .end(callback)
+    },
 //Settings screen services - move to separate file if it gets longer
     updatePassword: function(
         userId,

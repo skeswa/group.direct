@@ -114,6 +114,51 @@ var ContactService = {
             // Submit the request
             .end(callback);
 
+    },
+    //Get company users
+    getCompanyUsers: function(
+        companyId,
+        userId,
+        sessionToken,
+        callback) {
+        request
+            .post('/GroupDirectServices/CompanyServices.svc/getcompanyusers')
+            .send({
+                companyId: companyId,
+                userId: userId,
+                st: sessionToken
+            })
+            .end(callback)
+    },
+    inviteWithPasscode: function(
+        userId,
+        companyId,
+        email,
+        sessionToken,
+        callback) {
+        request
+            .post('/GroupDirectServices/CompanySignupService.svc/invitewithpasscode')
+            .send({
+                userId: userId,
+                companyId: companyId,
+                email: email,
+                st: sessionToken
+            })
+            .end(callback)
+    },
+    removeCompanyUser: function(
+        userId,
+        adminId,
+        sessionToken,
+        callback) {
+        request
+            .post('/GroupDirectServices/CompanyServices.svc/deletecompanyuserbyid')
+            .send({
+                userId: userId,
+                adminId: adminId,
+                st: sessionToken
+            })
+            .end(callback)
     }
 };
 

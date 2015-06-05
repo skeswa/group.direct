@@ -11,6 +11,21 @@ var AuthMixin       = require('../../../mixins/auth');
 // React-router variables
 var Link            = Router.Link;
 
+// var userId      = AppStateStore.getSessionData().id,
+//     firstName   = AppStateStore.getSessionData().firstName,
+//     lastName    = AppStateStore.getSessionData().lastName,
+//     email       = AppStateStore.getSessionData().email,
+//     phone       = AppStateStore.getSessionData().contactNumber,
+//     addressId   = AppStateStore.getSessionData().addressId,
+//     address1    = '',
+//     address2    =  '',
+//     city        = '',
+//     province    = '',
+//     zip         = '',
+//     country     = '',
+//     companyName = AppStateStore.getSessionData().companyName,
+//     sessionToken = AppStateStore.getSessionData().sessionToken;
+
 var Profile = React.createClass({
     mixins: [AuthMixin],
     getInitialState: function() {
@@ -28,6 +43,7 @@ var Profile = React.createClass({
             zip: '',
             country: '',
             sessionToken: AppStateStore.getSessionData().sessionToken,
+            companyName: AppStateStore.getSessionData().companyName,
             toastMessage: undefined
         };
     },
@@ -42,6 +58,15 @@ var Profile = React.createClass({
                 if(res.ok) {
                     // This means everything went just fine
                     if(res.body.Result) {
+                        // firstName   = res.body.Result.FirstName;
+                        // lastName    = res.body.Result.LastName;
+                        // email       = res.body.Result.Email;
+                        // phone       = res.body.Result.ContactNumber;
+                        // address1    = res.body.Result.Address1;
+                        // address2    = res.body.Result.Address2;
+                        // city        = res.body.Result.City;
+                        // province    = res.body.Result.State;
+                        // zip         = res.body.Result.Zipcode;
                         component.setState({
                             firstName: res.body.Result.FirstName,
                             lastName: res.body.Result.LastName,
@@ -61,9 +86,9 @@ var Profile = React.createClass({
                             });
                         }
                     }
-                    console.log('Response from saveProfileInfo', JSON.stringify(res.body));
+                    console.log('Response from getProfileInfo', JSON.stringify(res.body));
                 } else {
-                    console.log('Error at saveProfileInfo', res.text);
+                    console.log('Error at getProfileInfo', res.text);
                 }
             });
     },
@@ -241,7 +266,7 @@ var Profile = React.createClass({
                             <i className="fa fa-university"></i>
                         </div>
                         <div className="top-text-wrapper">
-                            <div className="line1">Group.Direct Demo Company</div>
+                            <div className="line1">{this.state.companyName}</div>
                             <div className="line2 link"><a href='notice'>Edit info</a></div>
                         </div>
                     </div>

@@ -191,6 +191,7 @@
             display:inline-block;
             overflow: auto;
             padding-bottom: 5px;
+            text-align: left;
             &.active {
                 background: #cc0;
             }
@@ -214,7 +215,7 @@
                 }
                 .line2 {
                     font-size: 10px;
-                    line-height: 0.8;
+                    line-height: 1.4;
                     letter-spacing: 0;
                     .link, &.link {
                         color: #00AAF9; /*#F9C100;*/
@@ -374,5 +375,16 @@
     }
     .hide {
         display: none;
+    }
+    .get-for-android {
+        display: inline-block;
+        height: 18px;
+        background-repeat: no-repeat;
+        background-size: contain;
+        margin: 6px 0px;
+        width: 50px;
+        background-image: url(/static/img/android-play-store.png);
+        margin-left: 0px;
+        opacity: 0.8;
     }
 }

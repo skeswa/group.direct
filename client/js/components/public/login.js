@@ -59,7 +59,8 @@ var Login = React.createClass({
                 toastMessage: undefined
             });
             // Send the login request
-            var component = this;
+            var component = this,
+                sessionData = [];
             AuthService.login(this.state.userName, this.state.password, function(err, res) {
                 if (err) {
                     // There was an issue with the connection
@@ -83,28 +84,11 @@ var Login = React.createClass({
                         });
                         return;
                     } else if (res.status === 200) {
-                        // var logoUrl     = 'logoUrl',
-                        //     companyName   = '';
+                        var self    = component,
+                            timer   = null,
+                            logoUrl = '../static/img/ic_aphelia.png';
 
-                        // ProfileService.getCompanyById(
-                        //     res.body.Result.CompanyId,
-                        //     res.body.Result.SessionToken,
-                        //     function (res) {
-                        //         if(res.body.Result) {
-                        //             console.log("Sucess at getCompanyById", logoUrl);
-                        //             // Actions.declareLoggedIn({
-                        //             //     companyName: res.body.Result.Name,
-                        //             //     logoUrl: logoUrl
-                        //             // });
-                        //             companyName = res.body.Result.Name;
-                        //         } else {
-                        //             console.log("Error at getCompanyById", res.text);
-                        //         }
-                        // });
-
-
-                        // We have to declare that we're logged in now :)
-                        Actions.declareLoggedIn({
+                        sessionData.push({
                             id: res.body.Result.Id,
                             firstName: res.body.Result.FirstName,
                             lastName: res.body.Result.LastName,
@@ -115,18 +99,43 @@ var Login = React.createClass({
                             sessionToken: res.body.Result.SessionToken,
                             userName: res.body.Result.UserName,
                             companyId: res.body.Result.CompanyId,
-                            userTypeId: res.body.Result.UserTypeId
+                            userTypeId: res.body.Result.UserTypeId,
+                            companyName: '',
+                            logoUrl: logoUrl
+                        });
+
+                        // We have to declare that we're logged in now :)
+                        //Actions.declareLoggedIn(sessionData[0]);
+                        // console.log("2", JSON.stringify(sessionData));
+
+                        ProfileService.getCompanyById(
+                            res.body.Result.CompanyId,
+                            res.body.Result.SessionToken,
+                            function (res) {
+                                if(res.body.Result) {
+                                    sessionData[0].companyName = res.body.Result.Name;
+                                    sessionData[0].logoUrl     = logoUrl;
+
+                                    Actions.declareLoggedIn(sessionData[0]);
+                                    console.log("Success at getCompanyById", JSON.stringify(sessionData));
+                                timer = setTimeout(function() {
+                                    if (sessionData[0].UserTypeId == 1) {
+                                        component.transitionTo('company');
+                                    } else {
+                                        component.transitionTo('apps');
+                                    }
+                                }, 1);
+
+                                } else {
+                                    console.log("Error at getCompanyById", res.text);
+                                }
                         });
 
                         // Move to the account screen
                         console.log('userId', res.body.Result.Id);
-                        console.log("userTypeId", res.body.Result.UserTypeId);
+                        console.log("CompanyId", res.body.Result.CompanyId);
                         console.log('sessionToken', res.body.Result.SessionToken);
-                        if (res.body.Result.UserTypeId == 1) {
-                            component.transitionTo('company');
-                        } else {
-                            component.transitionTo('apps');
-                        }
+
                     } else {
                         // Stop waiting
                         component.setState({

@@ -7,9 +7,10 @@
     left: 0px;
     right: 0px;
     text-align: center;
-
+    a {
+        color: #9F4318;
+    }
     .header {
-        padding: 70px 50px;
         background: transparent;
         position: absolute;
         top: 0px;
@@ -56,17 +57,22 @@
                     position: relative;
                     display: table-cell;
                     vertical-align: middle;
-
                     .title {
                         color: @slate-gray;
-                        font-size: 42px;
+                        font-size: 36px;
+                    }
+                    .hedding2 {
+                        margin-top: 10%;
+                        font-size: 24px;
                     }
                     .subtitle {
-                        margin-top: 20px;
                         box-sizing: border-box;
-                        padding: 0px 20%;
                         color: lighten(@slate-gray, 15%);
-                        font-size: 24px;
+                        font-size: 18px;
+                        &.normal {
+                            font-size: 14px;
+                            margin: 0 20%;
+                        }
                     }
                 }
             }
@@ -102,7 +108,7 @@
         padding: 50px;
         padding-top: 80px;
         text-align: center;
-
+        border-top: solid 8px darken(#c6bab1, 20%);
         .title {
             .mixin-section-title;
                 a {
@@ -182,6 +188,16 @@
             }
         }
     }
+    section.videos {
+        .feature {
+            width: 50%;
+            .card {
+                .title {
+                    font-size: 14px;
+                }
+            }
+        }
+    }
     section.gptt,
     section.gvc,
     section.aphelia,
@@ -211,7 +227,6 @@
 
         .title {
             text-align: left;
-            margin-top: 50px;
             margin-bottom: 10px;
 
             .icon {
