@@ -36,8 +36,8 @@ var steps = [
                             <i className="fa fa-user"></i>
                         </div>
                     </div>
-                    <div className="grid">Elon Musk</div>
-                    <div className="grid wide">Pretoria, Gauteng, SA</div>
+                    <div className="grid">Eron Muss</div>
+                    <div className="grid wide">Huntsville, TX</div>
                     <div className="grid">5th Grade</div>
                     <div className="grid">2990</div>
                     <div className="grid">7:00am</div>
@@ -50,7 +50,7 @@ var steps = [
                         </div>
                     </div>
                     <div className="grid">Eron Muss</div>
-                    <div className="grid wide">Pretoria, Gauteng, SA</div>
+                    <div className="grid wide">Huntsville, TX</div>
                     <div className="grid">5th Grade</div>
                     <div className="grid">2990</div>
                     <div className="grid">3:00pm</div>
