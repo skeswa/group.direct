@@ -45,7 +45,9 @@ var Routes = React.createClass({
             newStop: undefined,
             toast: undefined,
             counter: 1000,
-            routeName: undefined
+            routeName: undefined,
+            companyId: AppStateStore.getSessionData().companyId,
+            sessionToken: AppStateStore.getSessionData().sessionToken
         }
     },
     componentDidMount: function() {
@@ -180,7 +182,7 @@ var Routes = React.createClass({
         var component = this;
         SchoolBusService.deleteRoute(
             currentRoute.Id,
-            sessionToken,
+           this.state.sessionToken,
             function(res) {
                 if (res.body.Result) {
                     console.log('Response for onDeleteRouteClick', JSON.stringify(res.body));
@@ -386,9 +388,9 @@ var Routes = React.createClass({
         this.calculateStartEndPoints();
         SchoolBusService.addRoute(
             this.refs.routeName.getDOMNode().value.trim(),
-            companyId,
+            this.state.companyId,
             this.state.stopData,
-            sessionToken,
+            this.state.sessionToken,
             function(res) {
                 if (res.body.Result) {
                     component.state.routes.push(res.body.Result);
@@ -412,9 +414,9 @@ var Routes = React.createClass({
         SchoolBusService.updateRoute(
             this.state.routeId,
             this.state.routeName,
-            companyId,
+            this.state.companyId,
             this.state.stopData,
-            sessionToken,
+            this.state.sessionToken,
             function(res) {
                 if (res.body.Result) {
                     console.log('Response from editRoute', JSON.stringify(res.body));
