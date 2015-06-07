@@ -50,9 +50,9 @@ exports.route = function(app) {
         res.status(200).json(getStudentsData);
     });
 
-    app.get('/GroupDirectTestServices/*', serviceProxy);
-    app.post('/GroupDirectTestServices/*', serviceProxy);
-    app.get('/ApheliaBusConnectTestService/*', serviceProxy);
-    app.post('/ApheliaBusConnectTestService/*', serviceProxy);
+    app.get('/GroupDirectServices/*', serviceProxy);
+    app.post('/GroupDirectServices/*', serviceProxy);
+    app.get('/ApheliaBusConnectService/*', serviceProxy);
+    app.post('/ApheliaBusConnectService/*', serviceProxy);
     app.get('/maps/api/*', googleMapsProxy);
 };

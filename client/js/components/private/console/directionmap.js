@@ -20,7 +20,7 @@ var ExampleGoogleMap = React.createClass({
         };
     },
     componentDidMount: function (rootNode) {
-      this.props.paths = [];      
+      this.props.paths = [];
       console.log('componentDidMount: ' + this.props.route)
       // initializing map
       this.initializeMap();
@@ -32,12 +32,13 @@ var ExampleGoogleMap = React.createClass({
       this.props.paths = [];
       console.log('componentDidUpdate: ' + JSON.stringify(this.props.route));
       this.generateRoute();
-      if(this.props.route.IntermediatePoints == null)
+
+      if(this.props.route != null && this.props.route.IntermediatePoints == null)
       {
         timer = setInterval(this.savePaths, 3000);
       }
-      
-    },    
+
+    },
     savePaths: function(){
       this.props.route.IntermediatePoints = this.props.paths;
       var intermediateRoutes = [];
@@ -48,7 +49,7 @@ var ExampleGoogleMap = React.createClass({
         {
           //console.log('PATHS: printPath - Latitude: ' + path[j].A + ' Longitude: ' + path[j].F);
           intermediateRoutes.push(path[j]);
-          //break;    
+          //break;
           //console.log(intermediateRoutes);
         }
       }
@@ -78,10 +79,10 @@ var ExampleGoogleMap = React.createClass({
       });
 
       //console.log(JSON.stringify(intermediateRoutes));
-      
+
       clearInterval(timer);
     },
-    generateRoute: function(){      
+    generateRoute: function(){
       var currentRoute = this.props.route;
       var wayPointList = [];
       this.initializeMap();
@@ -113,8 +114,8 @@ var ExampleGoogleMap = React.createClass({
         if(wayPointList.length > 1){
           this.drawRouteOnMap(wayPointList);
           wayPointList = [];
-        }              
-      }    
+        }
+      }
     },
     drawRouteOnMap: function(wayPointList){
       var startPoint = wayPointList[0].location;
@@ -188,7 +189,7 @@ var ExampleGoogleMap = React.createClass({
           {
             var step = leg.steps[k];
             this.props.paths.push(step.path);
-            /*for(var l = 0; l < step.path.length; l++){ 
+            /*for(var l = 0; l < step.path.length; l++){
               var marker = new google.maps.Marker({
                 position: step.path[l],
                 map: this.props.map,
@@ -209,7 +210,7 @@ var ExampleGoogleMap = React.createClass({
         //{
           //var step = route.legs[route.legs.length-1].steps[k];
           //this.props.paths.push(step.path);
-          /*for(var l = 0; l < step.path.length; l++){ 
+          /*for(var l = 0; l < step.path.length; l++){
             var marker = new google.maps.Marker({
               position: step.path[l],
               map: this.props.map,
