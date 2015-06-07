@@ -41,7 +41,7 @@ var steps = [
                     <div className="grid">5th Grade</div>
                     <div className="grid">2990</div>
                     <div className="grid">7:00am</div>
-                    <div className="grid wide">Maye H., Errol Musk</div>
+                    <div className="grid wide">Maye H., Errol Muss</div>
                 </div>
                 <div className="row">
                     <div className="grid narrow">
