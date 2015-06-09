@@ -9,7 +9,7 @@ var ContactService = {
         callback) {
         // Build the request
         request
-            .post('/GroupDirectTestServices/ContactService.svc/GetUserByEmail')
+            .post('/GroupDirectServices/ContactService.svc/GetUserByEmail')
             .send({
                 email: email,
                 userId: userId,
@@ -26,7 +26,7 @@ var ContactService = {
         callback) {
         // Build the request
         request
-            .post('/GroupDirectTestServices/ContactService.svc/addContactRequest')
+            .post('/GroupDirectServices/ContactService.svc/addContactRequest')
             .send({
                 RequesterId: requesterId,
                 RequesteeId: requesteeId,
@@ -43,7 +43,7 @@ var ContactService = {
         callback) {
         // Build the request
         request
-            .post('/GroupDirectTestServices/ContactService.svc/SendInviteToEmail')
+            .post('/GroupDirectServices/ContactService.svc/SendInviteToEmail')
             .send({
                 requesterId: requesterId,
                 requesteeEmail: requesteeEmail,
@@ -58,7 +58,7 @@ var ContactService = {
         callback) {
         // Build the request
         request
-            .post('/GroupDirectTestServices/ContactService.svc/GetAddRequestsByUserId')
+            .post('/GroupDirectServices/ContactService.svc/GetAddRequestsByUserId')
             .send({
                 userId: userId,
                 st: sessionToken
@@ -73,7 +73,7 @@ var ContactService = {
         callback) {
         // Build the request
         request
-            .post('/GroupDirectTestServices/ContactService.svc/GetUserContactsByUserId')
+            .post('/GroupDirectServices/ContactService.svc/GetUserContactsByUserId')
             .send({
                 userId: userId,
                 st: sessionToken
@@ -89,7 +89,7 @@ var ContactService = {
         callback) {
         // Build the request
         request
-            .post('/GroupDirectTestServices/ContactService.svc/approvedenycontactrequest')
+            .post('/GroupDirectServices/ContactService.svc/approvedenycontactrequest')
             .send({
                 RequestId: requestId,
                 status: status,
@@ -105,7 +105,7 @@ var ContactService = {
         callback) {
         // Build the request
         request
-            .post('/GroupDirectTestServices/ContactService.svc/DeleteContactByUserId')
+            .post('/GroupDirectServices/ContactService.svc/DeleteContactByUserId')
             .send({
                 userId: userId,
                 contactId: contactId,
@@ -122,7 +122,7 @@ var ContactService = {
         sessionToken,
         callback) {
         request
-            .post('/GroupDirectTestServices/CompanyServices.svc/getcompanyusers')
+            .post('/GroupDirectServices/CompanyServices.svc/getcompanyusers')
             .send({
                 companyId: companyId,
                 userId: userId,
@@ -137,7 +137,7 @@ var ContactService = {
         sessionToken,
         callback) {
         request
-            .post('/GroupDirectTestServices/CompanySignupService.svc/invitewithpasscode')
+            .post('/GroupDirectServices/CompanySignupService.svc/invitewithpasscode')
             .send({
                 userId: userId,
                 companyId: companyId,
@@ -152,7 +152,7 @@ var ContactService = {
         sessionToken,
         callback) {
         request
-            .post('/GroupDirectTestServices/CompanyServices.svc/deletecompanyuserbyid')
+            .post('/GroupDirectServices/CompanyServices.svc/deletecompanyuserbyid')
             .send({
                 userId: userId,
                 adminId: adminId,

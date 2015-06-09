@@ -8,7 +8,7 @@ var AuthService = {
     },
     login: function(user, pass, callback) {
         request
-            .post('/GroupDirectTestServices/SignupService.svc/login')
+            .post('/GroupDirectServices/SignupService.svc/login')
             .send({
                 userName: user,
                 password: pass
@@ -17,7 +17,7 @@ var AuthService = {
     },
     logout: function(userId, callback) {
         request
-            .post('/GroupDirectTestServices/SignupService.svc/logout')
+            .post('/GroupDirectServices/SignupService.svc/logout')
             .send({
                 userId: userId
             })
@@ -25,7 +25,7 @@ var AuthService = {
     },
     requestResetPassword: function(email, callback) {
         request
-            .post('/GroupDirectTestServices/ApheliaIUserService.svc/RequestResetPassword')
+            .post('/GroupDirectServices/ApheliaIUserService.svc/RequestResetPassword')
             .send({
                 email: email
             })
@@ -33,7 +33,7 @@ var AuthService = {
     },
     resetPassword: function(token, pass, callback) {
         request
-            .post('/GroupDirectTestServices/ApheliaIUserService.svc/ResetPassword')
+            .post('/GroupDirectServices/ApheliaIUserService.svc/ResetPassword')
             .send({
                 token: token,
                 password: pass

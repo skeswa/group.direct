@@ -12,7 +12,7 @@ var SignupService = {
         callback) {
         // Build the request
         request
-            .post('/GroupDirectTestServices/SignupService.svc/usersignuprequest')
+            .post('/GroupDirectServices/SignupService.svc/usersignuprequest')
             .send({
                 userSignupRequest: {
                     FirstName: firstName,
@@ -34,7 +34,7 @@ var SignupService = {
         callback){
         // Build the request
         request
-            .post('/GroupDirectTestServices/SignupService.svc/activateusersignuprequest')
+            .post('/GroupDirectServices/SignupService.svc/activateusersignuprequest')
             .send({
                     email: email,
                     code: activationCode
@@ -58,7 +58,7 @@ var SignupService = {
         callback) {
         // Build the request
         request
-            .post('/GroupDirectTestServices/CompanySignupService.svc/docompanysignuprequest')
+            .post('/GroupDirectServices/CompanySignupService.svc/docompanysignuprequest')
             .send({
                 signUpModel: {
                     FirstName: firstName,
@@ -88,7 +88,7 @@ var SignupService = {
         callback){
         // Build the request
         request
-            .post('/GroupDirectTestServices/CompanySignupService.svc/dousersignupforexistingcompany')
+            .post('/GroupDirectServices/CompanySignupService.svc/dousersignupforexistingcompany')
             .send({
                 signUpModel: {
                     FirstName: firstName,
