@@ -7,7 +7,7 @@ var SchoolBusService = {
         callback) {
         // Build the request
         request
-            .post('/ApheliaBusConnectTestService/BusConnectService.svc/getallactiveroutes')
+            .post('/ApheliaBusConnectService/BusConnectService.svc/getallactiveroutes')
             .send({
                 st: sessionToken,
                 companyId: companyId
@@ -22,7 +22,7 @@ var SchoolBusService = {
         sessionToken,
         callback) {
             request
-                .post('/ApheliaBusConnectTestService/BusConnectService.svc/addroute')
+                .post('/ApheliaBusConnectService/BusConnectService.svc/addroute')
                 .send({
                     route:
                         {
@@ -41,7 +41,7 @@ var SchoolBusService = {
         sessionToken,
         callback) {
             request
-                .post('/ApheliaBusConnectTestService/BusConnectService.svc/saveintermediatepoints')
+                .post('/ApheliaBusConnectService/BusConnectService.svc/saveintermediatepoints')
                 .send({
                     routeId: routeId,
                     intermediatePoints: intermediatePoints,
@@ -57,7 +57,7 @@ var SchoolBusService = {
         sessionToken,
         callback) {
             request
-                .post('/ApheliaBusConnectTestService/BusConnectService.svc/editroute')
+                .post('/ApheliaBusConnectService/BusConnectService.svc/editroute')
                 .send({
                     route:
                         {
@@ -76,7 +76,7 @@ var SchoolBusService = {
         sessionToken,
         callback) {
             request
-                .post('/ApheliaBusConnectTestService/BusConnectService.svc/deleteroute')
+                .post('/ApheliaBusConnectService/BusConnectService.svc/deleteroute')
                 .send({
                     routeId: routeId,
                     st: sessionToken
@@ -97,7 +97,7 @@ var SchoolBusService = {
         callback) {
         // Build the request
         request
-            .post('/ApheliaBusConnectTestService/BusConnectService.svc/addlocation')
+            .post('/ApheliaBusConnectService/BusConnectService.svc/addlocation')
             .send({
                 location: {
                         Address: street1,
@@ -132,7 +132,7 @@ var SchoolBusService = {
         callback) {
         // Build the request
         request
-            .post('/GroupDirectTestServices/CompanyServices.svc/getusersbyappspecificroleid')
+            .post('/GroupDirectServices/CompanyServices.svc/getusersbyappspecificroleid')
             .send({
                 roleId: 18,
                 appId: 11,
@@ -150,7 +150,7 @@ var SchoolBusService = {
         callback) {
         // Build the request
         request
-            .post('/ApheliaBusConnectTestService/BusConnectService.svc/getallvehicle')
+            .post('/ApheliaBusConnectService/BusConnectService.svc/getallvehicle')
             .send({
                 companyId: companyId,
                 st: sessionToken
@@ -168,7 +168,7 @@ var SchoolBusService = {
         callback) {
         // Build the request
         request
-            .post('/ApheliaBusConnectTestService/BusConnectService.svc/createvehicle')
+            .post('/ApheliaBusConnectService/BusConnectService.svc/createvehicle')
             .send({
                 vehicle:
                     {
@@ -188,7 +188,7 @@ var SchoolBusService = {
         sessionToken,
         callback) {
             request
-                .post('/ApheliaBusConnectTestService/BusConnectService.svc/deletevehicle')
+                .post('/ApheliaBusConnectService/BusConnectService.svc/deletevehicle')
                 .send({
                     vehicleId: vehicleId,
                     st: sessionToken
@@ -206,7 +206,7 @@ var SchoolBusService = {
         callback) {
         // Build the request
         request
-            .post('/ApheliaBusConnectTestService/BusConnectService.svc/updatevehicle')
+            .post('/ApheliaBusConnectService/BusConnectService.svc/updatevehicle')
             .send({
                 vehicle:
                     {
@@ -228,7 +228,7 @@ var SchoolBusService = {
         callback) {
         // Build the request
         request
-            .post('/GroupDirectTestServices/SchoolBusService.svc/getStudents')
+            .post('/GroupDirectServices/SchoolBusService.svc/getStudents')
             .send({
                 userId: userId,
                 sessionToken: sessionToken
