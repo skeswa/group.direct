@@ -48,22 +48,24 @@ var steps = [
         var userElements = [];
         for (var i=0; i<component.state.companyUsers.length; i++) {
             var array = component.state.companyUsers[i];
-            userElements.push(
-                <div className="row">
-                    <div className="left wide">
-                        <div className="profile-pic">
-                            <i className="fa fa-user"></i>
+            if(array.Status === 1) {
+                userElements.push(
+                    <div className="row">
+                        <div className="left wide">
+                            <div className="profile-pic">
+                                <i className="fa fa-user"></i>
+                            </div>
+                            <div className="top-text-wrapper">
+                                <div className="line1">{array.FirstName + " " + array.LastName}</div>
+                                <div className="line2">{array.Email}</div>
+                            </div>
                         </div>
-                        <div className="top-text-wrapper">
-                            <div className="line1">{array.FirstName + " " + array.LastName}</div>
-                            <div className="line2">{array.Email}</div>
+                        <div className="right narrow">
+                            <button className={component.state.userTypeId == 2 ? "button" : "invisible"} id="remove-button" onClick={component.createExecutable(component.onRemoveCompanyUserClick, array.Id)}>Remove</button>
                         </div>
                     </div>
-                    <div className="right narrow">
-                        <button className={component.state.userTypeId == 2 ? "button" : "invisible"} id="remove-button" onClick={component.createExecutable(component.onRemoveCompanyUserClick, array.Id)}>Remove</button>
-                    </div>
-                </div>
-            );
+                );
+            }
         }
         //Populate connections
         var contactElements = [];

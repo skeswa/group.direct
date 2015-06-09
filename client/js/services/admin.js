@@ -7,7 +7,7 @@ var AdminService = {
         callback) {
         // Build the request
         request
-            .get('/GroupDirectServices/CompanySignupService.svc/getcompanysignuprequests?userId='+userId+'&offset=0&limit=5&st='+sessionToken+'&status=1')
+            .get('/GroupDirectTestServices/CompanySignupService.svc/getcompanysignuprequests?userId='+userId+'&offset=0&limit=5&st='+sessionToken+'&status=1')
             // Submit the request
             .end(callback);
     },
@@ -17,7 +17,7 @@ var AdminService = {
         callback) {
         // Build the request
         request
-            .post('/GroupDirectServices/CompanySignupService.svc/getcompanylist')
+            .post('/GroupDirectTestServices/CompanySignupService.svc/getcompanylist')
             .send({
                 userId: userId,
                 status: 1,
@@ -33,7 +33,7 @@ var AdminService = {
         callback) {
         // Build the request
         request
-            .post('/GroupDirectServices/CompanySignupService.svc/acceptcompanysignuprequest')
+            .post('/GroupDirectTestServices/CompanySignupService.svc/acceptcompanysignuprequest')
             .send({
                 userId: userId,
                 companySignupRequestId: requestId,
@@ -49,7 +49,7 @@ var AdminService = {
         callback) {
         // Build the request
         request
-            .post('/GroupDirectServices/CompanySignupService.svc/rejectcompanysignuprequest')
+            .post('/GroupDirectTestServices/CompanySignupService.svc/rejectcompanysignuprequest')
             .send({
                 userId: userId,
                 companySignupRequestId: requestId,
@@ -66,7 +66,7 @@ var AdminService = {
         callback) {
         // Build the request
         request
-            .post('/GroupDirectServices/CompanySignupService.svc/enabledisblecompany')
+            .post('/GroupDirectTestServices/CompanySignupService.svc/enabledisblecompany')
             .send({
                 companyId: companyId,
                 action: action,

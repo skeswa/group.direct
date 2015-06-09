@@ -20,7 +20,6 @@ var Vehicles = React.createClass({
     getInitialState: function() {
         return{
             vehicles: [],
-            vehicleElements: [],
             active: 0,
             message:''
         }
@@ -31,10 +30,11 @@ var Vehicles = React.createClass({
         Actions.changePageTitle('SchoolBus Connect');
 
         SchoolBusService.getVehicles(
+            AppStateStore.getSessionData().companyId,
             AppStateStore.getSessionData().sessionToken,
             function (res) {
                 if (res.body.ResultSet) {
-                    console.log('Response for getVehicles', JSON.stringify(res.body));
+                    //console.log('Response for getVehicles', JSON.stringify(res.body));
                     component.setState({
                         vehicles: res.body.ResultSet,
                         name: res.body.ResultSet[0].Name,
@@ -50,50 +50,43 @@ var Vehicles = React.createClass({
     },
     onVehicleClick: function(current, i, event) {
         this.setState({
+            id: current.Id,
             name: current.Name,
             description: current.Description,
             model: current.ModelNo,
             registration: current.RegistrationNo,
             active: i,
-            status:'',
-            vehicleElements: [],
             message:''
         });
     },
     onAddClick: function(event) {
-        console.log("ON ADD CLICK");
         this.setState({
             name: '',
             description: '',
             model: '',
             registration: '',
             active: 100,
-            vehicleElements: [],
             message:''
         });
     },
     onNameChange: function(event) {
         this.setState({
             name: event.target.value,
-            vehicleElements: []
         });
     },
     onModelChange: function(event) {
         this.setState({
             model: event.target.value,
-            vehicleElements: []
         });
     },
     onRegChange: function(event) {
         this.setState({
             registration: event.target.value,
-            vehicleElements: []
         });
     },
     onDescChange: function(event) {
         this.setState({
             description: event.target.value,
-            vehicleElements: []
         });
     },
     addVehicle: function(event) {
@@ -103,34 +96,19 @@ var Vehicles = React.createClass({
             this.state.model,
             this.state.registration,
             this.state.description,
+            AppStateStore.getSessionData().companyId,
             AppStateStore.getSessionData().sessionToken,
             function (res) {
                 if (res.body.Result) {
                     console.log('Response for addVehicle', JSON.stringify(res.body));
                     component.setState({
-                        name: res.body.Result.Name,
-                        description: res.body.Result.Description,
-                        model: res.body.Result.ModelNo,
-                        registration: res.body.Result.RegistrationNo,
-                        active: 100,
-                        vehicleElements: [],
                         message: 'Vehicle added successfully.'
                     });
-                    console.log('message', this.state.message);
-                var position = this.state.vehicles.length -1;
-                this.state.vehicleElements.push(
-                    <div className={'row' + (this.state.active === i ? ' active':'')} onClick={this.createExecutable(this.onVehicleClick, this.state.vehicles[position], position)}>
-                        <div className="profile-pic">
-                            <i className="fa fa-map-marker"></i>
-                        </div>
-                        <div className="top-text-wrapper">
-                            <div className="line1">{current.Name}</div>
-                        </div>
-                        <div className="remove-button">
-                            <i className="fa fa-close"></i>
-                        </div>
-                    </div>
-                );
+                    console.log('message', component.state.message);
+                    //var position = component.state.vehicles.length -1;
+                    component.state.vehicles.push(res.body.Result);
+                    component.forceUpdate();
+                    console.log('vehicles', JSON.stringify(component.state.vehicles));
                 } else {
                     console.log('Error at addVehicle', res.text);
                     component.setState({
@@ -139,11 +117,79 @@ var Vehicles = React.createClass({
                 }
             });
     },
+    onDelete: function(id, event) {
+        var component = this;
+        SchoolBusService.deleteVehicle(
+           id,
+           AppStateStore.getSessionData().sessionToken,
+            function(res) {
+                if (res.body.Result) {
+                    console.log('Response for onDelete', JSON.stringify(res.body));
+                    component.setState({
+                        id: undefined,
+                        name: undefined,
+                        description: undefined,
+                        model: undefined,
+                        registration: undefined,
+                        message:'Vehicle deleted successfully'
+                    });
+                    for(var i=0; i<component.state.vehicles.length; i++) {
+                        if(component.state.vehicles[i].Id === id) {
+                            console.log(component.state.vehicles[i].Name);
+                            component.state.vehicles.splice(i, 1);
+                            component.forceUpdate();
+                            break;
+                        }
+                    }
+                } else {
+                    console.log('Error at onDelete', res.text);
+                }
+            });
+    },
+    updateVehicle: function(event) {
+        var component   = this;
+        console.log("name", this.state.name);
+        SchoolBusService.updateVehicle(
+            this.state.id,
+            this.state.name,
+            this.state.model,
+            this.state.registration,
+            this.state.description,
+            AppStateStore.getSessionData().companyId,
+            AppStateStore.getSessionData().sessionToken,
+            function (res) {
+                if (res.body.Result) {
+                    console.log('Response for updateVehicle', JSON.stringify(res.body));
+                    for(var i=0; i<component.state.vehicles.length; i++) {
+                        if(component.state.vehicles[i].Id === component.state.id) {
+                            component.state.vehicles[i].Name = component.state.name;
+                            component.forceUpdate();
+                            break;
+                        }
+                    }
+                    component.setState({
+                        message: 'Vehicle updated successfully.'
+                    });
+                } else {
+                    console.log('Error at updateVehicle', res.text);
+                    component.setState({
+                        message: 'Error on update vehicle.'
+                    });
+                }
+            });
+    },
+    removeToast: function(event) {
+        this.setState({
+            mwssage: undefined
+        });
+    },
     render: function() {
+        console.log("active", this.state.active);
+        var vehicleElements = [];
         //Get list of vehicles
         for (var i=0; i<this.state.vehicles.length; i++) {
             var current = this.state.vehicles[i];
-            this.state.vehicleElements.push(
+            vehicleElements.push(
                 <div className={'row' + (this.state.active === i ? ' active':'')} onClick={this.createExecutable(this.onVehicleClick, current, i)}>
                     <div className="profile-pic">
                         <i className="fa fa-map-marker"></i>
@@ -152,7 +198,7 @@ var Vehicles = React.createClass({
                         <div className="line1">{current.Name}</div>
                     </div>
                     <div className="remove-button">
-                        <i className="fa fa-close"></i>
+                        <i className="fa fa-close" onClick={this.createExecutable(this.onDelete, current.Id)}></i>
                     </div>
                 </div>
             );
@@ -165,7 +211,7 @@ var Vehicles = React.createClass({
                     <div className="add-button" onClick={this.onAddClick}>
                         <i className="fa fa-plus"></i>
                     </div>
-                    <div className="routes">{this.state.vehicleElements}</div>
+                    <div className="routes">{vehicleElements}</div>
                 </div>
                 <div className="left">
                     <div className="subtitle">Profile</div>
@@ -188,17 +234,24 @@ var Vehicles = React.createClass({
                             <textarea rows="4" cols="50" name="description" ref="description" className="textbox textarea" value={this.state.description} onChange={this.onDescChange}/>
                         </div>
                         <div className="field center">
-                            <button id="save-button" type="button" className="save-button" onClick={this.addVehicle}><i className="fa fa-check"></i></button>
+                            <button id="save-button" type="button" className="save-button" onClick={(this.state.active === 100) ? this.addVehicle : this.updateVehicle}><i className="fa fa-check"></i></button>
+                        </div>
+                    </div>
+                    <div className="field center">
+                        <div className={'toast'+ (this.state.message ? ' active': ' ')}>
+                            <div className="text">{this.state.message}</div>
+                            <div className="remove-button">
+                                <i className="fa fa-close" onClick={this.removeToast}></i>
+                            </div>
                         </div>
                     </div>
                     <div className={'schedule' + (this.state.active === 100 ? '':' active')}>
+
+                    <br />
                         <div className="subtitle">Schedule</div>
                         <div className="row wider">4-8-2015, Wed, Job: Student Pickup - Route #1 at 7:30am</div>
                         <div className="row wider">4-7-2015, Tue, Job: Student Pickup - Route #1 at 7:30am</div>
                         <div className="row wider">4-6-2015, Mon, Job: Student Pickup - Route #1 at 7:30am</div>
-                    </div>
-                    <div className="status">
-                        {this.state.message}
                     </div>
                 </div>
                 <div className="vehicle-pic">

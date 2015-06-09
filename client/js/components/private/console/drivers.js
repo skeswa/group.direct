@@ -32,6 +32,7 @@ var Drivers = React.createClass({
 
         //Get connections
         SchoolBusService.getDrivers(
+            AppStateStore.getSessionData().companyId,
             AppStateStore.getSessionData().sessionToken,
             function (res) {
                 if (res.ok) {

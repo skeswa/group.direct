@@ -7,7 +7,7 @@ var SchoolBusService = {
         callback) {
         // Build the request
         request
-            .post('/ApheliaBusConnectService/BusConnectService.svc/getallactiveroutes')
+            .post('/ApheliaBusConnectTestService/BusConnectService.svc/getallactiveroutes')
             .send({
                 st: sessionToken,
                 companyId: companyId
@@ -22,7 +22,7 @@ var SchoolBusService = {
         sessionToken,
         callback) {
             request
-                .post('/ApheliaBusConnectService/BusConnectService.svc/addroute')
+                .post('/ApheliaBusConnectTestService/BusConnectService.svc/addroute')
                 .send({
                     route:
                         {
@@ -41,7 +41,7 @@ var SchoolBusService = {
         sessionToken,
         callback) {
             request
-                .post('/ApheliaBusConnectService/BusConnectService.svc/saveintermediatepoints')
+                .post('/ApheliaBusConnectTestService/BusConnectService.svc/saveintermediatepoints')
                 .send({
                     routeId: routeId,
                     intermediatePoints: intermediatePoints,
@@ -57,7 +57,7 @@ var SchoolBusService = {
         sessionToken,
         callback) {
             request
-                .post('/ApheliaBusConnectService/BusConnectService.svc/editroute')
+                .post('/ApheliaBusConnectTestService/BusConnectService.svc/editroute')
                 .send({
                     route:
                         {
@@ -76,7 +76,7 @@ var SchoolBusService = {
         sessionToken,
         callback) {
             request
-                .post('/ApheliaBusConnectService/BusConnectService.svc/deleteroute')
+                .post('/ApheliaBusConnectTestService/BusConnectService.svc/deleteroute')
                 .send({
                     routeId: routeId,
                     st: sessionToken
@@ -97,7 +97,7 @@ var SchoolBusService = {
         callback) {
         // Build the request
         request
-            .post('/ApheliaBusConnectService/BusConnectService.svc/addlocation')
+            .post('/ApheliaBusConnectTestService/BusConnectService.svc/addlocation')
             .send({
                 location: {
                         Address: street1,
@@ -127,13 +127,16 @@ var SchoolBusService = {
             .end(callback);
     },
     getDrivers: function(
+        companyId,
         sessionToken,
         callback) {
         // Build the request
         request
-            .post('/GroupDirectServices/ApheliaIUserService.svc/GetListOfUsersByRole')
+            .post('/GroupDirectTestServices/CompanyServices.svc/getusersbyappspecificroleid')
             .send({
-                roleId: 7,
+                roleId: 18,
+                appId: 11,
+                companyId: companyId,
                 st: sessionToken
             })
             // Submit the request
@@ -142,13 +145,14 @@ var SchoolBusService = {
 
     //Vehicles
     getVehicles: function(
+        companyId,
         sessionToken,
         callback) {
         // Build the request
         request
-            .post('/ApheliaBusConnectService/BusConnectService.svc/getallvehicle')
+            .post('/ApheliaBusConnectTestService/BusConnectService.svc/getallvehicle')
             .send({
-                companyId: 1,
+                companyId: companyId,
                 st: sessionToken
             })
             // Submit the request
@@ -159,11 +163,12 @@ var SchoolBusService = {
         model,
         registration,
         description,
+        companyId,
         sessionToken,
         callback) {
         // Build the request
         request
-            .post('/ApheliaBusConnectService/BusConnectService.svc/createvehicle')
+            .post('/ApheliaBusConnectTestService/BusConnectService.svc/createvehicle')
             .send({
                 vehicle:
                     {
@@ -171,7 +176,46 @@ var SchoolBusService = {
                         ModelNo: model,
                         RegistrationNo: registration,
                         Description: description,
-                        CompanyId: 1
+                        CompanyId: companyId
+                    },
+                st: sessionToken
+            })
+            // Submit the request
+            .end(callback);
+    },
+    deleteVehicle: function(
+        vehicleId,
+        sessionToken,
+        callback) {
+            request
+                .post('/ApheliaBusConnectTestService/BusConnectService.svc/deletevehicle')
+                .send({
+                    vehicleId: vehicleId,
+                    st: sessionToken
+                })
+                .end(callback);
+    },
+    updateVehicle: function(
+        vehicleId,
+        name,
+        model,
+        registration,
+        description,
+        companyId,
+        sessionToken,
+        callback) {
+        // Build the request
+        request
+            .post('/ApheliaBusConnectTestService/BusConnectService.svc/updatevehicle')
+            .send({
+                vehicle:
+                    {
+                        Id: vehicleId,
+                        Name: name,
+                        ModelNo: model,
+                        RegistrationNo: registration,
+                        Description: description,
+                        CompanyId: companyId
                     },
                 st: sessionToken
             })
@@ -184,7 +228,7 @@ var SchoolBusService = {
         callback) {
         // Build the request
         request
-            .post('/GroupDirectServices/SchoolBusService.svc/getStudents')
+            .post('/GroupDirectTestServices/SchoolBusService.svc/getStudents')
             .send({
                 userId: userId,
                 sessionToken: sessionToken

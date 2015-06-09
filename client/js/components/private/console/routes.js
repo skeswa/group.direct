@@ -129,7 +129,6 @@ var Routes = React.createClass({
             active: i,
             stopData: [],
             newStop: undefined,
-            toast: undefined,
             counter: 1000
         });
         if (currentRoute.RoutePointResponseList[0] === undefined) {
@@ -396,7 +395,7 @@ var Routes = React.createClass({
                     component.state.routes.push(res.body.Result);
                     console.log('Response from addRoute', JSON.stringify(res.body));
                     component.setState({
-                        toast: "Route added successfully. Refresh page to see the new route."
+                        toast: "Route added successfully."
                     });
 
                     component.renderPointsOnRight(res.body.Result, component.state.routes.length-1);
@@ -421,7 +420,7 @@ var Routes = React.createClass({
                 if (res.body.Result) {
                     console.log('Response from editRoute', JSON.stringify(res.body));
                     component.setState({
-                        toast: "Route updated successfully. Refresh page to see the changes."
+                        toast: "Route updated successfully."
                     });
                 } else {
                     console.log('Error at editRoute', res.text);
@@ -500,7 +499,6 @@ var Routes = React.createClass({
                                     <i className="fa fa-close" onClick={this.removeToast}></i>
                                 </div>
                             </div>
-
                         </div>
                     </div>
                 </div>
