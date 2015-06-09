@@ -504,7 +504,7 @@ var Register = React.createClass({
                                 <div className="footer">
                                     <div className="divider"/>
                                     <button id="back-button" onClick={this.onBack} disabled={this.state.waiting} style={{ display: (this.state.step === 2 ? 'none' : 'inline-block') }}>Back</button>
-                                    <button id="skip-button" style={{ display: (this.state.step === 1 ? 'inline-block' : 'none') }} onClick={this.onSkip} disabled={this.state.waiting}>Skip</button>
+                                    <button id="skip-button" style={{ display: (this.state.step === 5 ? 'inline-block' : 'none') }} onClick={this.onSkip} disabled={this.state.waiting}>Skip</button>
                                     <button id="next-button" onClick={this.onNext} disabled={this.state.waiting} style={{ display: (this.state.step === 0 ? 'inline-block' : 'none') }}>Next</button>
                                     <button id="finish-button" onClick={this.onFinish} disabled={this.state.waiting} style={{ display: (this.state.step === 1 ? 'inline-block' : 'none') }}>Finish</button>
                                 </div>

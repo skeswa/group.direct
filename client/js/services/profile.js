@@ -6,7 +6,7 @@ var ProfileService = {
         sessionToken,
         callback) {
         request
-            .post('/GroupDirectServices/ApheliaIUserService.svc/GetProfileInfo')
+            .post('/GroupDirectTestServices/ApheliaIUserService.svc/GetProfileInfo')
             .send({
                 userId: userId,
                 st: sessionToken
@@ -30,7 +30,7 @@ var ProfileService = {
         callback) {
         // Build the request
         request
-            .post('/GroupDirectServices/ApheliaIUserService.svc/SaveProfileInfo')
+            .post('/GroupDirectTestServices/ApheliaIUserService.svc/SaveProfileInfo')
             .send({
                 userModel: {
                     AddressId: addressId,
@@ -57,7 +57,7 @@ var ProfileService = {
         sessionToken,
         callback) {
         request
-            .post('/GroupDirectServices/CompanySignupService.svc/getcompanybyid')
+            .post('/GroupDirectTestServices/CompanySignupService.svc/getcompanybyid')
             .send({
                 companyId: companyId,
                 st: sessionToken
@@ -70,7 +70,7 @@ var ProfileService = {
         sessionToken,
         callback) {
         request
-            .post('/GroupDirectServices/CompanyServices.svc/getcompanyassociatedapplication')
+            .post('/GroupDirectTestServices/CompanyServices.svc/getcompanyassociatedapplication')
             .send({
                 companyId: companyId,
                 st: sessionToken
@@ -85,7 +85,7 @@ var ProfileService = {
         sessionToken,
         callback) {
         request
-            .post('/GroupDirectServices/ApheliaIUserService.svc/UpdatePassword')
+            .post('/GroupDirectTestServices/ApheliaIUserService.svc/UpdatePassword')
             .send({
                 userId: userId,
                 currentPassword: currentPassword,
