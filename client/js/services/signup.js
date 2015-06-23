@@ -4,6 +4,7 @@ var SignupService = {
     userSignupRequest: function(
         firstName,
         lastName,
+        userName,
         password,
         gender,
         email,
@@ -17,7 +18,7 @@ var SignupService = {
                 userSignupRequest: {
                     FirstName: firstName,
                     LastName: lastName,
-                    UserName: email,
+                    UserName: userName,
                     Password: password,
                     Gender: gender,
                     EmailAddress: email,
@@ -45,6 +46,7 @@ var SignupService = {
     companySignupRequest: function(
         firstName,
         lastName,
+        userName,
         password,
         email,
         newCompanyName,
@@ -63,7 +65,7 @@ var SignupService = {
                 signUpModel: {
                     FirstName: firstName,
                     LastName: lastName,
-                    UserName: email,
+                    UserName: userName,
                     Password: password,
                     EmailAddress: email,
                     CompanyName: newCompanyName,
@@ -82,6 +84,7 @@ var SignupService = {
     signupForExistingCompany: function(
         firstName,
         lastName,
+        userName,
         email,
         password,
         invitationCode,
@@ -93,7 +96,7 @@ var SignupService = {
                 signUpModel: {
                     FirstName: firstName,
                     LastName: lastName,
-                    UserName: email,
+                    UserName: userName,
                     Password: password,
                     EmailAddress: email
                 },
