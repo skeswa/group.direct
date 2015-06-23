@@ -31,10 +31,8 @@ var steps = [
                     <input type="text" className="textbox" value={component.state.email} onChange={component.onEmailChanged}/>
                 </div>
                 <div className="field right">
-                    {/*
                      <div className="label">Username</div>
                      <input type="text" className="textbox" value={component.state.userName} onChange={component.onUsernameChanged}/>
-                    */}
                 </div>
                 <div className="field left">
                     <div className="label">Password</div>
@@ -87,11 +85,6 @@ var steps = [
                         <div className="label">State</div>
                         <input type="text" className="textbox" value={component.state['newCompanyState']} onChange={component.onCompanyStateChanged}/>
                     </div>
-                    {/*<div className="field left">
-                        <div className="label">Country</div>
-                        <input type="text" className="textbox" value={component.state['newCompanyCountry']} onChange={component.onCompanyCountryChanged}/>
-                    </div>
-                    */}
                     <div className="field left">
                         <div className="label">Zip</div>
                         <input type="text" className="textbox" value={component.state['newCompanyZip']} onChange={component.onCompanyZipChanged}/>
@@ -107,8 +100,46 @@ var steps = [
                 <div className="icon gray shimmed">
                     <i className="fa fa-check"/>
                 </div>
-                <div className="title">Thank you for signing up with GroupConnect! You will receive a confirmation email. Please click on it to activate the basic free services provisioned with your account.</div>
-                <Link to="signin" className="subtitle">Continue to your account</Link>
+                <div className="title">Thank you for signing up with GroupDirect! You will receive a confirmation email. Please click on the activation link to get the basic free services provisioned with your account.</div>
+                <br />
+                <br />
+                <a cla href="signin">Continue to your account</a>
+                <br />
+                <br />
+                <br />
+            </div>
+        );
+    },
+    // Fourth Step
+    function(component) {
+        return (
+            <div>
+                <div className="icon gray shimmed">
+                    <i className="fa fa-check"/>
+                </div>
+                <div className="title">Thank you for signing up your company, {component.state.newCompanyName} with GroupDirect! We are reviewing your request. You will receive a confirmation email after we process your request.</div>
+                <br />
+                <br />
+                <a href="signin">Continue to your account</a>
+                <br />
+                <br />
+                <br />
+            </div>
+        );
+    },
+    // Fifth Step
+    function(component) {
+        return (
+            <div>
+                <div className="icon gray shimmed">
+                    <i className="fa fa-check"/>
+                </div>
+                <div className="title">Your account has been created successfully. <a href="signin">Login</a> to collaborate with your colleagues from {component.state.newCompanyName}.</div>
+                <br />
+                <br />
+                <a href="signin">Continue to your account</a>
+                <br />
+                <br />
                 <br />
             </div>
         );
@@ -160,6 +191,12 @@ var Register = React.createClass({
     onEmailChanged: function(event){
         this.setState({
             email: event.target.value,
+            toastMessage: undefined
+        });
+    },
+    onUsernameChanged: function(event){
+        this.setState({
+            userName: event.target.value,
             toastMessage: undefined
         });
     },
@@ -317,6 +354,7 @@ var Register = React.createClass({
     },
     onBack: function() {
         var step = this.state.step;
+        window.alert("Do you really wanna go back?");
         if (step > 0) {
             this.setState({
                 step: (step - 1)
@@ -375,6 +413,7 @@ var Register = React.createClass({
         SignupService.companySignupRequest(
             this.state.firstName,
             this.state.lastName,
+            this.state.userName,
             this.state.password,
             this.state.email,
             newCompanyName,
@@ -392,7 +431,7 @@ var Register = React.createClass({
                     if (res.body.Result) {
                         //Go to last step
                         component.setState({
-                            step: 2
+                            step: 3
                         });
                     } else {
                         component.setState({
@@ -415,6 +454,7 @@ var Register = React.createClass({
         SignupService.signupForExistingCompany(
             this.state.firstName,
             this.state.lastName,
+            this.state.userName,
             this.state.email,
             this.state.password,
             this.state.invitationCode,
@@ -424,7 +464,7 @@ var Register = React.createClass({
                     if (res.body.Result) {
                         //Go to last step
                         component.setState({
-                            step: 2
+                            step: 4
                         });
                     } else {
                         component.setState({
@@ -448,6 +488,7 @@ var Register = React.createClass({
     SignupService.userSignupRequest(
         this.state.firstName,
         this.state.lastName,
+        this.state.userName,
         this.state.password,
         'Male',
         this.state.email,
@@ -503,7 +544,7 @@ var Register = React.createClass({
                                 </div>
                                 <div className="footer">
                                     <div className="divider"/>
-                                    <button id="back-button" onClick={this.onBack} disabled={this.state.waiting} style={{ display: (this.state.step === 2 ? 'none' : 'inline-block') }}>Back</button>
+                                    <button id="back-button" onClick={this.onBack} disabled={this.state.waiting} style={{ display: (this.state.step === 1 ? 'inline-block' : 'none') }}>Back</button>
                                     <button id="skip-button" style={{ display: (this.state.step === 5 ? 'inline-block' : 'none') }} onClick={this.onSkip} disabled={this.state.waiting}>Skip</button>
                                     <button id="next-button" onClick={this.onNext} disabled={this.state.waiting} style={{ display: (this.state.step === 0 ? 'inline-block' : 'none') }}>Next</button>
                                     <button id="finish-button" onClick={this.onFinish} disabled={this.state.waiting} style={{ display: (this.state.step === 1 ? 'inline-block' : 'none') }}>Finish</button>
