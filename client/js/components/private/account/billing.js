@@ -5,7 +5,10 @@ var React           = require('react'),
 
 var Actions         = require('../../../actions');
 
-var AuthMixin       = require('../../../mixins/auth');
+var AuthMixin       = require('../../../mixins/auth'),
+    AppStateStore   = require('../../../stores/appstate'),
+    AccountService  = require('../../../services/account'),
+    ProfileService  = require('../../../services/profile');
 
 // React-router variables
 var Link            = Router.Link;
@@ -15,15 +18,126 @@ var Billing = React.createClass({
     mixins: [Navigation],
     getInitialState: function() {
         return {
-            step: 6
+            toastMessage: undefined,
+            fc: undefined,
+            vc: undefined,
+            sbc: undefined,
+            cic: undefined,
+            apps: []
         };
     },
     componentDidMount: function() {
         Actions.changePageTitle('Billing');
+        var component = this;
+        ProfileService.getApps(
+            AppStateStore.getSessionData().companyId,
+            AppStateStore.getSessionData().sessionToken,
+            function(res) {
+                if(res.body.ResultSet) {
+                    var appStore = res.body.ResultSet;
+                    for(var i=0; i<appStore.length; i++) {
+                        switch (appStore[i].AppId) {
+                            case 9:
+                                component.setState({vc: 1});
+                                component.state.apps.push(appStore[i].AppId);
+                                break;
+                            case 11:
+                                component.setState({sbc: 1});
+                                component.state.apps.push(appStore[i].AppId);
+                                break;
+                            case 12:
+                                component.setState({fc: 1});
+                                component.state.apps.push(appStore[i].AppId);
+                                break;
+                            case 16:
+                                component.setState({cic: 1});
+                                component.state.apps.push(appStore[i].AppId);
+                                break;
+                        }
+                    }
+                    console.log("Success at getApps", JSON.stringify(component.state.apps));
+                } else {
+                    console.log("Error at getApps", res.Text);
+                }
+            });
     },
     componentWillUnmount: function() {
     },
-    onUpgradeClick: function() {
+    onVc: function(event) {
+        this.setState({
+            vc: event.target.value
+        });
+    },
+    onFc: function(event) {
+        this.setState({
+            fc: event.target.value
+        });
+    },
+    onSbc: function(event) {
+        this.setState({
+            sbc: event.target.value
+        });
+    },
+    onCic: function(event) {
+        this.setState({
+            cic: event.target.value
+        });
+    },
+    onUpdateClick: function() {
+        console.log("apps", JSON.stringify(this.state.apps));
+        var apps = [
+                {name: 'vc', id: 9},
+                {name: 'sbc', id: 11},
+                {name: 'fc', id: 12},
+                {name: 'cic', id: 16}
+            ];
+        var match = 0;
+        for (i=0; i<apps.length; i++) {
+            console.log(apps[i].name, this.state[apps[i].name]);
+            if (this.state[apps[i].name] == 1) {
+                if (this.state.apps.length == 0) {
+                    console.log("Here", this.state.apps.length);
+                    this.state.apps.push(apps[i].id);
+                    this.forceUpdate();
+                    console.log("current apps", JSON.stringify(this.state.apps));
+                } else {
+                    for (j=0; j<this.state.apps.length; j++) {
+                        if (this.state.apps[j] == apps[i].id) {
+                            console.log("spliced", apps[i].name);
+                            this.state.apps.splice(j, 1);
+                            this.forceUpdate();
+                            console.log("current apps", JSON.stringify(this.state.apps));
+                            match = 1;
+                        }
+                    }
+                    if (!match) {
+                            console.log("pushed", apps[i].name);
+                            this.state.apps.push(apps[i].id);
+                            this.forceUpdate();
+                            console.log("current apps", JSON.stringify(this.state.apps));
+                    }
+                match = 0;
+                }
+            }
+        }
+        var component = this;
+        AccountService.associateApps(
+            this.state.apps,
+            AppStateStore.getSessionData().companyId,
+            AppStateStore.getSessionData().sessionToken,
+            function(res){
+                if (res.body.Result) {
+                    component.setState({toastMessage: "Updated Successfully"});
+                    console.log("Updated Successfully");
+                } else {
+                    component.setState({toastMessage: "Somehting went wrong!"});
+                    console.log('Error at associateApps', res.text);
+                }
+            });
+
+        console.log("final apps", JSON.stringify(this.state.apps));
+    },
+    /*onUpgradeClick: function() {
         this.setState({
             step: 5
         });
@@ -58,7 +172,7 @@ var Billing = React.createClass({
         this.setState({
             step: 6
         });
-    },
+    },*/
     render: function() {
         var apps = [
             {name: 'Video Connect', logo:'gvc'},
@@ -108,110 +222,6 @@ var Billing = React.createClass({
                         </div>
                     </div>
                     {appElements}
-                    {/*<div className={'row'+(this.state.step === 1 ? ' active' : '')}>
-                        <div className="profile-pic" onClick={this.onGcClick} >
-                            <a href="#gc"><img src='../static/img/gc.png' /></a>
-                        </div>
-                        <div className="top-text-wrapper">
-                            <div className="line1" onClick={this.onGcClick}>Group Connect</div>
-                            <div className="line2">
-                                <span>Basic</span>
-                                <span className="separator"></span>
-                                <Link to="contact" className="link">Contact us</Link>
-                            </div>
-                        </div>
-                    </div>
-                    <div className={'row'+(this.state.step === 2 ? ' active' : '')}>
-                        <div className="profile-pic" onClick={this.onCalendarClick}>
-                            <a href="#calendar"><img src='../static/img/calendar.png' /></a>
-                        </div>
-                        <div className="top-text-wrapper">
-                            <div className="line1" onClick={this.onCalendarClick}>Job Scheduler</div>
-                            <div className="line2">
-                                <span>Basic</span>
-                                <span className="separator"></span>
-                                <Link to="contact" className="link">Contact us</Link>
-                            </div>
-                        </div>
-                    </div>
-                    <div className={'row'+(this.state.step === 3 ? ' active' : '')}>
-                        <div className="profile-pic" onClick={this.onR4rClick}>
-                            <a href="#r4r"><img src='../static/img/r4r.png' /></a>
-                        </div>
-                        <div className="top-text-wrapper">
-                            <div className="line1" onClick={this.onR4rClick}>Report For Results</div>
-                            <div className="line2">
-                                <span>Basic</span>
-                                <span className="separator"></span>
-                                <Link to="contact" className="link">Contact us</Link>
-                            </div>
-                        </div>
-                    </div>
-                    <div className={'row'+(this.state.step === 4 ? ' active' : '')}>
-                        <div className="profile-pic" onClick={this.onFcClick}>
-                            <a href="#fc"><img src='../static/img/field-connect.png' /></a>
-                        </div>
-                        <div className="top-text-wrapper">
-                            <div className="line1" onClick={this.onFcClick}><a href="#fc">Field Connect</a></div>
-                            <div className="line2">
-                                <span>Basic</span>
-                                <span className="separator"></span>
-                                <span className="link" onClick={this.onUpgradeClick}>Upgrade License</span>
-                            </div>
-                        </div>
-                    </div>
-                    <div className={'row'+(this.state.step === 4 ? ' active' : '')}>
-                        <div className="profile-pic" onClick={this.onFcClick}>
-                            <a href="#fc"><img src='../static/img/sbc.png' /></a>
-                        </div>
-                        <div className="top-text-wrapper">
-                            <div className="line1" onClick={this.onSbcClick}>School Bus Connect</div>
-                            <div className="line2">
-                                <span>Basic</span>
-                                <span className="separator"></span>
-                                <span className="link" onClick={this.onUpgradeClick}>Upgrade License</span>
-                            </div>
-                        </div>
-                    </div>
-                    <div className={'row'+(this.state.step === 4 ? ' active' : '')}>
-                        <div className="profile-pic" onClick={this.onFcClick}>
-                            <a href="#fc"><img src='../static/img/field-connect.png' /></a>
-                        </div>
-                        <div className="top-text-wrapper">
-                            <div className="line1" onClick={this.onFcClick}><a href="#fc">Field Connect</a></div>
-                            <div className="line2">
-                                <span>Basic</span>
-                                <span className="separator"></span>
-                                <span className="link" onClick={this.onUpgradeClick}>Upgrade License</span>
-                            </div>
-                        </div>
-                    </div>
-                    <div className={'row'+(this.state.step === 4 ? ' active' : '')}>
-                        <div className="profile-pic" onClick={this.onFcClick}>
-                            <a href="#fc"><img src='../static/img/field-connect.png' /></a>
-                        </div>
-                        <div className="top-text-wrapper">
-                            <div className="line1" onClick={this.onFcClick}><a href="#fc">Field Connect</a></div>
-                            <div className="line2">
-                                <span>Basic</span>
-                                <span className="separator"></span>
-                                <span className="link" onClick={this.onUpgradeClick}>Upgrade License</span>
-                            </div>
-                        </div>
-                    </div>
-                    <div className={'row'+(this.state.step === 4 ? ' active' : '')}>
-                        <div className="profile-pic" onClick={this.onFcClick}>
-                            <a href="#fc"><img src='../static/img/field-connect.png' /></a>
-                        </div>
-                        <div className="top-text-wrapper">
-                            <div className="line1" onClick={this.onFcClick}><a href="#fc">Field Connect</a></div>
-                            <div className="line2">
-                                <span>Basic</span>
-                                <span className="separator"></span>
-                                <Link to="contact" className="link">Contact us</Link>
-                            </div>
-                        </div>
-                    </div>*/}
                 </div>
                 <div className="right wide">
                     <div className="billing">
@@ -221,7 +231,7 @@ var Billing = React.createClass({
                             <span className="column2 caps">License</span>
                         </div>
                         <div className="row">
-                            <div className="column1 red"><input value="1" type="text" className="textbox" /></div>
+                            <div className="column1 red"><input value={this.state.fc} type="text" className="textbox" onChange={this.onFc}/></div>
                             <div className="column2">
                                 <div className="name">Basic License - $0/month per user</div>
                                 <div className="description">
@@ -256,13 +266,13 @@ var Billing = React.createClass({
                         </div>
                         <div className="row empty"></div>
 
-                        <div className="app-header"><a name="holster"><i className="fa fa-chevron-down"></i> Protect & Connect</a></div>
+                        <div className="app-header"><a name="holster"><i className="fa fa-chevron-down"></i> Video Connect</a></div>
                         <div className="row">
                             <div className="column1"></div>
                             <span className="column2 caps">License</span>
                         </div>
                         <div className="row">
-                            <div className="column1 red"><input value="1" type="text" className="textbox" /></div>
+                            <div className="column1 red"><input value={this.state.vc} type="text" className="textbox" onChange={this.onVc}/></div>
                             <div className="column2">
                                 <div className="name">Basic License - $0/month per user</div>
                                 <div className="description">
@@ -297,13 +307,13 @@ var Billing = React.createClass({
                         </div>
 
 
-                        {/*<div className="app-header"><a name="biocom"><i className="fa fa-chevron-down"></i> Bio Connect</a></div>
+                        <div className="app-header"><a name="biocom"><i className="fa fa-chevron-down"></i> School Bus Connect</a></div>
                         <div className="row">
                             <div className="column1"></div>
                             <span className="column2 caps">License</span>
                         </div>
                         <div className="row">
-                            <div className="column1 red"><input value="1" type="text" className="textbox" /></div>
+                            <div className="column1 red"><input value={this.state.sbc} type="text" className="textbox" onChange={this.onSbc}/></div>
                             <span className="column2">Basic License - $0/month per user</span>
                             <span className="column3">$0.00</span>
                         </div>
@@ -322,7 +332,7 @@ var Billing = React.createClass({
                             <span className="column3">$0.00</span>
                         </div>
 
-                        <div className="app-header"><a name="r4r"><i className="fa fa-chevron-down"></i> Reports for Results</a></div>
+                       {/* <div className="app-header"><a name="r4r"><i className="fa fa-chevron-down"></i> Reports for Results</a></div>
                         <div className="row">
                             <div className="column1"></div>
                             <span className="column2 caps">License</span>
@@ -345,7 +355,7 @@ var Billing = React.createClass({
                             <div className="column1"><input value="0" type="text" className="textbox" /></div>
                             <span className="column2">PTT Chat on TalkGroups with Radio Interoperability - $10/month per user</span>
                             <span className="column3">$0.00</span>
-                        </div>
+                        </div>*/}
 
                         <div className="app-header"><a name="cic"><i className="fa fa-chevron-down"></i> Cisco Instant Connect</a></div>
                         <div className="row">
@@ -353,7 +363,7 @@ var Billing = React.createClass({
                             <span className="column2 caps">License</span>
                         </div>
                         <div className="row">
-                            <div className="column1 red"><input value="1" type="text" className="textbox" /></div>
+                            <div className="column1 red"><input value={this.state.cic} type="text" className="textbox" onChange={this.onCic} /></div>
                             <span className="column2">Basic License - $0/month per user</span>
                             <span className="column3">$0.00</span>
                         </div>
@@ -375,8 +385,11 @@ var Billing = React.createClass({
                             <div className="column1"></div>
                             <span className="column2 caps">Total</span>
                             <span className="column3 big">$0.00</span>
-                        </div>*/}
-
+                        </div>
+                    </div>
+                    <button id="update-button" onClick={this.onUpdateClick}>Update</button>
+                    <div className={'flash' + (this.state.toastMessage ? ' visible' : '')}>
+                        {this.state.toastMessage}
                     </div>
                 </div>
             </div>

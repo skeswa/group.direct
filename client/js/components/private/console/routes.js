@@ -5,8 +5,6 @@ var React           = require('react'),
 var Map             = require('./map.js');
 var ExampleGoogleMap = require('./directionmap.js');
 
-//var Autosuggest     = require('./autosuggest.js');
-
 var Actions             = require('../../../actions'),
     AppStateStore       = require('../../../stores/appstate'),
     SchoolBusService    = require('../../../services/schoolbusconnect');
@@ -14,26 +12,68 @@ var Actions             = require('../../../actions'),
 var AuthMixin       = require('../../../mixins/auth'),
     ExecutorMixin   = require('../../../mixins/executor');
 
-//var suburbs         = ['Cheltenham', 'Mill Park', 'Mordialloc', 'Nunawading'];
-
-// var inputAttributes = {
-//   id: 'locations-autosuggest',
-//   name: 'locations-autosuggest',
-//   className: 'my-sweet-locations-autosuggest',
-//   placeholder: 'Enter locations...',
-//   value: 'Mordialloc'   // Initial value
-// };
-
 // React-router variables
 var Link            = Router.Link;
 var sessionToken    = AppStateStore.getSessionData().sessionToken,
     companyId       = AppStateStore.getSessionData().companyId,
     d               = new Date();
+var timer;
+
+var ReactLayeredComponentMixin = {
+    componentWillUnmount: function() {
+        this._unrenderLayer();
+        document.body.removeChild(this._target);
+    },
+    componentDidUpdate: function() {
+        this._renderLayer();
+    },
+    componentDidMount: function() {
+        // Appending to the body is easier than managing the z-index of everything on the page.
+        // It's also better for accessibility and makes stacking a snap (since components will stack
+        // in mount order).
+        this._target = document.createElement('div');
+        document.body.appendChild(this._target);
+        this._renderLayer();
+    },
+    _renderLayer: function() {
+        // By calling this method in componentDidMount() and componentDidUpdate(), you're effectively
+        // creating a "wormhole" that funnels React's hierarchical updates through to a DOM node on an
+        // entirely different part of the page.
+        React.renderComponent(this.renderLayer(), this._target);
+    },
+    _unrenderLayer: function() {
+        React.unmountComponentAtNode(this._target);
+    }
+};
+
+var Modal = React.createClass({
+    killClick: function(e) {
+        // clicks on the content shouldn't close the modal
+        e.stopPropagation();
+    },
+    handleBackdropClick: function() {
+        // when you click the background, the user is requesting that the modal gets closed.
+        // note that the modal has no say over whether it actually gets closed. the owner of the
+        // modal owns the state. this just "asks" to be closed.
+        this.props.onRequestClose();
+    },
+    render: function() {
+        return this.transferPropsTo(
+            <div className="ModalBackdrop" onClick={this.handleBackdropClick}>
+                <div className="ModalContent" onClick={this.killClick}>
+                    {this.props.children}
+                </div>
+            </div>
+        );
+    }
+});
+
 
 var Routes = React.createClass({
     mixins: [
         AuthMixin,
-        ExecutorMixin
+        ExecutorMixin,
+        ReactLayeredComponentMixin
     ],
     getInitialState: function() {
         return{
@@ -47,7 +87,9 @@ var Routes = React.createClass({
             counter: 1000,
             routeName: undefined,
             companyId: AppStateStore.getSessionData().companyId,
-            sessionToken: AppStateStore.getSessionData().sessionToken
+            sessionToken: AppStateStore.getSessionData().sessionToken,
+            shown: false, ticks: 0, modalShown: false,
+            waiting: false
         }
     },
     componentDidMount: function() {
@@ -60,7 +102,6 @@ var Routes = React.createClass({
             AppStateStore.getSessionData().companyId,
             function (res) {
                 if (res.body.ResultSet) {
-                    console.log('ResultSet Routes: ' + res.body.ResultSet);
                     //console.log('Response for getRoutes', JSON.stringify(res.body));
                     var stopPoints = [];
                     for (var i=0; i<res.body.ResultSet[0].RoutePointResponseList.length; i++) {
@@ -75,6 +116,7 @@ var Routes = React.createClass({
                                 "IsStopOver": 1,
                                 "Order": i + 1
                             });
+                        //console.log('Stops', JSON.stringify(currentStop.LocationResponse));
                         } else {
                             stopPoints.push({
                                 "Address":"Address not found"
@@ -101,27 +143,19 @@ var Routes = React.createClass({
                         routes: res.body.ResultSet,
                         routeId: res.body.ResultSet[0].Id,
                         routeName: res.body.ResultSet[0].Name,
-                        //fromAddress: res.body.ResultSet[0].RoutePointResponseList[0].LocationResponse.Street1,
-                        //toAddress: res.body.ResultSet[0].RoutePointResponseList[res.body.ResultSet[0].RoutePointResponseList.length - 1].LocationResponse.Street1,
                         stopData: stopPoints,
                         active: 0
                     });
 
-                    console.log("stopData on load", JSON.stringify(component.state.stopData));
+                    //console.log("stopData on load", JSON.stringify(component.state.stopData));
                 } else {
                     console.log('Error at getRoutes', res.text);
+                    component.setState({
+                        counter: 1001
+                    });
                 }
             });
     },
-    // getSuburbs: function(input, callback) {
-    //     var regex = new RegExp('^' + input, 'i');
-
-    //       setTimeout(function() {
-    //         callback(null, suburbs.filter(function(suburb){
-    //             regex.test(suburb);
-    //         }));
-    //       }, 300);
-    //     },
     renderPointsOnRight: function(currentRoute, i){
         this.setState({
             routeId: currentRoute.Id,
@@ -133,8 +167,6 @@ var Routes = React.createClass({
         });
         if (currentRoute.RoutePointResponseList[0] === undefined) {
             this.setState({
-                //fromAddress: 'Data not found',
-                //toAddress: 'Data not found',
                 stopData: 'No stops found',
             });
         } else  {
@@ -168,8 +200,6 @@ var Routes = React.createClass({
             }
 
             this.setState({
-                //fromAddress: currentRoute.RoutePointResponseList[0].LocationResponse.Street1,
-                //toAddress: currentRoute.RoutePointResponseList[currentRoute.RoutePointResponseList.length - 1].LocationResponse.Street1,
                 stopData: stopPoints
             });
         }
@@ -184,7 +214,7 @@ var Routes = React.createClass({
            this.state.sessionToken,
             function(res) {
                 if (res.body.Result) {
-                    console.log('Response for onDeleteRouteClick', JSON.stringify(res.body));
+                    //console.log('Response for onDeleteRouteClick', JSON.stringify(res.body));
                     for(var i=0; i<component.state.routes.length; i++) {
                         if(component.state.routes[i].Id === currentRoute.Id) {
                             console.log(component.state.routes[i].Name);
@@ -203,8 +233,6 @@ var Routes = React.createClass({
             routeName: undefined,
             newStop: undefined,
             toast: undefined,
-            //fromAddress: undefined,
-            //toAddress: undefined,
             stopData: [],
             active: 100,
             stopComponent: [],
@@ -217,21 +245,21 @@ var Routes = React.createClass({
         this.setState ({
             newStop: event.target.value
         });
-        console.log("newStop", this.state.newStop);
+       //console.log("newStop", this.state.newStop);
     },
     onSavedStop: function(event) {
         //capture new address
         this.setState ({
             savedStop: event.target.value
         });
-        console.log("savedStop", this.state.savedStop);
+      // console.log("savedStop", this.state.savedStop);
     },
     onSavedStopClick: function(event) {
         this.props.value = '';
     },
     onUpdateStop: function(position, event) {
         var component = this;
-        console.log("position", position);
+       // console.log("position", position);
         for (var i=0; i<this.state.stopData.length; i++) {
             if (i = position) {
                 this.state.stopData.push({
@@ -247,7 +275,7 @@ var Routes = React.createClass({
             }
         }
 
-        console.log("onUpdateStop", JSON.stringify(this.state.stopData));
+        //console.log("onUpdateStop", JSON.stringify(this.state.stopData));
     },
     getCoordinates: function(address) {
         var component = this,
@@ -292,7 +320,7 @@ var Routes = React.createClass({
                             newStop: undefined,
                             counter: i + 1
                         });
-                        console.log("stopData", JSON.stringify(component.state.stopData));
+                        //console.log("stopData", JSON.stringify(component.state.stopData));
                     } else {
                         console.log('Error at getCoordinates', res.text);
                     }
@@ -309,17 +337,17 @@ var Routes = React.createClass({
         //get lat lng and valid address from google API
         this.getCoordinates('newStop');
 
-        console.log("counter", component.state.stopData.length);
-        console.log("stopData before push", JSON.stringify(component.state.stopData));
-        console.log("active", JSON.stringify(component.state.active));
+        // console.log("counter", component.state.stopData.length);
+        // console.log("stopData before push", JSON.stringify(component.state.stopData));
+        // console.log("active", JSON.stringify(component.state.active));
 
     },
     deleteStop: function(i, event) {
-        console.log("count", i)
+        //console.log("count", i)
         this.state.stopData.splice(i, 1);
         this.state.stopComponent.splice(i,1);
         this.forceUpdate();
-        console.log("stopData", JSON.stringify(this.state.stopData));
+        //console.log("stopData", JSON.stringify(this.state.stopData));
 
         //Reload list to enable multiple deletion
         var stopPoints = [];
@@ -378,11 +406,19 @@ var Routes = React.createClass({
                 this.state.stopData[i].IsEndingLocation = 0;
             }
         }
-        console.log('calculateStartEndPoints', JSON.stringify(this.state.stopData));
+        //console.log('calculateStartEndPoints', JSON.stringify(this.state.stopData));
+    },
+    stopWait: function(){
+        this.setState({waiting: !this.state.waiting});
+        this.setState({shown: !this.state.shown});
+        clearInterval(timer);
     },
     onSaveRoute: function(event) {
         //console.log(this.state.stopData);
+        timer = setInterval(this.stopWait, 4000);
         var component = this;
+        component.setState({waiting: !this.state.waiting});
+        component.setState({shown: !this.state.shown});
         //this.state.routes.push();
         this.calculateStartEndPoints();
         SchoolBusService.addRoute(
@@ -393,7 +429,7 @@ var Routes = React.createClass({
             function(res) {
                 if (res.body.Result) {
                     component.state.routes.push(res.body.Result);
-                    console.log('Response from addRoute', JSON.stringify(res.body));
+                    //console.log('Response from addRoute', JSON.stringify(res.body));
                     component.setState({
                         toast: "Route added successfully."
                     });
@@ -418,7 +454,7 @@ var Routes = React.createClass({
             this.state.sessionToken,
             function(res) {
                 if (res.body.Result) {
-                    console.log('Response from editRoute', JSON.stringify(res.body));
+                    //console.log('Response from editRoute', JSON.stringify(res.body));
                     component.setState({
                         toast: "Route updated successfully."
                     });
@@ -434,6 +470,22 @@ var Routes = React.createClass({
         this.setState({
             toast: undefined
         });
+    },
+    handleClick: function() {
+        //console.log("Clicked");
+        var component = this;
+        component.setState({waiting: !this.state.waiting});
+        component.setState({shown: !this.state.shown});
+    },
+    renderLayer: function() {
+        if (!this.state.shown) {
+            return <span />;
+        }
+        return (
+            <Modal>
+                <i className={'fa fa-refresh fa-spin' + (this.state.waiting ? '' : ' hidden')}></i>
+            </Modal>
+        );
     },
     render: function() {
         //Get list of routes
@@ -465,38 +517,34 @@ var Routes = React.createClass({
                     </div>
                     <div className="routes">{routeElements}</div>
                 </div>
-                    <div className="left">
-                    <div>
-                        <input type="text" id="routeName" ref="routeName" className="textbox" placeholder="Enter route name" value={this.state.routeName} onChange={this.onRouteNameChange}/>
+                <div className="left">
+                    <div className={this.state.counter === 1001? '' : 'invisible'}>
+                        Looks like you have not setup any route yet. <a onClick={this.onAddRouteClick}>Click here</a> to add a new route.
                     </div>
-                    <div className="form">
-                        {/*<div className="field">
-                            <div className="label">From</div>
-                            <input type="text" id="fromAddress" ref="fromAddress" className="textbox" value={this.state.fromAddress} onChange={this.onFromAddressChange} onBlur={this.createExecutable(this.getCoordinates, 'fromAddress')}/>
+                    <div className={this.state.counter === 1001? 'invisible' : ''}>
+                        <div>
+                            <input type="text" id="routeName" ref="routeName" className="textbox" placeholder="Enter route name" value={this.state.routeName} onChange={this.onRouteNameChange}/>
                         </div>
-                        <div className="field">
-                            <div className="label">To</div>
-                            <input type="text" id="toAddress" ref="toAddress" className="textbox" value={this.state.toAddress} onChange={this.onToAddressChange} onBlur={this.createExecutable(this.getCoordinates, 'toAddress')}/>
-                        </div>*/}
-                        <div>Enter addresses or co-ordinates of drop-off/pickup points below. Click on Save when you are done.</div>
-                        <div className="field narrow">
-                            {this.state.stopComponent}
-                            <div>
-                                <input type="text" className="textbox" placeholder="Enter stop address" onChange={this.onNewStop} value={this.state.newStop}/>
-                                <div className="remove-button" onClick={this.addNewStop}>
-                                    <i className="fa fa-plus"></i>
+                        <div className="form">
+                            <div>Enter addresses or co-ordinates of drop-off/pickup points below. Click on Save when you are done.</div>
+                            <div className="field narrow">
+                                {this.state.stopComponent}
+                                <div>
+                                    <input type="text" className="textbox" placeholder="Enter stop address" onChange={this.onNewStop} value={this.state.newStop}/>
+                                    <div className="remove-button" onClick={this.addNewStop}>
+                                        <i className="fa fa-plus"></i>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                        <div className="field center">
-                            <button id="save-button" title="Save" type="button" className="save-button" onClick={(this.state.active === 100) ? this.onSaveRoute : this.onUpdateRoute}><i className="fa fa-check"></i></button>
-                            {/*<Autosuggest />*/}
-                        </div>
-                        <div className="field center">
-                            <div className={'toast'+ (this.state.toast ? ' active': ' ')}>
-                                <div className="text">{this.state.toast}</div>
-                                <div className="remove-button">
-                                    <i className="fa fa-close" onClick={this.removeToast}></i>
+                            <div className="field center">
+                                <button id="save-button" title="Save" type="button" className="save-button" onClick={(this.state.active === 100) ? this.onSaveRoute : this.onUpdateRoute}><i className="fa fa-check"></i></button>
+                            </div>
+                            <div className="field center">
+                                <div className={'toast'+ (this.state.toast ? ' active': ' ')}>
+                                    <div className="text">{this.state.toast}</div>
+                                    <div className="remove-button">
+                                        <i className="fa fa-close" onClick={this.removeToast}></i>
+                                    </div>
                                 </div>
                             </div>
                         </div>
