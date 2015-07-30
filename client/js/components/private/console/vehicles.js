@@ -33,7 +33,7 @@ var Vehicles = React.createClass({
             AppStateStore.getSessionData().companyId,
             AppStateStore.getSessionData().sessionToken,
             function (res) {
-                if (res.body.ResultSet) {
+                if (res.body.ResultSet[0]) {
                     //console.log('Response for getVehicles', JSON.stringify(res.body));
                     component.setState({
                         vehicles: res.body.ResultSet,
@@ -45,6 +45,9 @@ var Vehicles = React.createClass({
                     });
                 } else {
                     console.log('Error at getVehicles', res.text);
+                    component.setState({
+                        active: 101
+                    });
                 }
             });
     },
@@ -214,44 +217,49 @@ var Vehicles = React.createClass({
                     <div className="routes">{vehicleElements}</div>
                 </div>
                 <div className="left">
-                    <div className="subtitle">Profile</div>
-
-                    <div className="form">
-                        <div className="field">
-                            <div className="label wide">Name</div>
-                            <input type="text" id="name" ref="name" className="textbox narrow" value={this.state.name} onChange={this.onNameChange}/>
-                        </div>
-                        <div className="field">
-                            <div className="label wide">Model</div>
-                            <input type="text" id="model" ref="model" className="textbox narrow" value={this.state.model} onChange={this.onModelChange}/>
-                        </div>
-                        <div className="field">
-                            <div className="label wide">Registration #</div>
-                            <input type="text" id="registration" ref="registration" className="textbox narrow" value={this.state.registration} onChange={this.onRegChange}/>
-                        </div>
-                        <div className="field">
-                            <div className="label wide">Description</div>
-                            <textarea rows="4" cols="50" name="description" ref="description" className="textbox textarea" value={this.state.description} onChange={this.onDescChange}/>
-                        </div>
-                        <div className="field center">
-                            <button id="save-button" type="button" className="save-button" onClick={(this.state.active === 100) ? this.addVehicle : this.updateVehicle}><i className="fa fa-check"></i></button>
-                        </div>
+                    <div className={this.state.active === 101? '' : 'invisible'}>
+                        Looks like you have not setup any vehicle yet. <a onClick={this.onAddClick}>Click here</a> to add a new vehicle.
                     </div>
-                    <div className="field center">
-                        <div className={'toast'+ (this.state.message ? ' active': ' ')}>
-                            <div className="text">{this.state.message}</div>
-                            <div className="remove-button">
-                                <i className="fa fa-close" onClick={this.removeToast}></i>
+                    <div className={this.state.active === 101? 'invisible' : ''}>
+                        <div className="subtitle">Profile</div>
+
+                        <div className="form">
+                            <div className="field">
+                                <div className="label wide">Name</div>
+                                <input type="text" id="name" ref="name" className="textbox narrow" value={this.state.name} onChange={this.onNameChange}/>
+                            </div>
+                            <div className="field">
+                                <div className="label wide">Model</div>
+                                <input type="text" id="model" ref="model" className="textbox narrow" value={this.state.model} onChange={this.onModelChange}/>
+                            </div>
+                            <div className="field">
+                                <div className="label wide">Registration #</div>
+                                <input type="text" id="registration" ref="registration" className="textbox narrow" value={this.state.registration} onChange={this.onRegChange}/>
+                            </div>
+                            <div className="field">
+                                <div className="label wide">Description</div>
+                                <textarea rows="4" cols="50" name="description" ref="description" className="textbox textarea" value={this.state.description} onChange={this.onDescChange}/>
+                            </div>
+                            <div className="field center">
+                                <button id="save-button" type="button" className="save-button" onClick={(this.state.active === 100) ? this.addVehicle : this.updateVehicle}><i className="fa fa-check"></i></button>
                             </div>
                         </div>
-                    </div>
-                    <div className={'schedule' + (this.state.active === 100 ? '':' active')}>
+                        <div className="field center">
+                            <div className={'toast'+ (this.state.message ? ' active': ' ')}>
+                                <div className="text">{this.state.message}</div>
+                                <div className="remove-button">
+                                    <i className="fa fa-close" onClick={this.removeToast}></i>
+                                </div>
+                            </div>
+                        </div>
+                        <div className={'schedule' + (this.state.active === 100 ? '':' active')}>
 
-                    <br />
-                        <div className="subtitle">Schedule</div>
-                        <div className="row wider">4-8-2015, Wed, Job: Student Pickup - Route #1 at 7:30am</div>
-                        <div className="row wider">4-7-2015, Tue, Job: Student Pickup - Route #1 at 7:30am</div>
-                        <div className="row wider">4-6-2015, Mon, Job: Student Pickup - Route #1 at 7:30am</div>
+                        <br />
+                            <div className="subtitle">Schedule</div>
+                            <div className="row wider">4-8-2015, Wed, Job: Student Pickup - Route #1 at 7:30am</div>
+                            <div className="row wider">4-7-2015, Tue, Job: Student Pickup - Route #1 at 7:30am</div>
+                            <div className="row wider">4-6-2015, Mon, Job: Student Pickup - Route #1 at 7:30am</div>
+                        </div>
                     </div>
                 </div>
                 <div className="vehicle-pic">

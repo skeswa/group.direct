@@ -21,7 +21,7 @@ var ExampleGoogleMap = React.createClass({
     },
     componentDidMount: function (rootNode) {
       this.props.paths = [];
-      console.log('componentDidMount: ' + this.props.route)
+      //console.log('componentDidMount: ' + this.props.route)
       // initializing map
       this.initializeMap();
 
@@ -30,7 +30,7 @@ var ExampleGoogleMap = React.createClass({
     },
     componentDidUpdate: function(prevProps, prevState) {
       this.props.paths = [];
-      console.log('componentDidUpdate: ' + JSON.stringify(this.props.route));
+      //console.log('componentDidUpdate: ' + JSON.stringify(this.props.route));
       this.generateRoute();
 
       if(this.props.route != null && this.props.route.IntermediatePoints == null)
@@ -64,7 +64,7 @@ var ExampleGoogleMap = React.createClass({
           function(res) {
               if (res.body.Result) {
                   component.props.route.IntermediatePoints = JSON.stringify(intermediateRoutes);
-                  console.log('Response from savePaths', JSON.stringify(res.body));
+                  //console.log('Response from savePaths', JSON.stringify(res.body));
                   /*component.setState({
                       toast: "Paths added successfully. Refresh page to see the new route."
                   });*/
@@ -84,6 +84,7 @@ var ExampleGoogleMap = React.createClass({
     },
     generateRoute: function(){
       var currentRoute = this.props.route;
+      console.log('currentRoute', JSON.stringify(currentRoute));
       var wayPointList = [];
       this.initializeMap();
 
@@ -161,7 +162,7 @@ var ExampleGoogleMap = React.createClass({
         this.props.map = map;
     },
     directionResultCallback: function(response, status){
-    console.log('directionResultCallback ' + status );
+    //console.log('directionResultCallback ' + status );
       if(status == google.maps.DirectionsStatus.OK){
         var directionRenderer = new google.maps.DirectionsRenderer();
         directionRenderer.setMap(this.props.map);
@@ -227,7 +228,7 @@ var ExampleGoogleMap = React.createClass({
       }
     },
     attachInstructionText: function(marker, text, map){
-      console.log(text);
+      //console.log(text);
       var infowindow = new google.maps.InfoWindow({
           content: text
       });

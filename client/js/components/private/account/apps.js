@@ -14,6 +14,7 @@ var Link            = Router.Link;
 // Include internal tabs
 var Notice          = require('./notice'),
     logos = [
+        {appId: 4,  logoUrl: '../static/img/splash-icon.png',    androidUrl: '', consoleUrl:''},
         {appId: 7,  logoUrl: '../static/img/calendar.png', androidUrl: 'https://play.google.com/store/apps/details?id=com.technuf.aphelia.app.apheliaandroid', consoleUrl:''},
         {appId: 8,  logoUrl: '../static/img/biocom.png',    androidUrl: '', consoleUrl:''},
         {appId: 9,  logoUrl: '../static/img/gvc.png',       androidUrl: 'https://play.google.com/store/apps/details?id=com.technuf.vc.android', consoleUrl:''},
@@ -22,7 +23,8 @@ var Notice          = require('./notice'),
         {appId: 12, logoUrl: '../static/img/field-connect.png', androidUrl: 'https://play.google.com/store/apps/details?id=com.technuf.aphelia.app.fieldconnect', consoleUrl:''},
         {appId: 13, logoUrl: '../static/img/factory.png',   androidUrl: '', consoleUrl:''},
         {appId: 14, logoUrl: '../static/img/holster.png',   androidUrl: '', consoleUrl:''},
-        {appId: 15, logoUrl: '../static/img/campus.png',    androidUrl: '', consoleUrl:''}
+        {appId: 15, logoUrl: '../static/img/campus.png',    androidUrl: '', consoleUrl:''},
+        {appId: 16, logoUrl: '../static/img/cic_logo.png',    androidUrl: '', consoleUrl:''}
     ];
 
 var Apps = React.createClass({

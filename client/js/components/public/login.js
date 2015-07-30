@@ -101,7 +101,8 @@ var Login = React.createClass({
                             companyId: res.body.Result.CompanyId,
                             userTypeId: res.body.Result.UserTypeId,
                             companyName: '',
-                            logoUrl: logoUrl
+                            logoUrl: logoUrl,
+                            roles: res.body.Result.Roles
                         });
 
                         // We have to declare that we're logged in now :)
@@ -163,7 +164,7 @@ var Login = React.createClass({
                             </h1>
                             <div className="divider"/>
                             <div className="form">
-                                <div className="label">Email</div>
+                                <div className="label">Username</div>
                                 <input type="text" className="textbox" ref="username" id="username-textbox" value={this.state.userName} onChange={this.onUserNameUpdated} disabled={this.state.waiting}/>
                                 <div className="label">Password</div>
                                 <input type="password" className="textbox" ref="password" id="password-textbox" value={this.state.password} onChange={this.onPasswordUpdated} onKeyDown={this.onPasswordKeyPress} disabled={this.state.waiting}/>

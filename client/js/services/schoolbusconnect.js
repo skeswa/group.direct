@@ -81,7 +81,7 @@ var SchoolBusService = {
                     routeId: routeId,
                     st: sessionToken
                 })
-                .end(callback);
+                .end(callback)
     },
     addStop: function(
         street1,
@@ -115,7 +115,7 @@ var SchoolBusService = {
                 st: sessionToken
             })
             // Submit the request
-            .end(callback);
+            .end(callback)
     },
 
     getCoordinates: function(
@@ -140,7 +140,7 @@ var SchoolBusService = {
                 st: sessionToken
             })
             // Submit the request
-            .end(callback);
+            .end(callback)
     },
 
     //Vehicles
@@ -156,7 +156,7 @@ var SchoolBusService = {
                 st: sessionToken
             })
             // Submit the request
-            .end(callback);
+            .end(callback)
     },
     addVehicle: function(
         name,
@@ -181,7 +181,7 @@ var SchoolBusService = {
                 st: sessionToken
             })
             // Submit the request
-            .end(callback);
+            .end(callback)
     },
     deleteVehicle: function(
         vehicleId,
@@ -193,7 +193,7 @@ var SchoolBusService = {
                     vehicleId: vehicleId,
                     st: sessionToken
                 })
-                .end(callback);
+                .end(callback)
     },
     updateVehicle: function(
         vehicleId,
@@ -220,21 +220,49 @@ var SchoolBusService = {
                 st: sessionToken
             })
             // Submit the request
-            .end(callback);
+            .end(callback)
     },
-    getStudents: function(
-        userId,
+
+    //Students
+    getAllStudents: function(
+        companyId,
         sessionToken,
         callback) {
         // Build the request
         request
-            .post('/GroupDirectServices/SchoolBusService.svc/getStudents')
-            .send({
-                userId: userId,
-                sessionToken: sessionToken
-            })
+            .get('/ApheliaBusConnectService/BusConnectService.svc/GetAllStudents?companyId='+companyId+'&st='+sessionToken)
             // Submit the request
             .end(callback);
+    },
+    addStudents: function(
+        student,
+        parents,
+        address,
+        pickupDropPoints,
+        sessionToken,
+        callback) {
+            request
+                .post('/ApheliaBusConnectService/BusConnectService.svc/addStudent')
+                .send({
+                    student: student,
+                    parents:parents,
+                    address: address,
+                    pickupDropPoints: pickupDropPoints,
+                    st: sessionToken
+                })
+                .end(callback)
+    },
+    deleteStudent: function(
+        studentId,
+        sessionToken,
+        callback) {
+            request
+                .post('/ApheliaBusConnectService/BusConnectService.svc/deletestudent')
+                .send({
+                    studentId: studentId,
+                    st: sessionToken
+                })
+                .end(callback)
     }
 };
 

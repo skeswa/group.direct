@@ -67,6 +67,7 @@
                         padding: 3px 18px;
                         text-align: left;
                         display: inline-block;
+                        float: left;
                     }
                     .label {
                         font-size: 12px;
@@ -187,6 +188,9 @@
                     &.narrow {
                         width: 5%;
                     }
+                    &.wide {
+                        width: 20%;
+                    }
                 }
             }
         }
@@ -210,6 +214,10 @@
                     background: linear-gradient(to bottom, darken(#f0f0f0, 2%) 0%, darken(#d6d6d6, 2%) 100%);
                 }
             }
+        }
+        .back {
+            background: white!important;
+            border: 1px solid #AAE900;
         }
         .add-button {
             float: right;
@@ -359,6 +367,7 @@
                     display: block;
                     float: none;
                     font-size: 10px;
+                    clear: both;
                 }
             }
             .button {
@@ -406,5 +415,10 @@
         &.active {
             display: inline-block;
         }
+    }
+    .flash {
+        //float: left;
+        font-weight: 600;
+        color: #81AE08;
     }
 }

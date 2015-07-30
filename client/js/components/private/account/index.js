@@ -54,7 +54,7 @@ var Account = React.createClass({
                             <Link to="connections">Connections</Link>
                             <Link to="settings">Settings</Link>
                             <Link to="apps">Apps</Link>
-                            <Link to="billing">Billing</Link>
+                            <Link to="billing" className={(AppStateStore.getSessionData().userTypeId == 2) ? '' : 'invisible'}>Billing</Link>
                         </div>
                         <RouteHandler component="div" key={routeName}/>
                     </div>
