@@ -263,19 +263,28 @@ var Students = React.createClass({
     },
     onStudentClick: function(currentStudent, event) {
         var component = this;
-        console.log('in read', currentStudent.PickupDropPoints[0].RoutePointId);
+        //console.log('in read', currentStudent.PickupDropPoints[0].RoutePointId);
             outer_loop:
             for (var i=0; i<this.state.routes.length; i++) {
                 for(var j=0; j<this.state.routes[i].RoutePointResponseList.length; j++) {
                     console.log('Route #', i, 'Stop #', j, this.state.routes[i].RoutePointResponseList[j].Id);
-                    if (currentStudent.PickupDropPoints[0].RoutePointId == this.state.routes[i].RoutePointResponseList[j].Id) {
-                        console.log('match found');
+                    if (currentStudent.PickupDropPoints) {
+                        if (currentStudent.PickupDropPoints[0].RoutePointId == this.state.routes[i].RoutePointResponseList[j].Id) {
+                            console.log('match found');
+                            this.setState({
+                                busRoute: component.state.routes[i].Name,
+                                busStop: component.state.routes[i].RoutePointResponseList[j].LocationResponse.Address
+                            });
+                            break outer_loop;
+                        }
+                    } else {
                         this.setState({
-                            busRoute: component.state.routes[i].Name,
-                            busStop: component.state.routes[i].RoutePointResponseList[j].LocationResponse.Address
+                            busRoute: 'Not found',
+                            busStop: 'Not found'
                         });
-                        break outer_loop;
+                    break outer_loop;
                     }
+
                 }
             }
         this.setState({
