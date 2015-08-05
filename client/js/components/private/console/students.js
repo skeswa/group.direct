@@ -18,22 +18,24 @@ var steps = [
         var studentElements = [];
         for (var i=0; i<component.state.students.length; i++) {
             var currentStudent = component.state.students[i];
-            studentElements.push(
-                <div className="row">
-                    <div className="grid narrow">
-                        <div className="profile-pic" onClick={component.createExecutable(component.onStudentClick, currentStudent)}>
-                            <i className="fa fa-user"></i>
-                        </div>
-                    </div>
-                    <div className="grid wide">{currentStudent.FirstName} {currentStudent.LastName}</div>
-                    <div className="grid">{currentStudent.StudentId}</div>
-                    <div className="grid">{currentStudent.Grade}</div>
-                    <div className="grid">{currentStudent.PickupDropPoints[0].RoutePointId}</div>
-                    <div className="grid">{currentStudent.PickupDropPoints[0].PickedUpDropTime} / {currentStudent.PickupDropPoints[1].PickedUpDropTime}</div>
-                    {/*<div className="grid wide">{currentStudent.Guardians[0].FirstName} {currentStudent.Guardians[0].LastName}</div>*/}
-                    <div className="grid"><div className="remove-button"><i className="fa fa-close" onClick={component.createExecutable(component.deleteStudent, currentStudent.Id)}></i></div></div>
-                </div>
-            );
+	    if (currentStudent.PickupDropPoints){
+	            studentElements.push(
+         	       <div className="row">
+                	    <div className="grid narrow">
+                        	<div className="profile-pic" onClick={component.createExecutable(component.onStudentClick, currentStudent)}>
+	                            <i className="fa fa-user"></i>
+        	                </div>
+                	    </div>
+	                    <div className="grid wide">{currentStudent.FirstName} {currentStudent.LastName}</div>
+        	            <div className="grid">{currentStudent.StudentId}</div>
+                	    <div className="grid">{currentStudent.Grade}</div>
+	                    <div className="grid">{currentStudent.PickupDropPoints[0].RoutePointId}</div>
+        	            <div className="grid">{currentStudent.PickupDropPoints[0].PickedUpDropTime} / {currentStudent.PickupDropPoints[1].PickedUpDropTime}</div>
+	                    {/*<div className="grid wide">{currentStudent.Guardians[0].FirstName} {currentStudent.Guardians[0].LastName}</div>*/}
+        	            <div className="grid"><div className="remove-button"><i className="fa fa-close" onClick={component.createExecutable(component.deleteStudent, currentStudent.Id)}></i></div></div>
+	                </div>
+        	    );
+		}
         }
         return (
             <div>
@@ -392,7 +394,7 @@ var Students = React.createClass({
         };
         parents = [{
             StudentId: this.state.studentId,
-            GuardianId: 37,
+            GuardianId: 114,
             Relationship: 'Neighbor'
         }];
         address = {
