@@ -14,7 +14,6 @@ var NotFound    = require('./components/404');
 // Publicly accessible page components
 var Public      = require('./components/public'),
     Splash      = require('./components/public/splash'),
-    Splash2      = require('./components/public/splash2'),
     About       = require('./components/public/about'),
     Contact     = require('./components/public/contact'),
     Login       = require('./components/public/login'),
@@ -65,7 +64,6 @@ var sitemap = (
             <Route name="forgot" handler={Forgot}/>
             <Route name="confirmpassword" handler={ConfirmPassword}/>
             <Route name="requestexpired" handler={RequestExpired}/>
-            <Route name="splash2" handler={Splash2}/>
             <DefaultRoute name="splash" handler={Splash}/>
         </Route>
         <Route name="account" handler={Account}>
