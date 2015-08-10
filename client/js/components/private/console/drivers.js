@@ -27,13 +27,23 @@ var Drivers = React.createClass({
     },
     componentDidMount: function() {
         var component   = this;
+            roleId      = null;
+
+        for (i=0; i<AppStateStore.getSessionData().roles.length; i++) {
+            if(AppStateStore.getSessionData().roles[i].AppId == 11) {
+                roleId = AppStateStore.getSessionData().roles[i].RoleId;
+                console.log("Role Id", roleId);
+                break;
+            }
+        }
 
         Actions.changePageTitle('SchoolBus Connect');
-
+        console.log('Roles', JSON.stringify(AppStateStore.getSessionData().roles));
         //Get connections
         SchoolBusService.getDrivers(
             AppStateStore.getSessionData().companyId,
             AppStateStore.getSessionData().sessionToken,
+            roleId,
             function (res) {
                 if (res.ok) {
                     if (res.body.ResultSet) {

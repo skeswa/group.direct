@@ -129,12 +129,13 @@ var SchoolBusService = {
     getDrivers: function(
         companyId,
         sessionToken,
+        roleId,
         callback) {
         // Build the request
         request
             .post('/GroupDirectServices/CompanyServices.svc/getusersbyappspecificroleid')
             .send({
-                roleId: 18,
+                roleId: roleId,
                 appId: 11,
                 companyId: companyId,
                 st: sessionToken

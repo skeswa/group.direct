@@ -102,7 +102,7 @@ var Login = React.createClass({
                             userTypeId: res.body.Result.UserTypeId,
                             companyName: '',
                             logoUrl: logoUrl,
-                            roles: res.body.Result.Roles
+                            roles: res.body.Result.AppRoles
                         });
 
                         // We have to declare that we're logged in now :)
