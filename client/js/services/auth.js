@@ -11,7 +11,8 @@ var AuthService = {
             .post('/GroupDirectServices/SignupService.svc/login')
             .send({
                 userName: user,
-                password: pass
+                password: pass,
+                platformId: 1
             })
             .end(callback);
     },
